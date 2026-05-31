@@ -1,0 +1,143 @@
+---
+import Layout from "@/layouts/main.astro"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Header } from "@/components/custom/header"
+import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars"
+import { AnimatedCodeDisplay } from "@/components/custom/animated-code-display"
+import { ProjectFiles } from "@/components/custom/project-files"
+import { ShoppingCart, Code, Palette } from "lucide-react"
+
+const projects = [
+  {
+    label: "e-commerce",
+    links: [{ label: "client-site.com", href: "https://client-site.com" }],
+  },
+  {
+    label: "web",
+    links: [
+      { label: "project-one.com", href: "https://project-one.com" },
+      { label: "project-two.com", href: "https://project-two.com" },
+    ],
+  },
+]
+
+const services = [
+  {
+    title: "E-commerce",
+    description:
+      "Scalable platforms for selling anything — from storefront to checkout.",
+    icon: ShoppingCart,
+    badge: "Shopify | Custom",
+  },
+  {
+    title: "Custom solutions",
+    description:
+      "Tailored software to automate, integrate, and grow your business.",
+    icon: Code,
+    badge: "APIs | Automation",
+  },
+  {
+    title: "Beautiful webs",
+    description: "Modern, performant websites that look as good as they feel.",
+    icon: Palette,
+    badge: "Design | Development",
+  },
+]
+
+const simulationCode = `./kaizencode.sh build-my-project
+
+works on my machine...
+eh, good enough 🚀
+deployed`
+---
+
+<Layout>
+  <GravityStarsBackground
+    client:load
+    starsCount={60}
+    starsOpacity={0.6}
+    glowIntensity={12}
+    movementSpeed={0.2}
+    mouseGravity="attract"
+    className="fixed inset-0"
+  />
+
+  <Header client:load />
+
+  <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
+    <main class="flex flex-1 flex-col justify-center gap-24 py-16">
+      <section class="max-w-2xl">
+        <Badge
+          variant="outline"
+          className="mb-6 px-3 text-center font-mono text-xs tracking-widest"
+        >
+          Software & e-commerce studio
+        </Badge>
+        <h1
+          class="text-5xl leading-tight font-bold tracking-tighter sm:text-7xl"
+        >
+          kaizencode
+        </h1>
+        <p class="mt-4 max-w-lg text-base text-muted-foreground sm:text-lg">
+          We build e-commerce software, custom solutions, and beautiful webs —
+          from concept to deployment.
+        </p>
+      </section>
+
+      <section
+        class="mx-auto flex w-full max-w-3xl flex-col items-start gap-12 sm:flex-row"
+      >
+        <div class="flex-1">
+          <ProjectFiles client:load categories={projects} />
+        </div>
+        <div class="flex-1 pt-2">
+          <AnimatedCodeDisplay
+            client:load
+            className="h-[180px] w-full"
+            filename="kaizencode.sh"
+            code={simulationCode}
+            duration={4000}
+          />
+        </div>
+      </section>
+
+      <section class="grid gap-6 sm:grid-cols-3">
+        {
+          services.map(({ title, description, icon: Icon, badge }) => (
+            <Card key={title} size="sm" className="group/card backdrop-blur-xl">
+              <CardHeader>
+                <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Icon className="size-5" />
+                </div>
+                <CardTitle>{title}</CardTitle>
+                <CardDescription>{description}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Badge
+                  variant="secondary"
+                  className="font-mono text-[10px] tracking-wider uppercase"
+                >
+                  {badge}
+                </Badge>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </section>
+    </main>
+
+    <footer
+      class="flex items-center justify-between border-t border-border/50 py-6 text-xs text-muted-foreground"
+    >
+      <span>&copy; {new Date().getFullYear()} kaizencode</span>
+    </footer>
+  </div>
+</Layout>
