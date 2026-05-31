@@ -90,13 +90,6 @@ function GravityStarsBackground({
     [starsCount, movementSpeed, starsOpacity, starsSize],
   );
 
-  const redistributeStars = React.useCallback((w: number, h: number) => {
-    starsRef.current.forEach((p) => {
-      p.x = Math.random() * w;
-      p.y = Math.random() * h;
-    });
-  }, []);
-
   const resizeCanvas = React.useCallback(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
@@ -111,28 +104,15 @@ function GravityStarsBackground({
     setCanvasSize({ width: rect.width, height: rect.height });
     if (starsRef.current.length === 0) {
       initStars(rect.width, rect.height);
-    } else {
-      redistributeStars(rect.width, rect.height);
     }
-  }, [initStars, redistributeStars]);
+  }, [initStars]);
 
   const handlePointerMove = React.useCallback(
-    (e: React.MouseEvent | React.TouchEvent) => {
+    (e: React.MouseEvent) => {
       const canvas = canvasRef.current;
       if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
-      let clientX = 0;
-      let clientY = 0;
-      if ('touches' in e) {
-        const t = e.touches[0];
-        if (!t) return;
-        clientX = t.clientX;
-        clientY = t.clientY;
-      } else {
-        clientX = e.clientX;
-        clientY = e.clientY;
-      }
-      mouseRef.current = { x: clientX - rect.left, y: clientY - rect.top };
+      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
     },
     [],
   );
@@ -305,22 +285,11 @@ function GravityStarsBackground({
     const onResize = () => resizeCanvas();
     window.addEventListener('resize', onResize);
 
-    const onGlobalMove = (e: MouseEvent | TouchEvent) => {
+    const onGlobalMove = (e: MouseEvent) => {
       const canvas = canvasRef.current;
       if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
-      let clientX = 0;
-      let clientY = 0;
-      if ('touches' in e) {
-        const t = e.touches[0];
-        if (!t) return;
-        clientX = t.clientX;
-        clientY = t.clientY;
-      } else {
-        clientX = e.clientX;
-        clientY = e.clientY;
-      }
-      mouseRef.current = { x: clientX - rect.left, y: clientY - rect.top };
+      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
     };
     window.addEventListener('mousemove', onGlobalMove);
     return () => {
@@ -369,7 +338,6 @@ function GravityStarsBackground({
       data-slot="gravity-stars-background"
       className={cn('relative size-full overflow-hidden', className)}
       onMouseMove={(e) => handlePointerMove(e)}
-      onTouchMove={(e) => handlePointerMove(e)}
       {...props}
     >
       <canvas ref={canvasRef} className="block w-full h-full" />
