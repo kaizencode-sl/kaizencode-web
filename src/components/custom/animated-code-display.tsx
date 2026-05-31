@@ -34,7 +34,7 @@ export function AnimatedCodeDisplay({
         <Code
             key={filename}
             className={cn(
-                "h-[260px] w-[480px]",
+                "h-[260px] w-full",
                 "[&_.shiki_.line_span]:!text-foreground [&_.shiki_.line]:!text-foreground",
                 className,
             )}

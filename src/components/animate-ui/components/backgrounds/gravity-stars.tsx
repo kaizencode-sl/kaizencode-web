@@ -323,11 +323,9 @@ function GravityStarsBackground({
       mouseRef.current = { x: clientX - rect.left, y: clientY - rect.top };
     };
     window.addEventListener('mousemove', onGlobalMove);
-    window.addEventListener('touchmove', onGlobalMove);
     return () => {
       window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onGlobalMove);
-      window.removeEventListener('touchmove', onGlobalMove);
       if (ro && container) ro.disconnect();
     };
   }, [resizeCanvas]);
