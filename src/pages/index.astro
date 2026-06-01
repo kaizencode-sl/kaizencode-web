@@ -98,10 +98,43 @@ deployed`
             className="h-[180px] w-full rounded-xl border border-border/50 bg-secondary/30 backdrop-blur-sm"
             filename="kaizencode.sh"
             code={simulationCode}
-            duration={4000}
+            duration={9000}
           />
         </div>
         <div class="min-w-0 flex-1">
+          <Card size="sm" className="bg-secondary/30 backdrop-blur-sm">
+            <CardHeader>
+              <div
+                class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary"
+              >
+                <Mail className="size-5" />
+              </div>
+              <CardDescription>Send us an email at</CardDescription>
+              <CardTitle>
+                <a
+                  href="mailto:contact@kaizencode.es"
+                  class="text-foreground transition-colors hover:text-muted-foreground"
+                >
+                  contact@kaizencode.es
+                </a>
+              </CardTitle>
+            </CardHeader>
+          </Card>
+        </div>
+      </section>
+
+      <section id="projects" class="flex flex-col gap-8">
+        <div class="flex flex-col gap-2">
+          <span
+            class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
+          >
+            // our projects
+          </span>
+          <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+            Projects
+          </h2>
+        </div>
+        <div class="min-w-0">
           <ProjectFiles client:load categories={projects} />
         </div>
       </section>
@@ -144,35 +177,6 @@ deployed`
             ))
           }
         </div>
-
-        <section id="contact" class="flex flex-col gap-8">
-          <div class="flex flex-col gap-2">
-            <span
-              class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
-            >
-              // get in touch
-            </span>
-            <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-              Contact
-            </h2>
-          </div>
-          <Card size="sm" className="bg-secondary/30 backdrop-blur-sm">
-            <CardHeader>
-              <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <Mail className="size-5" />
-              </div>
-              <CardDescription>Send us an email at</CardDescription>
-              <CardTitle>
-                <a
-                  href="mailto:contact@kaizencode.es"
-                  class="text-foreground transition-colors hover:text-muted-foreground"
-                >
-                  contact@kaizencode.es
-                </a>
-              </CardTitle>
-            </CardHeader>
-          </Card>
-        </section>
       </section>
 
       <footer

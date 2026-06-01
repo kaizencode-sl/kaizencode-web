@@ -12,8 +12,8 @@ import {
 import { ThemeTogglerButton } from "@/components/custom/theme-toggler-button"
 
 const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Contact", href: "#contact" },
+  { label: "Our projects", href: "#projects" },
+  { label: "Services", href: "#services" }
 ]
 
 const linkVariants = {
