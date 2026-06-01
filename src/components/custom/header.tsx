@@ -1,6 +1,7 @@
 'use client'
 
 import { Menu, X } from "lucide-react"
+import { motion } from "motion/react"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -14,6 +15,15 @@ const navLinks = [
   { label: "Services", href: "#services" },
   { label: "Contact", href: "#contact" },
 ]
+
+const linkVariants = {
+  hidden: { opacity: 0, x: -16 },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: 0.3 + i * 0.1, duration: 0.4, ease: "easeOut" as const },
+  }),
+}
 
 export function Header() {
   return (
@@ -31,7 +41,7 @@ export function Header() {
             <a
               key={link.label}
               href={link.href}
-              className="transition-colors hover:text-foreground"
+              className="relative transition-colors hover:text-foreground after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-foreground after:transition-all after:duration-300 hover:after:w-full"
             >
               {link.label}
             </a>
@@ -72,14 +82,18 @@ export function Header() {
                   </SheetClose>
                 </div>
                 <nav className="flex flex-col gap-8">
-                  {navLinks.map((link) => (
+                  {navLinks.map((link, i) => (
                     <SheetClose asChild key={link.label}>
-                      <a
+                      <motion.a
                         href={link.href}
-                        className="text-3xl font-semibold tracking-tight text-muted-foreground transition-colors hover:text-foreground"
+                        className="block text-3xl font-semibold tracking-tight text-muted-foreground transition-colors hover:text-foreground"
+                        custom={i}
+                        initial="hidden"
+                        animate="visible"
+                        variants={linkVariants}
                       >
                         {link.label}
-                      </a>
+                      </motion.a>
                     </SheetClose>
                   ))}
                 </nav>

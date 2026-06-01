@@ -55,6 +55,9 @@ function GravityStarsBackground({
   const animRef = React.useRef<number | null>(null);
   const starsRef = React.useRef<Particle[]>([]);
   const mouseRef = React.useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const isTouchDevice = React.useRef(
+    typeof window !== 'undefined' && 'ontouchstart' in window,
+  );
   const [dpr, setDpr] = React.useState(1);
   const [canvasSize, setCanvasSize] = React.useState({
     width: 800,
@@ -109,6 +112,7 @@ function GravityStarsBackground({
 
   const handlePointerMove = React.useCallback(
     (e: React.MouseEvent) => {
+      if (isTouchDevice.current) return;
       const canvas = canvasRef.current;
       if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
@@ -291,10 +295,14 @@ function GravityStarsBackground({
       const rect = canvas.getBoundingClientRect();
       mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
     };
-    window.addEventListener('mousemove', onGlobalMove);
+    if (!isTouchDevice.current) {
+      window.addEventListener('mousemove', onGlobalMove);
+    }
     return () => {
       window.removeEventListener('resize', onResize);
-      window.removeEventListener('mousemove', onGlobalMove);
+      if (!isTouchDevice.current) {
+        window.removeEventListener('mousemove', onGlobalMove);
+      }
       if (ro && container) ro.disconnect();
     };
   }, [resizeCanvas]);

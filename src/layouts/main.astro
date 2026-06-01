@@ -4,7 +4,7 @@ import { ClientRouter } from "astro:transitions"
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="dark scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -14,7 +14,7 @@ import { ClientRouter } from "astro:transitions"
     <script is:inline>
       (function () {
         const theme = localStorage.getItem("theme") || "dark"
-        document.documentElement.className = theme
+        document.documentElement.className = theme + " scroll-smooth"
       })()
     </script>
   </head>

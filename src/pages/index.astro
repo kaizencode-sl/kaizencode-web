@@ -12,7 +12,7 @@ import { Header } from "@/components/custom/header"
 import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars"
 import { AnimatedCodeDisplay } from "@/components/custom/animated-code-display"
 import { ProjectFiles } from "@/components/custom/project-files"
-import { ShoppingCart, Code, Palette } from "lucide-react"
+import { ShoppingCart, Code, Palette, Mail } from "lucide-react"
 
 const projects = [
   {
@@ -95,7 +95,7 @@ deployed`
         <div class="min-w-0 flex-1">
           <AnimatedCodeDisplay
             client:load
-            className="h-[180px] w-full"
+            className="h-[180px] w-full rounded-xl border border-border/50 bg-secondary/30 backdrop-blur-sm"
             filename="kaizencode.sh"
             code={simulationCode}
             duration={4000}
@@ -106,48 +106,80 @@ deployed`
         </div>
       </section>
 
-      <section id="services" class="grid gap-6 sm:grid-cols-3">
-        {
-          services.map(({ title, description, icon: Icon, badge }) => (
-            <Card key={title} size="sm" className="group/card backdrop-blur-xl">
-              <CardHeader>
-                <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <Icon className="size-5" />
-                </div>
-                <CardTitle>{title}</CardTitle>
-                <CardDescription>{description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Badge
-                  variant="secondary"
-                  className="font-mono text-[10px] tracking-wider uppercase"
-                >
-                  {badge}
-                </Badge>
-              </CardContent>
-            </Card>
-          ))
-        }
-      </section>
-
-      <section id="contact" class="flex flex-col items-center gap-4 py-16 text-center">
-        <h2 class="text-2xl font-semibold tracking-tight">Contact</h2>
-        <p class="text-muted-foreground">
-          Get in touch with us at{" "}
-          <a
-            href="mailto:contact@kaizencode.es"
-            class="text-foreground underline underline-offset-4 transition-colors hover:text-muted-foreground"
+      <section id="services" class="flex flex-col gap-8">
+        <div class="flex flex-col gap-2">
+          <span
+            class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
           >
-            contact@kaizencode.es
-          </a>
-        </p>
-      </section>
-    </main>
+            // what we do
+          </span>
+          <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+            Services
+          </h2>
+        </div>
+        <div class="grid gap-6 sm:grid-cols-3">
+          {
+            services.map(({ title, description, icon: Icon, badge }) => (
+              <Card
+                key={title}
+                size="sm"
+                className="group/card bg-secondary/30 backdrop-blur-sm"
+              >
+                <CardHeader>
+                  <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Icon className="size-5" />
+                  </div>
+                  <CardTitle>{title}</CardTitle>
+                  <CardDescription>{description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Badge
+                    variant="secondary"
+                    className="font-mono text-[10px] tracking-wider uppercase"
+                  >
+                    {badge}
+                  </Badge>
+                </CardContent>
+              </Card>
+            ))
+          }
+        </div>
 
-    <footer
-      class="flex items-center justify-between border-t border-border/50 py-6 text-xs text-muted-foreground"
-    >
-      <span>&copy; {new Date().getFullYear()} kaizencode</span>
-    </footer>
+        <section id="contact" class="flex flex-col gap-8">
+          <div class="flex flex-col gap-2">
+            <span
+              class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
+            >
+              // get in touch
+            </span>
+            <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Contact
+            </h2>
+          </div>
+          <Card size="sm" className="bg-secondary/30 backdrop-blur-sm">
+            <CardHeader>
+              <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <Mail className="size-5" />
+              </div>
+              <CardDescription>Send us an email at</CardDescription>
+              <CardTitle>
+                <a
+                  href="mailto:contact@kaizencode.es"
+                  class="text-foreground transition-colors hover:text-muted-foreground"
+                >
+                  contact@kaizencode.es
+                </a>
+              </CardTitle>
+            </CardHeader>
+          </Card>
+        </section>
+      </section>
+
+      <footer
+        class="flex items-center justify-between border-t border-border/50 py-6 text-xs text-muted-foreground"
+      >
+        <span>&copy; {new Date().getFullYear()} kaizencode</span>
+      </footer>
+    </main>
   </div>
 </Layout>
