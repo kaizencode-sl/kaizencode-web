@@ -6,7 +6,7 @@ import react from "@astrojs/react"
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://omarcaja.github.io",
+  site: "https://kaizencode-sl.github.io",
   base: "/kaizencode-web",
   vite: {
     plugins: [tailwindcss()],
