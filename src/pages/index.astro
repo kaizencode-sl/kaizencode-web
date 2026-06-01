@@ -1,6 +1,5 @@
 ---
 import Layout from "@/layouts/main.astro"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
@@ -92,13 +91,8 @@ deployed`
         </p>
       </section>
 
-      <section
-        class="flex flex-col gap-12 sm:flex-row"
-      >
+      <section class="flex flex-col gap-12 sm:flex-row">
         <div class="min-w-0 flex-1">
-          <ProjectFiles client:load categories={projects} />
-        </div>
-        <div class="min-w-0 flex-1 pt-2">
           <AnimatedCodeDisplay
             client:load
             className="h-[180px] w-full"
@@ -107,9 +101,12 @@ deployed`
             duration={4000}
           />
         </div>
+        <div class="min-w-0 flex-1">
+          <ProjectFiles client:load categories={projects} />
+        </div>
       </section>
 
-      <section class="grid gap-6 sm:grid-cols-3">
+      <section id="services" class="grid gap-6 sm:grid-cols-3">
         {
           services.map(({ title, description, icon: Icon, badge }) => (
             <Card key={title} size="sm" className="group/card backdrop-blur-xl">
@@ -131,6 +128,19 @@ deployed`
             </Card>
           ))
         }
+      </section>
+
+      <section id="contact" class="flex flex-col items-center gap-4 py-16 text-center">
+        <h2 class="text-2xl font-semibold tracking-tight">Contact</h2>
+        <p class="text-muted-foreground">
+          Get in touch with us at{" "}
+          <a
+            href="mailto:contact@kaizencode.es"
+            class="text-foreground underline underline-offset-4 transition-colors hover:text-muted-foreground"
+          >
+            contact@kaizencode.es
+          </a>
+        </p>
       </section>
     </main>
 
