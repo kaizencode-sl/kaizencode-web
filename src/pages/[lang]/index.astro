@@ -9,9 +9,14 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Header } from "@/components/custom/header"
+import { Effect } from "@/components/animate-ui/primitives/effects/effect"
+import { BackToTop } from "@/components/custom/back-to-top"
 import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars"
 import { AnimatedCodeDisplay } from "@/components/custom/animated-code-display"
+import { HeroTextCarousel } from "@/components/custom/hero-text-carousel"
+import { HeroTitle } from "@/components/custom/hero-title"
 import { ProjectFiles } from "@/components/custom/project-files"
+import { AboutSection } from "@/components/custom/about-section"
 import { ShoppingCart, Code, Palette, Mail } from "lucide-react"
 import { useTranslations } from "@/i18n/utils"
 import { languages, defaultLang, type Lang } from "@/i18n/ui"
@@ -29,14 +34,34 @@ const t = useTranslations(lang)
 const projects = [
   {
     label: "e-commerce",
-    links: [{ label: t("project.centauro"), href: "https://shop.centauro.es/" }],
+    links: [
+      { label: t("project.centauro"), href: "https://shop.centauro.es/" },
+    ],
   },
   {
     label: "web",
     links: [
       { label: t("project.agora"), href: "https://www.agoraacademy.es/" },
-      { label: t("project.albinana"), href: "https://www.farmaciaalbinana.es/" },
+      {
+        label: t("project.albinana"),
+        href: "https://www.farmaciaalbinana.es/",
+      },
     ],
+  },
+]
+
+const members = [
+  {
+    name: t("about.member.omar"),
+    src: "https://avatars.githubusercontent.com/kaizen-omarcaja?size=80",
+  },
+  {
+    name: t("about.member.misha"),
+    src: "https://avatars.githubusercontent.com/kaizen-misha?size=80",
+  },
+  {
+    name: t("about.member.jose"),
+    src: "https://avatars.githubusercontent.com/kaizen-josemaria?size=80",
   },
 ]
 
@@ -62,7 +87,7 @@ const services = [
 ]
 ---
 
-<Layout lang={lang} title={t("site.title")}>
+<Layout lang={lang} title={t("site.title")} description={t("hero.tagline")}>
   <GravityStarsBackground
     client:load
     starsCount={60}
@@ -76,26 +101,34 @@ const services = [
   <Header client:load lang={lang} />
 
   <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
-    <main class="flex flex-1 flex-col justify-center gap-24 py-16">
-      <section class="flex flex-col">
+    <main
+      id="main-content"
+      class="flex flex-1 flex-col justify-center gap-24 py-16"
+    >
+      <section class="flex flex-col items-start">
         <Badge
           variant="outline"
-          className="mb-6 px-3 text-center font-mono text-xs tracking-widest"
+          className="mb-6 px-3 font-mono text-xs tracking-widest"
         >
           {t("hero.badge")}
         </Badge>
-        <h1
-          class="text-5xl leading-tight font-bold tracking-tighter sm:text-7xl"
-        >
-          kaizencode
-        </h1>
-        <p class="mt-4 text-base text-muted-foreground sm:text-lg">
-          {t("hero.tagline")}
+        <HeroTitle
+          client:load
+          text="kaizencode"
+          className="text-5xl leading-tight font-bold tracking-tighter sm:text-7xl"
+        />
+        <p class="mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
+          <HeroTextCarousel
+            client:load
+            prefix={t("hero.carousel.prefix")}
+            words={t("hero.carousel.words").split(",")}
+            suffix={t("hero.carousel.suffix")}
+          />
         </p>
       </section>
 
       <section class="flex flex-col gap-12 sm:flex-row">
-        <div class="min-w-0 flex-1">
+        <Effect client:load inView slide fade className="min-w-0 flex-1">
           <AnimatedCodeDisplay
             client:load
             className="h-[180px] w-full rounded-xl border border-border/50 bg-secondary/30 backdrop-blur-sm"
@@ -103,8 +136,15 @@ const services = [
             code={t("code.content")}
             duration={9000}
           />
-        </div>
-        <div class="min-w-0 flex-1">
+        </Effect>
+        <Effect
+          client:load
+          inView
+          slide
+          fade
+          delay={150}
+          className="min-w-0 flex-1"
+        >
           <Card size="sm" className="bg-secondary/30 backdrop-blur-sm">
             <CardHeader>
               <div
@@ -123,64 +163,80 @@ const services = [
               </CardTitle>
             </CardHeader>
           </Card>
-        </div>
+        </Effect>
       </section>
 
-      <section id="projects" class="flex flex-col gap-8">
-        <div class="flex flex-col gap-2">
-          <span
-            class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
-          >
-            {t("section.projects.label")}
-          </span>
-          <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-            {t("section.projects.title")}
-          </h2>
-        </div>
-        <div class="min-w-0">
-          <ProjectFiles client:load categories={projects} />
-        </div>
-      </section>
+      <Effect client:load inView slide fade>
+        <section id="projects" class="flex flex-col gap-8">
+          <div class="flex flex-col gap-2">
+            <span
+              class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
+            >
+              {t("section.projects.label")}
+            </span>
+            <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              {t("section.projects.title")}
+            </h2>
+          </div>
+          <div class="min-w-0">
+            <ProjectFiles client:load categories={projects} />
+          </div>
+        </section>
+      </Effect>
 
-      <section id="services" class="flex flex-col gap-8">
-        <div class="flex flex-col gap-2">
-          <span
-            class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
-          >
-            {t("section.services.label")}
-          </span>
-          <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-            {t("section.services.title")}
-          </h2>
-        </div>
-        <div class="grid gap-6 sm:grid-cols-3">
-          {
-            services.map(({ title, description, icon: Icon, badge }) => (
-              <Card
-                key={title}
-                size="sm"
-                className="group/card bg-secondary/30 backdrop-blur-sm"
-              >
-                <CardHeader>
-                  <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <Icon className="size-5" />
-                  </div>
-                  <CardTitle>{title}</CardTitle>
-                  <CardDescription>{description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Badge
-                    variant="secondary"
-                    className="font-mono text-[10px] tracking-wider uppercase"
-                  >
-                    {badge}
-                  </Badge>
-                </CardContent>
-              </Card>
-            ))
-          }
-        </div>
-      </section>
+      <Effect client:load inView slide fade>
+        <section id="services" class="flex flex-col gap-8">
+          <div class="flex flex-col gap-2">
+            <span
+              class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
+            >
+              {t("section.services.label")}
+            </span>
+            <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              {t("section.services.title")}
+            </h2>
+          </div>
+          <div class="grid gap-6 sm:grid-cols-3">
+            {
+              services.map(({ title, description, icon: Icon, badge }) => (
+                <Card
+                  key={title}
+                  size="sm"
+                  className="group/card bg-secondary/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5"
+                >
+                  <CardHeader>
+                    <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-300 group-hover/card:bg-primary/20">
+                      <Icon className="size-5" />
+                    </div>
+                    <CardTitle>{title}</CardTitle>
+                    <CardDescription>{description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Badge
+                      variant="secondary"
+                      className="font-mono text-[10px] tracking-wider uppercase"
+                    >
+                      {badge}
+                    </Badge>
+                  </CardContent>
+                </Card>
+              ))
+            }
+          </div>
+        </section>
+      </Effect>
+
+      <Effect client:load inView slide fade>
+        <section id="about" class="flex flex-col gap-8">
+          <AboutSection
+            client:load
+            label={t("about.label")}
+            title={t("about.title")}
+            description={t("about.description")}
+            members={members}
+          />
+        </section>
+      </Effect>
 
       <footer
         class="flex items-center justify-between border-t border-border/50 py-6 text-xs text-muted-foreground"
@@ -189,4 +245,5 @@ const services = [
       </footer>
     </main>
   </div>
+  <BackToTop client:load />
 </Layout>

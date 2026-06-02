@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Menu, X } from "lucide-react"
 import { motion } from "motion/react"
@@ -22,17 +22,25 @@ const linkVariants = {
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
-    transition: { delay: 0.3 + i * 0.1, duration: 0.4, ease: "easeOut" as const },
+    transition: {
+      delay: 0.3 + i * 0.1,
+      duration: 0.4,
+      ease: "easeOut" as const,
+    },
   }),
 }
 
 export function Header({ lang = defaultLang }: HeaderProps) {
-  const base = import.meta.env.BASE_URL
-  const t = (key: keyof typeof ui[typeof defaultLang]) => ui[lang]?.[key] ?? ui[defaultLang][key]
+  const base = import.meta.env.BASE_URL.endsWith("/")
+    ? import.meta.env.BASE_URL
+    : import.meta.env.BASE_URL + "/"
+  const t = (key: keyof (typeof ui)[typeof defaultLang]) =>
+    ui[lang]?.[key] ?? ui[defaultLang][key]
 
   const navLinks = [
     { label: t("nav.projects"), href: "#projects" },
     { label: t("nav.services"), href: "#services" },
+    { label: t("nav.about"), href: "#about" },
   ]
 
   return (
@@ -50,7 +58,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
             <a
               key={link.label}
               href={link.href}
-              className="relative transition-colors hover:text-foreground after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-foreground after:transition-all after:duration-300 hover:after:w-full"
+              className="relative transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-foreground after:transition-all after:duration-300 hover:text-foreground hover:after:w-full"
             >
               {link.label}
             </a>
@@ -86,7 +94,11 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                     {`/{`}
                   </a>
                   <SheetClose asChild>
-                    <Button variant="ghost" size="icon-sm" aria-label="Close menu">
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      aria-label="Close menu"
+                    >
                       <X className="size-5" />
                     </Button>
                   </SheetClose>

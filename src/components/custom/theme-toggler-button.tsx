@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { ThemeProvider } from 'next-themes'
-import { ThemeTogglerButton as AnimateThemeTogglerButton } from '@/components/animate-ui/components/buttons/theme-toggler'
-import type { ThemeTogglerButtonProps } from '@/components/animate-ui/components/buttons/theme-toggler'
+import { ThemeProvider } from "next-themes"
+import { ThemeTogglerButton as AnimateThemeTogglerButton } from "@/components/animate-ui/components/buttons/theme-toggler"
+import type { ThemeTogglerButtonProps } from "@/components/animate-ui/components/buttons/theme-toggler"
 
 export function ThemeTogglerButton(props: ThemeTogglerButtonProps) {
   return (
