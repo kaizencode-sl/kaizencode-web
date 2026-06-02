@@ -1,13 +1,17 @@
 "use client"
 
-import { ThemeProvider } from "next-themes"
+import { useEffect, useState } from "react"
 import { ThemeTogglerButton as AnimateThemeTogglerButton } from "@/components/animate-ui/components/buttons/theme-toggler"
 import type { ThemeTogglerButtonProps } from "@/components/animate-ui/components/buttons/theme-toggler"
 
 export function ThemeTogglerButton(props: ThemeTogglerButtonProps) {
-  return (
-    <ThemeProvider attribute="class" defaultTheme="dark" storageKey="theme">
-      <AnimateThemeTogglerButton {...props} />
-    </ThemeProvider>
-  )
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
+  return <AnimateThemeTogglerButton {...props} />
 }

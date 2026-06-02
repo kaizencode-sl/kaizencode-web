@@ -64,8 +64,15 @@ function ThemeToggler({
     resolved: Resolved
   }>({
     effective: theme,
-    resolved: resolvedTheme,
+    resolved: resolvedTheme ?? (theme === "system" ? "light" : theme) as Resolved,
   })
+
+  React.useEffect(() => {
+    setCurrent({
+      effective: theme,
+      resolved: resolvedTheme ?? (theme === "system" ? "light" : theme) as Resolved,
+    })
+  }, [theme, resolvedTheme])
 
   React.useEffect(() => {
     if (
