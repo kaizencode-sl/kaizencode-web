@@ -1,0 +1,192 @@
+---
+import Layout from "@/layouts/main.astro"
+import { Badge } from "@/components/ui/badge"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Header } from "@/components/custom/header"
+import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars"
+import { AnimatedCodeDisplay } from "@/components/custom/animated-code-display"
+import { ProjectFiles } from "@/components/custom/project-files"
+import { ShoppingCart, Code, Palette, Mail } from "lucide-react"
+import { useTranslations } from "@/i18n/utils"
+import { languages, defaultLang, type Lang } from "@/i18n/ui"
+
+export async function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }))
+}
+
+const rawLang = Astro.params.lang as string
+const lang: Lang = rawLang === "en" || rawLang === "es" ? rawLang : defaultLang
+const t = useTranslations(lang)
+
+const projects = [
+  {
+    label: "e-commerce",
+    links: [{ label: t("project.centauro"), href: "https://shop.centauro.es/" }],
+  },
+  {
+    label: "web",
+    links: [
+      { label: t("project.agora"), href: "https://www.agoraacademy.es/" },
+      { label: t("project.albinana"), href: "https://www.farmaciaalbinana.es/" },
+    ],
+  },
+]
+
+const services = [
+  {
+    title: t("service.ecommerce.title"),
+    description: t("service.ecommerce.description"),
+    icon: ShoppingCart,
+    badge: t("service.ecommerce.badge"),
+  },
+  {
+    title: t("service.custom.title"),
+    description: t("service.custom.description"),
+    icon: Code,
+    badge: t("service.custom.badge"),
+  },
+  {
+    title: t("service.web.title"),
+    description: t("service.web.description"),
+    icon: Palette,
+    badge: t("service.web.badge"),
+  },
+]
+---
+
+<Layout lang={lang} title={t("site.title")}>
+  <GravityStarsBackground
+    client:load
+    starsCount={60}
+    starsOpacity={0.6}
+    glowIntensity={12}
+    movementSpeed={0.2}
+    mouseGravity="attract"
+    className="fixed inset-0 will-change-transform"
+  />
+
+  <Header client:load lang={lang} />
+
+  <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
+    <main class="flex flex-1 flex-col justify-center gap-24 py-16">
+      <section class="flex flex-col">
+        <Badge
+          variant="outline"
+          className="mb-6 px-3 text-center font-mono text-xs tracking-widest"
+        >
+          {t("hero.badge")}
+        </Badge>
+        <h1
+          class="text-5xl leading-tight font-bold tracking-tighter sm:text-7xl"
+        >
+          kaizencode
+        </h1>
+        <p class="mt-4 text-base text-muted-foreground sm:text-lg">
+          {t("hero.tagline")}
+        </p>
+      </section>
+
+      <section class="flex flex-col gap-12 sm:flex-row">
+        <div class="min-w-0 flex-1">
+          <AnimatedCodeDisplay
+            client:load
+            className="h-[180px] w-full rounded-xl border border-border/50 bg-secondary/30 backdrop-blur-sm"
+            filename={t("code.filename")}
+            code={t("code.content")}
+            duration={9000}
+          />
+        </div>
+        <div class="min-w-0 flex-1">
+          <Card size="sm" className="bg-secondary/30 backdrop-blur-sm">
+            <CardHeader>
+              <div
+                class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary"
+              >
+                <Mail className="size-5" />
+              </div>
+              <CardDescription>{t("contact.description")}</CardDescription>
+              <CardTitle>
+                <a
+                  href="mailto:contact@kaizencode.es"
+                  class="text-foreground transition-colors hover:text-muted-foreground"
+                >
+                  contact@kaizencode.es
+                </a>
+              </CardTitle>
+            </CardHeader>
+          </Card>
+        </div>
+      </section>
+
+      <section id="projects" class="flex flex-col gap-8">
+        <div class="flex flex-col gap-2">
+          <span
+            class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
+          >
+            {t("section.projects.label")}
+          </span>
+          <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+            {t("section.projects.title")}
+          </h2>
+        </div>
+        <div class="min-w-0">
+          <ProjectFiles client:load categories={projects} />
+        </div>
+      </section>
+
+      <section id="services" class="flex flex-col gap-8">
+        <div class="flex flex-col gap-2">
+          <span
+            class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
+          >
+            {t("section.services.label")}
+          </span>
+          <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+            {t("section.services.title")}
+          </h2>
+        </div>
+        <div class="grid gap-6 sm:grid-cols-3">
+          {
+            services.map(({ title, description, icon: Icon, badge }) => (
+              <Card
+                key={title}
+                size="sm"
+                className="group/card bg-secondary/30 backdrop-blur-sm"
+              >
+                <CardHeader>
+                  <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Icon className="size-5" />
+                  </div>
+                  <CardTitle>{title}</CardTitle>
+                  <CardDescription>{description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Badge
+                    variant="secondary"
+                    className="font-mono text-[10px] tracking-wider uppercase"
+                  >
+                    {badge}
+                  </Badge>
+                </CardContent>
+              </Card>
+            ))
+          }
+        </div>
+      </section>
+
+      <footer
+        class="flex items-center justify-between border-t border-border/50 py-6 text-xs text-muted-foreground"
+      >
+        <span>&copy; {new Date().getFullYear()} {t("footer.copyright")}</span>
+      </footer>
+    </main>
+  </div>
+</Layout>

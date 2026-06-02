@@ -58,7 +58,7 @@ function GravityStarsBackground({
   const isTouchDevice = React.useRef(
     typeof window !== 'undefined' && 'ontouchstart' in window,
   );
-  const [dpr, setDpr] = React.useState(1);
+  const dprRef = React.useRef(1);
   const [canvasSize, setCanvasSize] = React.useState({
     width: 800,
     height: 600,
@@ -99,14 +99,18 @@ function GravityStarsBackground({
     if (!canvas || !container) return;
     const rect = container.getBoundingClientRect();
     const nextDpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
-    setDpr(nextDpr);
-    canvas.width = Math.max(1, Math.floor(rect.width * nextDpr));
-    canvas.height = Math.max(1, Math.floor(rect.height * nextDpr));
-    canvas.style.width = `${rect.width}px`;
-    canvas.style.height = `${rect.height}px`;
-    setCanvasSize({ width: rect.width, height: rect.height });
-    if (starsRef.current.length === 0) {
-      initStars(rect.width, rect.height);
+    const newW = Math.max(1, Math.floor(rect.width * nextDpr));
+    const newH = Math.max(1, Math.floor(rect.height * nextDpr));
+    if (canvas.width !== newW || canvas.height !== newH || dprRef.current !== nextDpr) {
+      dprRef.current = nextDpr;
+      canvas.width = newW;
+      canvas.height = newH;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      setCanvasSize({ width: rect.width, height: rect.height });
+      if (starsRef.current.length === 0) {
+        initStars(rect.width, rect.height);
+      }
     }
   }, [initStars]);
 
@@ -125,46 +129,67 @@ function GravityStarsBackground({
     const w = canvasSize.width;
     const h = canvasSize.height;
     const mouse = mouseRef.current;
+    const touchDevice = isTouchDevice.current;
 
     for (let i = 0; i < starsRef.current.length; i++) {
       const p = starsRef.current[i];
 
-      const dx = mouse.x - p.x;
-      const dy = mouse.y - p.y;
-      const dist = Math.hypot(dx, dy);
+      if (!touchDevice) {
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const dist = Math.hypot(dx, dy);
 
-      if (dist < mouseInfluence && dist > 0) {
-        const force = (mouseInfluence - dist) / mouseInfluence;
-        const nx = dx / dist;
-        const ny = dy / dist;
-        const g = force * (gravityStrength * 0.001);
+        if (dist < mouseInfluence && dist > 0) {
+          const force = (mouseInfluence - dist) / mouseInfluence;
+          const nx = dx / dist;
+          const ny = dy / dist;
+          const g = force * (gravityStrength * 0.001);
 
-        if (mouseGravity === 'attract') {
-          p.vx += nx * g;
-          p.vy += ny * g;
-        } else if (mouseGravity === 'repel') {
-          p.vx -= nx * g;
-          p.vy -= ny * g;
-        }
+          if (mouseGravity === 'attract') {
+            p.vx += nx * g;
+            p.vy += ny * g;
+          } else if (mouseGravity === 'repel') {
+            p.vx -= nx * g;
+            p.vy -= ny * g;
+          }
 
-        p.opacity = Math.min(1, p.baseOpacity + force * 0.4);
+          p.opacity = Math.min(1, p.baseOpacity + force * 0.4);
 
-        const targetGlow = 1 + force * 2;
-        const currentGlow = p.glowMultiplier || 1;
+          const targetGlow = 1 + force * 2;
+          const currentGlow = p.glowMultiplier || 1;
 
-        if (glowAnimation === 'instant') {
-          p.glowMultiplier = targetGlow;
-        } else if (glowAnimation === 'ease') {
-          const ease = 0.15;
-          p.glowMultiplier = currentGlow + (targetGlow - currentGlow) * ease;
+          if (glowAnimation === 'instant') {
+            p.glowMultiplier = targetGlow;
+          } else if (glowAnimation === 'ease') {
+            const ease = 0.15;
+            p.glowMultiplier = currentGlow + (targetGlow - currentGlow) * ease;
+          } else {
+            const spring = (targetGlow - currentGlow) * 0.2;
+            const damping = 0.85;
+            p.glowVelocity = (p.glowVelocity || 0) * damping + spring;
+            p.glowMultiplier = currentGlow + (p.glowVelocity || 0);
+          }
         } else {
-          const spring = (targetGlow - currentGlow) * 0.2;
-          const damping = 0.85;
-          p.glowVelocity = (p.glowVelocity || 0) * damping + spring;
-          p.glowMultiplier = currentGlow + (p.glowVelocity || 0);
+          p.opacity = Math.max(p.baseOpacity * 0.3, p.opacity - 0.02);
+          const targetGlow = 1;
+          const currentGlow = p.glowMultiplier || 1;
+          if (glowAnimation === 'instant') {
+            p.glowMultiplier = targetGlow;
+          } else if (glowAnimation === 'ease') {
+            const ease = 0.08;
+            p.glowMultiplier = Math.max(
+              1,
+              currentGlow + (targetGlow - currentGlow) * ease,
+            );
+          } else {
+            const spring = (targetGlow - currentGlow) * 0.15;
+            const damping = 0.9;
+            p.glowVelocity = (p.glowVelocity || 0) * damping + spring;
+            p.glowMultiplier = Math.max(1, currentGlow + (p.glowVelocity || 0));
+          }
         }
       } else {
-        p.opacity = Math.max(p.baseOpacity * 0.3, p.opacity - 0.02);
+        p.opacity += (p.baseOpacity - p.opacity) * 0.05;
         const targetGlow = 1;
         const currentGlow = p.glowMultiplier || 1;
         if (glowAnimation === 'instant') {
@@ -253,6 +278,7 @@ function GravityStarsBackground({
     (ctx: CanvasRenderingContext2D) => {
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       const color = readColor();
+      const currentDpr = dprRef.current;
       for (const p of starsRef.current) {
         ctx.save();
         ctx.shadowColor = color;
@@ -260,22 +286,22 @@ function GravityStarsBackground({
         ctx.globalAlpha = p.opacity;
         ctx.fillStyle = color;
         ctx.beginPath();
-        ctx.arc(p.x * dpr, p.y * dpr, p.size * dpr, 0, Math.PI * 2);
+        ctx.arc(p.x * currentDpr, p.y * currentDpr, p.size * currentDpr, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       }
     },
-    [dpr, glowIntensity, readColor],
+    [glowIntensity, readColor],
   );
 
-  const animate = React.useCallback(() => {
+  const animate = React.useCallback(function tick() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     updateStars();
     drawStars(ctx);
-    animRef.current = requestAnimationFrame(animate);
+    animRef.current = requestAnimationFrame(tick);
   }, [updateStars, drawStars]);
 
   React.useEffect(() => {

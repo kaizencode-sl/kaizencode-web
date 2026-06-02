@@ -10,11 +10,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { ThemeTogglerButton } from "@/components/custom/theme-toggler-button"
+import { LanguageSelector } from "@/components/custom/language-selector"
+import { ui, defaultLang, type Lang } from "@/i18n/ui"
 
-const navLinks = [
-  { label: "Our projects", href: "#projects" },
-  { label: "Services", href: "#services" }
-]
+interface HeaderProps {
+  lang?: Lang
+}
 
 const linkVariants = {
   hidden: { opacity: 0, x: -16 },
@@ -25,12 +26,20 @@ const linkVariants = {
   }),
 }
 
-export function Header() {
+export function Header({ lang = defaultLang }: HeaderProps) {
+  const base = import.meta.env.BASE_URL
+  const t = (key: keyof typeof ui[typeof defaultLang]) => ui[lang]?.[key] ?? ui[defaultLang][key]
+
+  const navLinks = [
+    { label: t("nav.projects"), href: "#projects" },
+    { label: t("nav.services"), href: "#services" },
+  ]
+
   return (
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a
-          href={import.meta.env.BASE_URL}
+          href={`${base}${lang}/`}
           className="text-lg font-bold tracking-tighter no-underline"
         >
           {`/{`}
@@ -49,6 +58,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <LanguageSelector currentLang={lang} />
           <ThemeTogglerButton
             variant="ghost"
             size="sm"
@@ -70,7 +80,7 @@ export function Header() {
               <div className="flex h-full flex-col gap-14 p-8">
                 <div className="flex items-center justify-between">
                   <a
-                    href={import.meta.env.BASE_URL}
+                    href={`${base}${lang}/`}
                     className="text-lg font-bold tracking-tighter no-underline"
                   >
                     {`/{`}

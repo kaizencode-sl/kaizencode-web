@@ -1,12 +1,14 @@
 # OpenCode Agent Instructions
 
 ## Project Overview
-This is an Astro.js project with React, TypeScript, and shadcn/ui components for Kaizencode, a software company. The project uses:
-- Astro v6.4.2
-- React 19.2.6
-- TypeScript 6.x
-- Tailwind CSS v4
-- shadcn/ui components
+This is an Astro.js project with React, TypeScript, Tailwind CSS v4, and shadcn/ui components for Kaizencode, a software company.
+
+## Framework Details
+- Component paths are aliased via `@/*` in tsconfig.json
+- Tailwind CSS is configured through `@tailwindcss/vite`
+- Uses strict TypeScript config from `astro/tsconfigs/strict`
+- shadcn/ui components can be added with `npx shadcn@latest add <component>`
+- Node.js >=22.12.0 required
 
 ## Key Commands
 - `npm run dev` - Start development server
@@ -22,12 +24,6 @@ This is an Astro.js project with React, TypeScript, and shadcn/ui components for
 - Layouts: `src/layouts/`
 - Utilities: `src/lib/`, `src/hooks/`
 
-## Framework Details
-- Uses Astro's React integration (`@astrojs/react`)
-- Component paths are aliased via `@/*` in tsconfig.json
-- Tailwind CSS is configured through `@tailwindcss/vite`
-- shadcn/ui components are installed and can be added with `npx shadcn@latest add <component>`
-
 ## Development Workflow
 1. Run `npm run dev` to start the dev server
 2. Make changes to components or pages in `src/`
@@ -35,15 +31,19 @@ This is an Astro.js project with React, TypeScript, and shadcn/ui components for
 4. Use `npm run lint` before committing to check for issues
 5. Run `npm run typecheck` to verify TypeScript types
 
-## Important Notes
-- The project uses strict TypeScript configuration from `astro/tsconfigs/strict`
-- Component imports use the `@/` alias path
-- The project is configured to run with Node.js >=22.12.0
-
 ## Component Usage Guidelines
-- Always prefer using shadcn and animate-ui components instead of crafting them manually
-- When composing new components using shadcn or animate-ui primitives, place them under the `src/components/custom/` folder (e.g., `animated-code-display.tsx`)
-- Always prefer animated components from animate-ui over static alternatives (e.g., use `ThemeTogglerButton` over a plain `ThemeToggle`)
+- Before creating a new component, always check if shadcn or animate-ui already provides one that serves the purpose — avoid custom components when an existing one suffices
+- When composing new components using shadcn or animate-ui primitives, place them under `src/components/custom/` (e.g., `animated-code-display.tsx`)
+- Prefer animated components from animate-ui over static alternatives (e.g., `ThemeTogglerButton` over a plain `ThemeToggle`)
+
+## Internationalization (i18n)
+- The project uses Astro's built-in i18n with `en` and `es` locales, configured in `astro.config.mjs`
+- All text content must be provided in **both English (`en`) and Spanish (`es`)** — never add text in only one language
+- Translations live in `src/i18n/ui.ts` as a single dictionary with flat, dot-separated keys (e.g., `'hero.tagline'`)
+- The `Lang` type (`'en' | 'es'`) flows from Astro route params → layout → components via props
+- Use `useTranslations(lang)` from `@/i18n/utils` in Astro components to look up translated strings
+- In React client components (`'use client'`), receive translated strings as props or re-implement the inline lookup pattern from `header.tsx`
+- The type-safe `UiKey` type (derived from `defaultLang` keys) ensures all translations are accounted for
 
 ## Text & Copy Guidelines
 - Use sentence case for all text content: only the first word and proper nouns are capitalized (e.g., "Software company" not "Software Company", "Custom solutions" not "Custom Solutions")
