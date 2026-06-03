@@ -59,10 +59,7 @@ function GravityStarsBackground({
     typeof window !== "undefined" && "ontouchstart" in window
   )
   const dprRef = React.useRef(1)
-  const [canvasSize, setCanvasSize] = React.useState({
-    width: 800,
-    height: 600,
-  })
+  const canvasSizeRef = React.useRef({ width: 800, height: 600 })
 
   const readColor = React.useCallback(() => {
     const el = containerRef.current
@@ -101,17 +98,20 @@ function GravityStarsBackground({
     const nextDpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2))
     const newW = Math.max(1, Math.floor(rect.width * nextDpr))
     const newH = Math.max(1, Math.floor(rect.height * nextDpr))
+    
+    // On touch devices, ignore small height changes (like iOS Safari address bar) to prevent flickering and logic resets
+    const isMobileResize = isTouchDevice.current && canvas.width === newW && Math.abs(canvas.height - newH) < 300 * nextDpr
+    
     if (
-      canvas.width !== newW ||
+      !isMobileResize &&
+      (canvas.width !== newW ||
       canvas.height !== newH ||
-      dprRef.current !== nextDpr
+      dprRef.current !== nextDpr)
     ) {
       dprRef.current = nextDpr
       canvas.width = newW
       canvas.height = newH
-      canvas.style.width = `${rect.width}px`
-      canvas.style.height = `${rect.height}px`
-      setCanvasSize({ width: rect.width, height: rect.height })
+      canvasSizeRef.current = { width: rect.width, height: rect.height }
       if (starsRef.current.length === 0) {
         initStars(rect.width, rect.height)
       }
@@ -127,8 +127,8 @@ function GravityStarsBackground({
   }, [])
 
   const updateStars = React.useCallback(() => {
-    const w = canvasSize.width
-    const h = canvasSize.height
+    const w = canvasSizeRef.current.width
+    const h = canvasSizeRef.current.height
     const mouse = mouseRef.current
     const touchDevice = isTouchDevice.current
 
@@ -265,8 +265,6 @@ function GravityStarsBackground({
       if (p.y > h) p.y = 0
     }
   }, [
-    canvasSize.width,
-    canvasSize.height,
     mouseInfluence,
     mouseGravity,
     gravityStrength,
@@ -345,7 +343,7 @@ function GravityStarsBackground({
 
   React.useEffect(() => {
     if (starsRef.current.length === 0) {
-      initStars(canvasSize.width, canvasSize.height)
+      initStars(canvasSizeRef.current.width, canvasSizeRef.current.height)
     } else {
       starsRef.current.forEach((p) => {
         p.baseOpacity = starsOpacity
@@ -362,8 +360,6 @@ function GravityStarsBackground({
     starsCount,
     starsOpacity,
     movementSpeed,
-    canvasSize.width,
-    canvasSize.height,
     initStars,
   ])
 
