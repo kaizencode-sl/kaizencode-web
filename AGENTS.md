@@ -7,16 +7,17 @@ This is an Astro.js project with React, TypeScript, Tailwind CSS v4, and shadcn/
 - Component paths are aliased via `@/*` in tsconfig.json
 - Tailwind CSS is configured through `@tailwindcss/vite`
 - Uses strict TypeScript config from `astro/tsconfigs/strict`
-- shadcn/ui components can be added with `npx shadcn@latest add <component>`
+- shadcn/ui components can be added with `pnpm dlx shadcn@latest add <component>`
 - Node.js >=22.12.0 required
+- Use pnpm (not npm) for all package management commands
 
 ## Key Commands
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-- `npm run format` - Format code with Prettier
-- `npm run typecheck` - Run TypeScript checks
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm preview` - Preview production build
+- `pnpm lint` - Run ESLint
+- `pnpm format` - Format code with Prettier
+- `pnpm typecheck` - Run TypeScript checks
 
 ## Project Structure
 - Components: `src/components/`
@@ -25,11 +26,11 @@ This is an Astro.js project with React, TypeScript, Tailwind CSS v4, and shadcn/
 - Utilities: `src/lib/`, `src/hooks/`
 
 ## Development Workflow
-1. Run `npm run dev` to start the dev server
+1. Run `pnpm dev` to start the dev server
 2. Make changes to components or pages in `src/`
 3. Code is automatically reloaded during development
-4. Use `npm run lint` before committing to check for issues
-5. Run `npm run typecheck` to verify TypeScript types
+4. Use `pnpm lint` before committing to check for issues
+5. Run `pnpm typecheck` to verify TypeScript types
 
 ## Component Usage Guidelines
 - Before creating a new component, always check if shadcn or animate-ui already provides one that serves the purpose — avoid custom components when an existing one suffices

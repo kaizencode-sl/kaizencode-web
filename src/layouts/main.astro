@@ -49,6 +49,8 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
 
     <title>{resolvedTitle}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content={lang === "es" ? "#ffffff" : "#ffffff"} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)" />
 
     <!-- Canonical & hreflang -->
     <link rel="canonical" href={canonicalUrl} />
@@ -102,6 +104,19 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
         document.documentElement.className = theme + " scroll-smooth"
       })()
     </script>
+
+    <!-- Structured data -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Kaizencode",
+      url: siteOrigin,
+      logo: `${siteOrigin}${basePath}favicon/favicon.svg`,
+      description,
+      sameAs: [
+        "https://github.com/kaizen-omarcaja",
+      ],
+    })} />
   </head>
   <body>
     <a

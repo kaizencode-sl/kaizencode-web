@@ -1,0 +1,50 @@
+---
+import Layout from "@/layouts/main.astro"
+import { defaultLang, type Lang } from "@/i18n/ui"
+import { getLangFromUrl } from "@/i18n/utils"
+
+// Determine the language from the URL path
+const url = Astro.url
+const lang = getLangFromUrl(url)
+
+// Fallback messages for when the URL doesn't have a recognizable lang prefix
+const messages: Record<Lang, { title: string; description: string }> = {
+  en: {
+    title: "404 — Page not found",
+    description:
+      "The page you're looking for doesn't exist or has been moved.",
+  },
+  es: {
+    title: "404 — Página no encontrada",
+    description:
+      "La página que buscas no existe o ha sido movida.",
+  },
+}
+
+const { title, description } = messages[lang] ?? messages[defaultLang]
+---
+
+<Layout lang={lang} title={title} description={description}>
+  <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col items-center justify-center px-6">
+    <main
+      id="main-content"
+      class="flex flex-col items-center gap-6 text-center"
+    >
+      <span class="font-mono text-[10rem] font-bold leading-none tracking-tighter text-primary/10">
+        404
+      </span>
+      <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        {title}
+      </h1>
+      <p class="max-w-md text-muted-foreground">
+        {description}
+      </p>
+      <a
+        href={`/${lang}/`}
+        class="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+      >
+        {lang === "en" ? "Go home" : "Volver al inicio"}
+      </a>
+    </main>
+  </div>
+</Layout>

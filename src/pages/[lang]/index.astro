@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Header } from "@/components/custom/header"
+import { SectionHeader } from "@/components/custom/section-header"
 import { Effect } from "@/components/animate-ui/primitives/effects/effect"
 import { BackToTop } from "@/components/custom/back-to-top"
 import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars"
@@ -168,16 +169,10 @@ const services = [
 
       <Effect client:load inView slide fade>
         <section id="projects" class="flex flex-col gap-8">
-          <div class="flex flex-col gap-2">
-            <span
-              class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
-            >
-              {t("section.projects.label")}
-            </span>
-            <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-              {t("section.projects.title")}
-            </h2>
-          </div>
+          <SectionHeader
+            label={t("section.projects.label")}
+            title={t("section.projects.title")}
+          />
           <div class="min-w-0">
             <ProjectFiles client:load categories={projects} />
           </div>
@@ -186,16 +181,10 @@ const services = [
 
       <Effect client:load inView slide fade>
         <section id="services" class="flex flex-col gap-8">
-          <div class="flex flex-col gap-2">
-            <span
-              class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
-            >
-              {t("section.services.label")}
-            </span>
-            <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-              {t("section.services.title")}
-            </h2>
-          </div>
+          <SectionHeader
+            label={t("section.services.label")}
+            title={t("section.services.title")}
+          />
           <div class="grid gap-6 sm:grid-cols-3">
             {
               services.map(({ title, description, icon: Icon, badge }) => (

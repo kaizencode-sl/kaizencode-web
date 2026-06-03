@@ -1,15 +1,15 @@
 "use client"
 
 import * as React from "react"
-import { Accordion as AccordionPrimitive } from "@base-ui-components/react/accordion"
+import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
 import { AnimatePresence, motion, type HTMLMotionProps } from "motion/react"
 
 import { getStrictContext } from "@/lib/get-strict-context"
 import { useControlledState } from "@/hooks/use-controlled-state"
 
 type AccordionContextType = {
-  value: string | string[] | undefined
-  setValue: (value: string | string[] | undefined) => void
+  value: string[] | undefined
+  setValue: (value: string[]) => void
 }
 
 type AccordionItemContextType = {
@@ -23,24 +23,52 @@ const [AccordionProvider, useAccordion] =
 const [AccordionItemProvider, useAccordionItem] =
   getStrictContext<AccordionItemContextType>("AccordionItemContext")
 
-type AccordionProps = React.ComponentProps<typeof AccordionPrimitive.Root>
+type AccordionProps = {
+  value?: string[]
+  defaultValue?: string[]
+  onValueChange?: (value: string[]) => void
+  children?: React.ReactNode
+  disabled?: boolean
+  hiddenUntilFound?: boolean
+  keepMounted?: boolean
+  loopFocus?: boolean
+  multiple?: boolean
+  orientation?: "horizontal" | "vertical"
+  className?: string
+  style?: React.CSSProperties
+  id?: string
+  "data-slot"?: string
+}
 
 function Accordion(props: AccordionProps) {
-  const [value, setValue] = useControlledState<string | string[] | undefined>({
-    value: props?.value,
-    defaultValue: props?.defaultValue,
-    onChange: props?.onValueChange as (
-      value: string | string[] | undefined
-    ) => void,
+  const [value, setValue] = useControlledState<string[]>({
+    value: props.value,
+    defaultValue: props.defaultValue,
+    onChange: props.onValueChange,
   })
 
   return (
     <AccordionProvider value={{ value, setValue }}>
       <AccordionPrimitive.Root
         data-slot="accordion"
-        {...props}
-        onValueChange={setValue}
-      />
+        value={value}
+        defaultValue={props.defaultValue}
+        disabled={props.disabled}
+        hiddenUntilFound={props.hiddenUntilFound}
+        keepMounted={props.keepMounted}
+        loopFocus={props.loopFocus}
+        multiple={props.multiple}
+        orientation={props.orientation}
+        className={props.className}
+        style={props.style}
+        id={props.id}
+        onValueChange={(next, _details) => {
+          setValue(next as string[])
+          props.onValueChange?.(next as string[])
+        }}
+      >
+        {props.children}
+      </AccordionPrimitive.Root>
     </AccordionProvider>
   )
 }
