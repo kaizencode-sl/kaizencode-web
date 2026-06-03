@@ -16,7 +16,7 @@ const {
 } = Astro.props
 
 const siteName = "Kaizencode"
-const defaultTitle = `${siteName} — Software & E-Commerce Solutions`
+const defaultTitle = `${siteName} — software & e-commerce solutions`
 const resolvedTitle = title ?? defaultTitle
 
 // Canonical — always the current page's full URL
@@ -28,7 +28,7 @@ const basePath = rawBase.endsWith("/") ? rawBase : `${rawBase}/`
 
 // Absolute OG image URL — must be fully absolute for OG scrapers
 const siteOrigin = Astro.site?.origin ?? ""
-const ogImageUrl = `${siteOrigin}${basePath}og/og-image.png`
+const ogImageUrl = `${siteOrigin}${basePath}og/og-image.jpg`
 
 // hreflang alternate URLs — derive from Astro.site so both are always absolute and symmetric
 const enUrl = `${siteOrigin}${basePath}en/`

@@ -9,7 +9,7 @@ export const defaultLang: Lang = "en"
 
 export const ui = {
   en: {
-    "site.title": "Kaizencode — Software & E-Commerce Solutions",
+    "site.title": "Kaizencode — software & e-commerce solutions",
     "site.description":
       "Software & e-commerce studio building custom solutions, beautiful websites, and scalable e-commerce platforms.",
     "nav.projects": "Our projects",
@@ -30,15 +30,15 @@ export const ui = {
     "service.ecommerce.title": "E-commerce",
     "service.ecommerce.description":
       "Scalable platforms for selling anything — from storefront to checkout.",
-    "service.ecommerce.badge": "Shopify | Custom",
+    "service.ecommerce.badge": "Shopify | custom",
     "service.custom.title": "Custom solutions",
     "service.custom.description":
       "Tailored software to automate, integrate, and grow your business.",
-    "service.custom.badge": "APIs | Automation",
+    "service.custom.badge": "APIs | automation",
     "service.web.title": "Beautiful webs",
     "service.web.description":
       "Modern, performant websites that look as good as they feel.",
-    "service.web.badge": "Design | Development",
+    "service.web.badge": "Design | development",
     "project.centauro": "Centauro e-commerce",
     "project.agora": "Ágora Academy",
     "project.albinana": "Albiñana Pharmacy",
@@ -53,7 +53,7 @@ export const ui = {
     "footer.copyright": "kaizencode",
   },
   es: {
-    "site.title": "Kaizencode — Software y Soluciones de E-Commerce",
+    "site.title": "Kaizencode — software y soluciones de e-commerce",
     "site.description":
       "Estudio de software y e-commerce que desarrolla soluciones personalizadas, webs atractivas y plataformas de e-commerce escalables.",
     "nav.projects": "Nuestros proyectos",
@@ -74,15 +74,15 @@ export const ui = {
     "service.ecommerce.title": "E-commerce",
     "service.ecommerce.description":
       "Plataformas escalables para vender de todo — desde la tienda hasta el pago.",
-    "service.ecommerce.badge": "Shopify | Personalizado",
+    "service.ecommerce.badge": "Shopify | personalizado",
     "service.custom.title": "Soluciones personalizadas",
     "service.custom.description":
       "Software a medida para automatizar, integrar y hacer crecer tu negocio.",
-    "service.custom.badge": "APIs | Automatización",
+    "service.custom.badge": "APIs | automatización",
     "service.web.title": "Webs atractivas",
     "service.web.description":
       "Sitios web modernos y rápidos que se ven tan bien como se sienten.",
-    "service.web.badge": "Diseño | Desarrollo",
+    "service.web.badge": "Diseño | desarrollo",
     "project.centauro": "Centauro e-commerce",
     "project.agora": "Academia Ágora",
     "project.albinana": "Farmacia Albiñana",
