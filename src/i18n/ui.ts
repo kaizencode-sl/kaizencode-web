@@ -9,7 +9,7 @@ export const defaultLang: Lang = "en"
 
 export const ui = {
   en: {
-    "site.title": "Kaizencode — software & e-commerce solutions",
+    "site.title": "Kaizencode - software & e-commerce solutions",
     "site.description":
       "Software & e-commerce studio building custom solutions, beautiful websites, and scalable e-commerce platforms.",
     "nav.projects": "Our projects",
@@ -53,7 +53,7 @@ export const ui = {
     "footer.copyright": "kaizencode",
   },
   es: {
-    "site.title": "Kaizencode — software y soluciones de e-commerce",
+    "site.title": "Kaizencode - software y soluciones de e-commerce",
     "site.description":
       "Estudio de software y e-commerce que desarrolla soluciones personalizadas, webs atractivas y plataformas de e-commerce escalables.",
     "nav.projects": "Nuestros proyectos",
