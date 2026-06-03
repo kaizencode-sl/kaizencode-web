@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, useScroll, useSpring } from "motion/react"
+import { motion, useScroll, useSpring, useTransform } from "motion/react"
 import { ArrowUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -11,12 +11,12 @@ export function BackToTop() {
     damping: 30,
   })
 
+  const opacity = useTransform(smoothProgress, [0.15, 0.3], [0, 1])
+
   return (
     <motion.div
       className="fixed right-6 bottom-6 z-40"
-      style={{ opacity: smoothProgress }}
-      initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      style={{ opacity }}
     >
       <Button
         variant="outline"
