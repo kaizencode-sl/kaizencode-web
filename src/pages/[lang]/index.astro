@@ -174,7 +174,7 @@ const services = [
             title={t("section.projects.title")}
           />
           <div class="min-w-0">
-            <ProjectFiles client:load categories={projects} />
+            <ProjectFiles client:load lang={lang} categories={projects} />
           </div>
         </section>
       </Effect>

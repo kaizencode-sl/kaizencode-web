@@ -7,6 +7,7 @@ import {
   SubFiles,
 } from "@/components/animate-ui/components/base/files"
 import { ExternalLink } from "lucide-react"
+import { ui, defaultLang, type Lang } from "@/i18n/ui"
 
 interface ProjectLink {
   label: string
@@ -19,14 +20,18 @@ interface ProjectCategory {
 }
 
 interface ProjectFilesProps {
+  lang?: Lang
   categories: ProjectCategory[]
 }
 
-export function ProjectFiles({ categories }: ProjectFilesProps) {
+export function ProjectFiles({ lang = defaultLang, categories }: ProjectFilesProps) {
+  const t = (key: keyof (typeof ui)[typeof defaultLang]) =>
+    ui[lang]?.[key] ?? ui[defaultLang][key]
+
   return (
     <Files className="w-full" defaultOpen={["projects"]}>
       <FolderItem value="projects">
-        <FolderTrigger>projects</FolderTrigger>
+        <FolderTrigger>{t("folder.projects")}</FolderTrigger>
         <FolderPanel>
           <SubFiles defaultOpen={categories.map((_, i) => String(i))}>
             {categories.map((category, i) => (
