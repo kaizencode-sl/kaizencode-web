@@ -1,0 +1,234 @@
+---
+import { Badge } from "@/components/ui/badge"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Header } from "@/components/custom/header"
+import { SectionHeader } from "@/components/custom/section-header"
+import { Effect } from "@/components/animate-ui/primitives/effects/effect"
+import { BackToTop } from "@/components/custom/back-to-top"
+import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars"
+import { AnimatedCodeDisplay } from "@/components/custom/animated-code-display"
+import { HeroTextCarousel } from "@/components/custom/hero-text-carousel"
+import { HeroTitle } from "@/components/custom/hero-title"
+import { ProjectFiles } from "@/components/custom/project-files"
+import { AboutSection } from "@/components/custom/about-section"
+import { DevelopedByKaizencode } from "@/components/ui/developed-by-kaizencode"
+import { ShoppingCart, Code, Palette, Mail } from "lucide-react"
+import { useTranslations } from "@/i18n/utils"
+import { type Lang } from "@/i18n/ui"
+
+export interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+
+const projects = [
+  {
+    label: "e-commerce",
+    links: [
+      { label: t("project.centauro"), href: "https://shop.centauro.es/" },
+    ],
+  },
+  {
+    label: "web",
+    links: [
+      { label: t("project.agora"), href: "https://www.agoraacademy.es/" },
+      {
+        label: t("project.albinana"),
+        href: "https://www.farmaciaalbinana.es/",
+      },
+    ],
+  },
+]
+
+const members = [
+  {
+    name: t("about.member.omar"),
+    src: "https://avatars.githubusercontent.com/kaizen-omarcaja?size=80",
+  },
+  {
+    name: t("about.member.misha"),
+    src: "https://avatars.githubusercontent.com/kaizen-misha?size=80",
+  },
+  {
+    name: t("about.member.jose"),
+    src: "https://avatars.githubusercontent.com/kaizen-josemaria?size=80",
+  },
+]
+
+const services = [
+  {
+    title: t("service.ecommerce.title"),
+    description: t("service.ecommerce.description"),
+    icon: ShoppingCart,
+    badge: t("service.ecommerce.badge"),
+  },
+  {
+    title: t("service.custom.title"),
+    description: t("service.custom.description"),
+    icon: Code,
+    badge: t("service.custom.badge"),
+  },
+  {
+    title: t("service.web.title"),
+    description: t("service.web.description"),
+    icon: Palette,
+    badge: t("service.web.badge"),
+  },
+]
+---
+
+<GravityStarsBackground
+  client:load
+  starsCount={60}
+  starsOpacity={0.6}
+  glowIntensity={12}
+  movementSpeed={0.2}
+  mouseGravity="attract"
+  className="fixed inset-0 will-change-transform"
+/>
+
+<Header client:load lang={lang} />
+
+<div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
+  <main
+    id="main-content"
+    class="flex flex-1 flex-col justify-center gap-24 py-16"
+  >
+    <section class="flex flex-col items-start">
+      <Badge
+        variant="outline"
+        className="mb-6 px-3 font-mono text-xs tracking-widest"
+      >
+        {t("hero.badge")}
+      </Badge>
+      <HeroTitle
+        client:load
+        text="Kaizencode"
+        className="text-5xl leading-tight font-bold tracking-tighter sm:text-7xl"
+      />
+      <p class="mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
+        <HeroTextCarousel
+          client:load
+          prefix={t("hero.carousel.prefix")}
+          words={t("hero.carousel.words").split(",")}
+          suffix={t("hero.carousel.suffix")}
+        />
+      </p>
+    </section>
+
+    <section class="flex flex-col gap-12 sm:flex-row">
+      <Effect client:load inView slide fade className="min-w-0 flex-1">
+        <AnimatedCodeDisplay
+          client:load
+          className="h-[180px] w-full rounded-xl border border-border/50 bg-secondary/30 backdrop-blur-sm"
+          filename={t("code.filename")}
+          code={t("code.content")}
+          duration={9000}
+        />
+      </Effect>
+      <Effect
+        client:load
+        inView
+        slide
+        fade
+        delay={150}
+        className="min-w-0 flex-1"
+      >
+        <Card size="sm" className="bg-secondary/30 backdrop-blur-sm">
+          <CardHeader>
+            <div
+              class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary"
+            >
+              <Mail className="size-5" />
+            </div>
+            <CardDescription>{t("contact.description")}</CardDescription>
+            <CardTitle>
+              <a
+                href="mailto:contact@kaizencode.es"
+                class="text-foreground transition-colors hover:text-muted-foreground"
+              >
+                contact@kaizencode.es
+              </a>
+            </CardTitle>
+          </CardHeader>
+        </Card>
+      </Effect>
+    </section>
+
+    <Effect client:load inView slide fade>
+      <section id="projects" class="flex flex-col gap-8">
+        <SectionHeader
+          label={t("section.projects.label")}
+          title={t("section.projects.title")}
+        />
+        <div class="min-w-0">
+          <ProjectFiles client:load lang={lang} categories={projects} />
+        </div>
+      </section>
+    </Effect>
+
+    <Effect client:load inView slide fade>
+      <section id="services" class="flex flex-col gap-8">
+        <SectionHeader
+          label={t("section.services.label")}
+          title={t("section.services.title")}
+        />
+        <div class="grid gap-6 sm:grid-cols-3">
+          {
+            services.map(({ title, description, icon: Icon, badge }) => (
+              <Card
+                key={title}
+                size="sm"
+                className="group/card bg-secondary/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5"
+              >
+                <CardHeader>
+                  <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-300 group-hover/card:bg-primary/20">
+                    <Icon className="size-5" />
+                  </div>
+                  <CardTitle>{title}</CardTitle>
+                  <CardDescription>{description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Badge
+                    variant="secondary"
+                    className="font-mono text-[10px] tracking-wider uppercase"
+                  >
+                    {badge}
+                  </Badge>
+                </CardContent>
+              </Card>
+            ))
+          }
+        </div>
+      </section>
+    </Effect>
+
+    <Effect client:load inView slide fade>
+      <section id="about" class="flex flex-col gap-8">
+        <AboutSection
+          client:load
+          label={t("about.label")}
+          title={t("about.title")}
+          description={t("about.description")}
+          members={members}
+        />
+      </section>
+    </Effect>
+
+    <footer
+      class="flex flex-col items-start justify-between gap-4 border-t border-border/50 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-2"
+    >
+      <span class="text-sm">&copy; {new Date().getFullYear()} {t("footer.copyright")}</span>
+      <DevelopedByKaizencode lang={lang} />
+    </footer>
+  </main>
+</div>
+<BackToTop client:load />

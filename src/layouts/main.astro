@@ -30,9 +30,9 @@ const basePath = rawBase.endsWith("/") ? rawBase : `${rawBase}/`
 const siteOrigin = Astro.site?.origin ?? ""
 const ogImageUrl = `${siteOrigin}${basePath}og/og-image.jpg`
 
-// hreflang alternate URLs — derive from Astro.site so both are always absolute and symmetric
-const enUrl = `${siteOrigin}${basePath}en/`
-const esUrl = `${siteOrigin}${basePath}es/`
+// hreflang alternate URLs — English at root, Spanish at /es/
+const enUrl = `${siteOrigin}/`
+const esUrl = `${siteOrigin}/es/`
 
 // og:locale format: en → en_US, es → es_ES
 const ogLocaleMap: Record<Lang, string> = { en: "en_US", es: "es_ES" }

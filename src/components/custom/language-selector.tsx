@@ -11,8 +11,12 @@ interface LanguageSelectorProps {
 export function LanguageSelector({ currentLang }: LanguageSelectorProps) {
   const navigate = useCallback((value: Lang) => {
     const segments = window.location.pathname.split("/").filter(Boolean)
-    segments[0] = value
-    window.location.href = "/" + segments.join("/")
+    if (value === "en") {
+      window.location.href = segments.length <= 1 ? "/" : "/" + segments.slice(1).join("/")
+    } else {
+      segments[0] = value
+      window.location.href = "/" + segments.join("/")
+    }
   }, [])
 
   return (

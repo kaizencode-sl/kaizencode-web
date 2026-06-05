@@ -58,6 +58,8 @@ export const ui = {
     "about.member.misha": "Misha",
     "about.member.jose": "José María",
     "footer.copyright": "kaizencode",
+    "footer.developed.with": "Developed with",
+    "footer.developed.by": "by",
   },
   es: {
     "site.title": "Kaizencode - software y soluciones de e-commerce",
@@ -109,6 +111,8 @@ export const ui = {
     "about.member.misha": "Misha",
     "about.member.jose": "José María",
     "footer.copyright": "kaizencode",
+    "footer.developed.with": "Desarrollado con",
+    "footer.developed.by": "por",
   },
 } as const
 

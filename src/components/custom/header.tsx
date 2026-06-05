@@ -95,7 +95,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                   <div className="flex h-full flex-col gap-14 px-6 pt-4 pb-8">
                     <div className="flex items-center justify-between">
                       <a
-                        href={`${base}${lang}/`}
+              href={lang === "en" ? base : `${base}${lang}/`}
                         className="text-lg font-bold tracking-tighter no-underline"
                       >
                         {`/{`}
