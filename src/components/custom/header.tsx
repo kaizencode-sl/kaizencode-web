@@ -54,7 +54,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
         <header className="sticky top-0 z-50 border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
             <a
-              href={`${base}${lang}/`}
+              href={lang === "en" ? base : `${base}${lang}/`}
               className="text-lg font-bold tracking-tighter no-underline"
             >
               {`/{`}
