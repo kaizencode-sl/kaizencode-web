@@ -16,11 +16,11 @@ const {
 } = Astro.props
 
 const siteName = "Kaizencode"
-const defaultTitle = `${siteName} — software & e-commerce solutions`
+const defaultTitle = `${siteName} — Software & e-commerce solutions`
 const resolvedTitle = title ?? defaultTitle
 
-// Canonical — always the current page's full URL
-const canonicalUrl = Astro.url.href
+// Canonical — always the current page's URL without query parameters
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href
 
 // Normalise BASE_URL to always have a trailing slash
 const rawBase = import.meta.env.BASE_URL as string
@@ -28,11 +28,18 @@ const basePath = rawBase.endsWith("/") ? rawBase : `${rawBase}/`
 
 // Absolute OG image URL — must be fully absolute for OG scrapers
 const siteOrigin = Astro.site?.origin ?? ""
-const ogImageUrl = `${siteOrigin}${basePath}og/og-image.jpg`
+const ogImageUrl = `${siteOrigin}${basePath}og/og-image.png`
 
 // hreflang alternate URLs — English at root, Spanish at /es/
-const enUrl = `${siteOrigin}/`
-const esUrl = `${siteOrigin}/es/`
+const pathname = Astro.url.pathname
+const pathWithoutLang = pathname.startsWith("/es/")
+  ? pathname.slice(3)
+  : pathname === "/es"
+    ? "/"
+    : pathname
+
+const enUrl = `${siteOrigin}${pathWithoutLang}`
+const esUrl = `${siteOrigin}/es${pathWithoutLang === "/" ? "" : pathWithoutLang}`
 
 // og:locale format: en → en_US, es → es_ES
 const ogLocaleMap: Record<Lang, string> = { en: "en_US", es: "es_ES" }
@@ -49,8 +56,16 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
 
     <title>{resolvedTitle}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content={lang === "es" ? "#ffffff" : "#ffffff"} media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="theme-color"
+      content="#ffffff"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#0f0f0f"
+      media="(prefers-color-scheme: dark)"
+    />
 
     <!-- Canonical & hreflang -->
     <link rel="canonical" href={canonicalUrl} />
@@ -100,23 +115,29 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
     <ClientRouter />
     <script is:inline>
       ;(function () {
-        const theme = localStorage.getItem("theme") || "dark"
-        document.documentElement.className = theme + " scroll-smooth"
+        const setTheme = () => {
+          const theme = localStorage.getItem("theme") || "dark"
+          document.documentElement.className = theme + " scroll-smooth"
+        }
+        setTheme()
+        document.addEventListener("astro:after-swap", setTheme)
       })()
     </script>
 
     <!-- Structured data -->
-    <script is:inline type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "Kaizencode",
-      url: siteOrigin,
-      logo: `${siteOrigin}${basePath}favicon/favicon.svg`,
-      description,
-      sameAs: [
-        "https://github.com/kaizen-omarcaja",
-      ],
-    })} />
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "Kaizencode",
+        url: siteOrigin,
+        logo: `${siteOrigin}${basePath}favicon/favicon.svg`,
+        description,
+        sameAs: ["https://kaizencode.es"],
+      })}
+    />
   </head>
   <body>
     <a
