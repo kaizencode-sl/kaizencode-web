@@ -52,7 +52,7 @@ const value = study.value.map((key) => t(key))
     <section class="flex flex-col items-start">
       <a
         href={projectsHref}
-        class="hero-in mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        class="hero-in mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground pointer-coarse:mb-3 pointer-coarse:min-h-11"
         style="--i: 0"
       >
         <ArrowLeft className="size-3.5" />
@@ -61,13 +61,13 @@ const value = study.value.map((key) => t(key))
       <div class="hero-in mb-6" style="--i: 1">
         <Badge
           variant="outline"
-          className="px-3 font-mono text-xs tracking-widest"
+          className="h-auto max-w-full px-3 font-mono text-xs tracking-widest whitespace-normal"
         >
           {t("case.badge")} · {name}
         </Badge>
       </div>
       <h1
-        class="hero-in max-w-3xl text-4xl leading-tight font-bold tracking-tighter text-balance sm:text-6xl"
+        class="hero-in max-w-3xl text-[min(2.25rem,10vw)] leading-tight font-bold tracking-tighter text-balance sm:text-[min(3.75rem,9.5vw)]"
         style="--i: 2"
       >
         {t(study.heading)}
@@ -86,11 +86,13 @@ const value = study.value.map((key) => t(key))
           class={buttonVariants({
             variant: "outline",
             size: "lg",
-            className: "h-11 border-foreground/20 px-6",
+            className:
+              "h-auto min-h-11 border-foreground/20 px-6 py-2 whitespace-normal shrink",
           })}
         >
           {t(study.visit)}
           <ExternalLink className="size-3.5" />
+          <span class="sr-only">{t("a11y.newTab")}</span>
         </a>
       </div>
     </section>
@@ -106,7 +108,7 @@ const value = study.value.map((key) => t(key))
         style="--i: 5"
         class="hero-in aspect-[16/10] w-full rounded-3xl border border-border/50 bg-muted object-cover object-top"
       />
-      <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <dl class="grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {
           facts.map(({ label, value }) => (
             <Card size="sm" className="gap-1 px-4">
@@ -121,10 +123,7 @@ const value = study.value.map((key) => t(key))
     </section>
 
     <section class="reveal flex flex-col gap-8">
-      <SectionHeader
-        label={t("case.challenge.label")}
-        title={t("case.challenge.title")}
-      />
+      <SectionHeader title={t("case.challenge.title")} />
       <div
         class="flex max-w-3xl flex-col gap-4 text-muted-foreground sm:text-lg"
       >
@@ -133,19 +132,16 @@ const value = study.value.map((key) => t(key))
     </section>
 
     <section class="reveal flex flex-col gap-8">
-      <SectionHeader
-        label={t("case.work.label")}
-        title={t("case.work.title")}
-      />
-      <div class="grid gap-6 sm:grid-cols-3">
+      <SectionHeader title={t("case.work.title")} />
+      <div
+        class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:[&>:last-child:nth-child(odd)]:col-span-2 lg:[&>:last-child:nth-child(odd)]:col-span-1"
+      >
         {
           work.map(({ title, text, icon: Icon }) => (
             <Card size="sm">
               <CardHeader>
-                <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-300 group-hover/card:bg-primary/20">
-                  <Icon className="size-5" />
-                </div>
-                <CardTitle>
+                <CardTitle className="flex items-center gap-2.5">
+                  <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
                   <h3>{title}</h3>
                 </CardTitle>
                 <CardDescription>{text}</CardDescription>
@@ -157,10 +153,7 @@ const value = study.value.map((key) => t(key))
     </section>
 
     <section class="reveal flex flex-col gap-8">
-      <SectionHeader
-        label={t("case.value.label")}
-        title={t(study.valueTitle)}
-      />
+      <SectionHeader title={t(study.valueTitle)} />
       {
         stats && (
           <div class="flex flex-col gap-3">
@@ -213,4 +206,4 @@ const value = study.value.map((key) => t(key))
     </footer>
   </main>
 </div>
-<BackToTop client:load />
+<BackToTop client:idle label={t("a11y.top")} />

@@ -33,7 +33,7 @@ export function LanguageSelector({ currentLang }: LanguageSelectorProps) {
           key={code}
           value={code}
           aria-label={label}
-          className="font-mono text-xs"
+          className="relative font-mono text-xs after:absolute after:-inset-y-2 after:inset-x-0"
         >
           {code.toUpperCase()}
         </ToggleGroupItem>

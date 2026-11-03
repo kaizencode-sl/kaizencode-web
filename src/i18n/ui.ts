@@ -26,9 +26,7 @@ export const ui = {
       "e-commerce solutions,custom software,modern and beautiful webs",
     "hero.carousel.suffix": "",
     "contact.description": "Send us an email at",
-    "section.projects.label": "// our projects",
     "section.projects.title": "What we have built",
-    "section.services.label": "// what we do",
     "section.services.title": "How we can help",
     "service.ecommerce.title": "Online stores",
     "service.ecommerce.description":
@@ -55,7 +53,6 @@ export const ui = {
     "hero3.stat.projects.label": "projects shipped",
     "hero3.stat.members": "3",
     "hero3.stat.members.label": "developers",
-    "about.label": "// about us",
     "about.title": "About us",
     "about.description":
       "We are Omar, Misha and José María, three partner developers based in Cuenca, Valencia and Málaga. We have spent over 10 years building websites, online stores and software, including e-commerce for large companies on SAP Commerce Cloud and Adobe Experience Manager. We love what we do and keep up to date, so your project is built with what works best today.",
@@ -69,6 +66,9 @@ export const ui = {
     "nav.menu": "Open menu",
     "nav.menu.close": "Close menu",
     "nav.theme": "Toggle light and dark mode",
+    "a11y.skip": "Skip to content",
+    "a11y.top": "Back to top",
+    "a11y.newTab": "(opens in a new tab)",
     "city.cuenca": "Cuenca",
     "city.valencia": "Valencia",
     "city.malaga": "Málaga",
@@ -94,7 +94,6 @@ export const ui = {
     "city.contact.text":
       "{name} is one of the three Kaizencode partners. You can meet in person in {city} or by video call, whichever you prefer.",
     "city.others.title": "We also work in",
-    "city.others.label": "// locations",
     "city.others.spain": "Anywhere in Spain (remote)",
     "hero.support":
       "We build every project from scratch, with no templates, and you talk directly to the people who build it. No salespeople, no middlemen.",
@@ -118,9 +117,6 @@ export const ui = {
     "project.jovi.tags": "Hospitality,multilingual,digital menu",
     "project.image.alt": "Screenshot of the website for",
     "project.visit": "Visit website",
-    "projects.prev": "Previous projects",
-    "projects.next": "Next projects",
-    "projects.goto": "Go to project",
     "project.case": "Read the case study",
     "case.badge": "Case study",
     "case.back": "Back to projects",
@@ -132,9 +128,6 @@ export const ui = {
     "case.challenge.title": "The challenge",
     "case.work.title": "What we do",
     "case.value.title": "What it brings",
-    "case.challenge.label": "// context",
-    "case.work.label": "// our work",
-    "case.value.label": "// results",
     "case.visit": "Visit the online store",
     "case.cta.title": "Got a platform that needs a team to look after it?",
     "case.cta.text":
@@ -207,8 +200,6 @@ export const ui = {
       "A single team that knows the platform end to end, from the code to the business.",
     "case.centauro.value.3":
       "Continuous evolution without stopping the store clinics rely on every day.",
-    "section.process.label": "// how we work",
-    "section.testimonials.label": "// testimonials",
     "section.testimonials.title": "What our clients say",
     "about.highlight":
       "You talk directly to the person who codes your website.",
@@ -217,7 +208,6 @@ export const ui = {
     "about.role.jose": "Frontend developer · websites & e-commerce",
     "about.linkedin": "LinkedIn",
     "about.linkedin.label": "LinkedIn profile of",
-    "section.faq.label": "// faq",
     "faq.price.q": "How much does a website cost?",
     "faq.price.a":
       "Every project is different, so we do not work with fixed rates. We talk to you, understand what you need and prepare a detailed, personalised quote, no strings attached.",
@@ -227,7 +217,6 @@ export const ui = {
     "faq.maintenance.q": "What happens once the website is live?",
     "faq.maintenance.a":
       "We stay by your side. If you want, we take care of maintenance: updates, backups, content changes and support. And if you prefer to manage it yourself, we leave everything ready for you.",
-    "section.contact.label": "// contact",
     "section.contact.title": "Shall we talk about your project?",
     "section.contact.text":
       "Tell us what you have in mind, even if it is not fully clear yet. We will get back to you with ideas and a first proposal, no strings attached.",
@@ -243,7 +232,6 @@ export const ui = {
     "webdesign.intro":
       "We are three partner developers based in Cuenca, Valencia and Málaga. We code every website from scratch, with no templates, so your business shows up on Google, explains clearly what it offers and turns visits into calls, bookings or sales. And you talk directly to the people who build it.",
     "webdesign.includes.title": "What your website includes",
-    "webdesign.includes.label": "// your website",
     "webdesign.includes.1.title": "Custom design",
     "webdesign.includes.1.text":
       "No templates: we design your website around your brand and your customers, starting with mobile.",
@@ -308,9 +296,7 @@ export const ui = {
       "soluciones e-commerce,software personalizado,webs modernas y atractivas",
     "hero.carousel.suffix": "",
     "contact.description": "Envíanos un correo a",
-    "section.projects.label": "// nuestros proyectos",
     "section.projects.title": "Lo que hemos hecho",
-    "section.services.label": "// lo que hacemos",
     "section.services.title": "En qué te ayudamos",
     "service.ecommerce.title": "Tiendas online",
     "service.ecommerce.description":
@@ -337,7 +323,6 @@ export const ui = {
     "hero3.stat.projects.label": "proyectos realizados",
     "hero3.stat.members": "3",
     "hero3.stat.members.label": "desarrolladores",
-    "about.label": "// sobre nosotros",
     "about.title": "Sobre nosotros",
     "about.description":
       "Somos Omar, Misha y José María, tres desarrolladores y socios en Cuenca, Valencia y Málaga. Llevamos más de 10 años programando webs, tiendas online y software, también e-commerce para grandes empresas con SAP Commerce Cloud y Adobe Experience Manager. Nos encanta lo que hacemos y estamos siempre al día, así que tu proyecto se construye con lo que mejor funciona hoy.",
@@ -351,6 +336,9 @@ export const ui = {
     "nav.menu": "Abrir menú",
     "nav.menu.close": "Cerrar menú",
     "nav.theme": "Cambiar entre modo claro y oscuro",
+    "a11y.skip": "Saltar al contenido",
+    "a11y.top": "Volver arriba",
+    "a11y.newTab": "(se abre en una pestaña nueva)",
     "city.cuenca": "Cuenca",
     "city.valencia": "Valencia",
     "city.malaga": "Málaga",
@@ -376,7 +364,6 @@ export const ui = {
     "city.contact.text":
       "{name} es uno de los tres socios de Kaizencode. Podéis reuniros en persona en {city} o por videollamada, como prefieras.",
     "city.others.title": "También trabajamos en",
-    "city.others.label": "// dónde estamos",
     "city.others.spain": "Toda España (en remoto)",
     "hero.support":
       "Programamos cada proyecto desde cero, sin plantillas, y hablas directamente con quien lo construye. Sin comerciales ni intermediarios.",
@@ -400,9 +387,6 @@ export const ui = {
     "project.jovi.tags": "Hostelería,multiidioma,carta digital",
     "project.image.alt": "Captura de la web de",
     "project.visit": "Ver web",
-    "projects.prev": "Proyectos anteriores",
-    "projects.next": "Siguientes proyectos",
-    "projects.goto": "Ir al proyecto",
     "project.case": "Ver caso de estudio",
     "case.badge": "Caso de estudio",
     "case.back": "Volver a proyectos",
@@ -414,9 +398,6 @@ export const ui = {
     "case.challenge.title": "El reto",
     "case.work.title": "Qué hacemos",
     "case.value.title": "Qué aporta",
-    "case.challenge.label": "// contexto",
-    "case.work.label": "// nuestro trabajo",
-    "case.value.label": "// resultados",
     "case.visit": "Ver la tienda online",
     "case.cta.title":
       "¿Tienes una plataforma que necesita un equipo que la cuide?",
@@ -492,8 +473,6 @@ export const ui = {
       "Un único equipo que conoce la plataforma de punta a punta, del código al negocio.",
     "case.centauro.value.3":
       "Evolución continua sin parar la tienda de la que dependen las clínicas cada día.",
-    "section.process.label": "// cómo trabajamos",
-    "section.testimonials.label": "// opiniones",
     "section.testimonials.title": "Lo que dicen nuestros clientes",
     "about.highlight": "Hablas directamente con quien programa tu web.",
     "about.role.omar": "Ingeniero de software · e-commerce",
@@ -501,7 +480,6 @@ export const ui = {
     "about.role.jose": "Desarrollador frontend · webs y e-commerce",
     "about.linkedin": "LinkedIn",
     "about.linkedin.label": "Perfil de LinkedIn de",
-    "section.faq.label": "// preguntas frecuentes",
     "faq.price.q": "¿Cuánto cuesta una web?",
     "faq.price.a":
       "Cada proyecto es distinto, así que no trabajamos con tarifas cerradas. Hablamos contigo, entendemos lo que necesitas y te preparamos un presupuesto personalizado y detallado, sin compromiso.",
@@ -511,7 +489,6 @@ export const ui = {
     "faq.maintenance.q": "¿Qué pasa cuando la web ya está publicada?",
     "faq.maintenance.a":
       "Seguimos a tu lado. Si quieres, nos encargamos del mantenimiento: actualizaciones, copias de seguridad, cambios de contenido y soporte. Y si prefieres gestionarla tú, te lo dejamos todo preparado.",
-    "section.contact.label": "// contacto",
     "section.contact.title": "¿Hablamos de tu proyecto?",
     "section.contact.text":
       "Cuéntanos qué tienes en mente, aunque todavía no lo tengas del todo claro. Te respondemos con ideas y una primera propuesta, sin compromiso.",
@@ -526,7 +503,6 @@ export const ui = {
     "webdesign.intro":
       "Somos tres socios desarrolladores en Cuenca, Valencia y Málaga. Programamos cada web desde cero, sin plantillas, para que tu negocio aparezca en Google, explique bien lo que ofrece y convierta visitas en llamadas, reservas o ventas. Y hablas directamente con quien la construye.",
     "webdesign.includes.title": "Qué incluye tu web",
-    "webdesign.includes.label": "// tu web",
     "webdesign.includes.1.title": "Diseño a medida",
     "webdesign.includes.1.text":
       "Nada de plantillas: diseñamos tu web para tu marca y tus clientes, empezando por el móvil.",

@@ -80,7 +80,7 @@ export function FaqAccordion({ faqs }: FaqAccordionProps) {
       type="multiple"
       value={open}
       onValueChange={setOpen}
-      className="border-border/50 bg-secondary/30 backdrop-blur-sm"
+      className="border-border/50 bg-card/70 backdrop-blur-sm dark:bg-secondary/30"
     >
       {faqs.map(({ q, a }, i) => {
         const value = `faq-${i}`

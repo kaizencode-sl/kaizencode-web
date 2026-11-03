@@ -1,12 +1,7 @@
 "use client"
 
 import { Menu, X } from "lucide-react"
-import { motion } from "motion/react"
 import { Button } from "@/components/ui/button"
-import {
-  ScrollProgressProvider,
-  ScrollProgress,
-} from "@/components/animate-ui/primitives/animate/scroll-progress"
 import {
   Sheet,
   SheetClose,
@@ -20,19 +15,6 @@ import { ui, defaultLang, type Lang } from "@/i18n/ui"
 
 interface HeaderProps {
   lang?: Lang
-}
-
-const linkVariants = {
-  hidden: { opacity: 0, x: -16 },
-  visible: (i: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: {
-      delay: 0.3 + i * 0.1,
-      duration: 0.4,
-      ease: "easeOut" as const,
-    },
-  }),
 }
 
 export function Header({ lang = defaultLang }: HeaderProps) {
@@ -53,12 +35,11 @@ export function Header({ lang = defaultLang }: HeaderProps) {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" storageKey="theme">
-      <ScrollProgressProvider global={true}>
         <header className="sticky top-0 z-50 border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
-          <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <div className="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center justify-between px-6">
             <a
               href={homeHref}
-              className="text-lg font-bold tracking-tighter no-underline"
+              className="inline-flex min-h-11 min-w-11 items-center text-lg font-bold tracking-tighter no-underline"
             >
               {`/{`}
             </a>
@@ -68,7 +49,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="transition-colors hover:text-foreground"
+                  className="py-3 transition-colors hover:text-foreground"
                 >
                   {link.label}
                 </a>
@@ -82,6 +63,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                 size="sm"
                 direction="ltr"
                 modes={["light", "dark"]}
+                className="pointer-coarse:size-11"
                 aria-label={t("nav.theme")}
               />
 
@@ -90,6 +72,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                   <Button
                     variant="ghost"
                     size="icon-sm"
+                    className="pointer-coarse:size-11"
                     aria-label={t("nav.menu")}
                   >
                     <Menu className="size-5" />
@@ -104,7 +87,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                     <div className="flex items-center justify-between">
                       <a
                         href={homeHref}
-                        className="text-lg font-bold tracking-tighter no-underline"
+                        className="inline-flex min-h-11 min-w-11 items-center text-lg font-bold tracking-tighter no-underline"
                       >
                         {`/{`}
                       </a>
@@ -112,6 +95,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                         <Button
                           variant="ghost"
                           size="icon-sm"
+                          className="pointer-coarse:size-11"
                           aria-label={t("nav.menu.close")}
                         >
                           <X className="size-5" />
@@ -121,16 +105,13 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                     <nav className="flex flex-col gap-8">
                       {navLinks.map((link, i) => (
                         <SheetClose asChild key={link.label}>
-                          <motion.a
+                          <a
                             href={link.href}
-                            className="block text-3xl font-semibold tracking-tight text-muted-foreground transition-colors hover:text-foreground"
-                            custom={i}
-                            initial="hidden"
-                            animate="visible"
-                            variants={linkVariants}
+                            className="block animate-in text-3xl font-semibold tracking-tight text-muted-foreground transition-colors duration-400 ease-out fade-in slide-in-from-left-4 fill-mode-backwards hover:text-foreground motion-reduce:animate-none"
+                            style={{ animationDelay: `${300 + i * 100}ms` }}
                           >
                             {link.label}
-                          </motion.a>
+                          </a>
                         </SheetClose>
                       ))}
                     </nav>
@@ -139,9 +120,13 @@ export function Header({ lang = defaultLang }: HeaderProps) {
               </Sheet>
             </div>
           </div>
-          <ScrollProgress className="absolute bottom-0 left-0 h-0.5 bg-primary" />
+          {/* --scroll-progress is set on <html> by GSAP (src/lib/animations.ts),
+              so this hydrated element's own style is never touched */}
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-(--scroll-progress,0) bg-primary"
+          />
         </header>
-      </ScrollProgressProvider>
     </ThemeProvider>
   )
 }

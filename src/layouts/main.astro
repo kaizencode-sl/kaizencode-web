@@ -50,7 +50,7 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
 <html lang={lang} class="dark scroll-smooth">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="index, follow" />
 
     <title>{resolvedTitle}</title>
@@ -130,19 +130,8 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
           const theme = localStorage.getItem("theme") || "dark"
           html.className = theme + " scroll-smooth"
         }
-        // Hide GSAP entrance targets until GSAP takes over (see
-        // src/lib/animations.ts); give up after 3s so content never stays hidden
-        const holdForAnimations = () => {
-          if (matchMedia("(prefers-reduced-motion: reduce)").matches) return
-          html.dataset.anim = ""
-          setTimeout(() => delete html.dataset.anim, 3000)
-        }
         setTheme()
-        holdForAnimations()
-        document.addEventListener("astro:after-swap", () => {
-          setTheme()
-          holdForAnimations()
-        })
+        document.addEventListener("astro:after-swap", setTheme)
       })()
     </script>
 
@@ -179,10 +168,9 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
       href="#main-content"
       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-background focus:px-4 focus:py-2 focus:text-foreground focus:ring-2 focus:ring-ring focus:outline-hidden"
     >
-      Skip to content
+      {ui[lang]["a11y.skip"]}
     </a>
-    <!-- GSAP fades this wrapper, not the React element, so hydration still
-         matches the server HTML -->
+    <!-- The entrance fades this wrapper, not the React element -->
     <div class="stars-in fixed inset-0">
       <GravityStarsBackground
         client:idle
@@ -191,7 +179,7 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
         glowIntensity={12}
         movementSpeed={0.2}
         mouseGravity="attract"
-        className="will-change-transform"
+        className="text-foreground/50 [--stars-glow:0] dark:text-foreground dark:[--stars-glow:1]"
       />
     </div>
     <slot />
@@ -201,7 +189,6 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
       let cleanup: (() => void) | undefined
       document.addEventListener("astro:page-load", () => {
         cleanup = initAnimations()
-        delete document.documentElement.dataset.anim
       })
       document.addEventListener("astro:before-swap", () => cleanup?.())
     </script>

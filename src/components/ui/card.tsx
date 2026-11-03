@@ -12,7 +12,7 @@ function Card({
       data-slot="card"
       data-size={size}
       className={cn(
-        "group/card flex flex-col gap-5 overflow-hidden rounded-[min(var(--radius-4xl),24px)] bg-secondary/30 py-5 text-sm text-card-foreground shadow-sm ring-1 ring-foreground/5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:ring-foreground/10 *:[img:first-child]:rounded-t-[min(var(--radius-4xl),24px)] *:[img:last-child]:rounded-b-[min(var(--radius-4xl),24px)]",
+        "group/card flex flex-col gap-5 overflow-hidden rounded-[min(var(--radius-4xl),24px)] bg-card/70 py-5 text-sm text-card-foreground shadow-sm ring-1 ring-foreground/8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:bg-secondary/30 dark:ring-foreground/10 *:[img:first-child]:rounded-t-[min(var(--radius-4xl),24px)] *:[img:last-child]:rounded-b-[min(var(--radius-4xl),24px)]",
         className
       )}
       {...props}

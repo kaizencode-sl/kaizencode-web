@@ -127,7 +127,7 @@
       },
       "label": {
         "displayName": "Label",
-        "purpose": "// section labels, project type, hero badge."
+        "purpose": "Project type and hero badge."
       },
       "tag": {
         "displayName": "Tag",
@@ -165,7 +165,7 @@
       {
         "name": "hover",
         "value": "300ms",
-        "purpose": "Card lift, nav link color, icon tile tint."
+        "purpose": "Card lift, nav link color, card icon tint."
       }
     ],
     "breakpoints": [
@@ -203,17 +203,17 @@
     {
       "name": "Section header",
       "kind": "custom",
-      "description": "The // comment label above every section headline.",
-      "html": "<div class=\"ds-sh\"><span class=\"ds-sh-label\">// lo que hacemos</span><h2 class=\"ds-sh-title\">En qué te ayudamos</h2></div>",
-      "css": ".ds-sh { display: flex; flex-direction: column; gap: 8px; } .ds-sh-label { font: 400 12px/16px 'JetBrains Mono Variable', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: oklch(0.708 0 0); } .ds-sh-title { margin: 0; font: 600 30px/36px 'JetBrains Mono Variable', monospace; letter-spacing: -0.025em; color: oklch(0.985 0 0); }"
+      "description": "The section headline, on its own with no label above it.",
+      "html": "<h2 class=\"ds-sh-title\">En qué te ayudamos</h2>",
+      "css": ".ds-sh { display: flex; flex-direction: column; gap: 8px; } .ds-sh-title { margin: 0; font: 600 30px/36px 'JetBrains Mono Variable', monospace; letter-spacing: -0.025em; color: oklch(0.985 0 0); }"
     },
     {
       "name": "Glass service card",
       "kind": "card",
       "refersTo": "card-sm",
-      "description": "Translucent card over the star field, with icon tile, title, description and tag; lifts on hover.",
-      "html": "<div class=\"ds-card\"><div class=\"ds-icon\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m16 18 6-6-6-6\"/><path d=\"m8 6-6 6 6 6\"/></svg></div><h3 class=\"ds-card-title\">Software a medida e IA</h3><p class=\"ds-card-desc\">Automatizamos tareas repetitivas con flujos de n8n y agentes a medida.</p><span class=\"ds-tag\">Agentes IA | n8n | APIs</span></div>",
-      "css": ".ds-card { display: flex; flex-direction: column; gap: 6px; max-width: 320px; padding: 16px; border-radius: 24px; background: oklch(0.269 0 0 / 30%); backdrop-filter: blur(4px); box-shadow: 0 0 0 1px oklch(0.985 0 0 / 10%), 0 1px 3px 0 rgb(0 0 0 / 0.1); color: oklch(0.985 0 0); font-family: 'JetBrains Mono Variable', monospace; transition: all 300ms; } .ds-card:hover { transform: translateY(-4px); box-shadow: 0 0 0 1px oklch(0.985 0 0 / 10%), 0 10px 15px -3px oklch(0.922 0 0 / 5%); } .ds-icon { display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; margin-bottom: 4px; border-radius: 14px; background: oklch(0.922 0 0 / 10%); color: oklch(0.922 0 0); transition: background 300ms; } .ds-card:hover .ds-icon { background: oklch(0.922 0 0 / 20%); } .ds-card-title { margin: 0; font-size: 16px; line-height: 24px; font-weight: 500; } .ds-card-desc { margin: 0 0 12px; font-size: 14px; line-height: 20px; color: oklch(0.708 0 0); } .ds-tag { align-self: flex-start; padding: 2px 8px; border-radius: 18px; background: oklch(0.269 0 0); font-size: 10px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }"
+      "description": "Translucent card over the star field, with an inline icon before the title, description and tag; lifts on hover.",
+      "html": "<div class=\"ds-card\"><h3 class=\"ds-card-title\"><svg class=\"ds-icon\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m16 18 6-6-6-6\"/><path d=\"m8 6-6 6 6 6\"/></svg>Software a medida e IA</h3><p class=\"ds-card-desc\">Automatizamos tareas repetitivas con flujos de n8n y agentes a medida.</p><span class=\"ds-tag\">Agentes IA | n8n | APIs</span></div>",
+      "css": ".ds-card { display: flex; flex-direction: column; gap: 6px; max-width: 320px; padding: 16px; border-radius: 24px; background: oklch(0.269 0 0 / 30%); backdrop-filter: blur(4px); box-shadow: 0 0 0 1px oklch(0.985 0 0 / 10%), 0 1px 3px 0 rgb(0 0 0 / 0.1); color: oklch(0.985 0 0); font-family: 'JetBrains Mono Variable', monospace; transition: all 300ms; } .ds-card:hover { transform: translateY(-4px); box-shadow: 0 0 0 1px oklch(0.985 0 0 / 10%), 0 10px 15px -3px oklch(0.922 0 0 / 5%); } .ds-icon { flex-shrink: 0; color: oklch(0.708 0 0); transition: color 300ms; } .ds-card:hover .ds-icon { color: oklch(0.985 0 0); } .ds-card-title { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 16px; line-height: 24px; font-weight: 500; } .ds-card-desc { margin: 0 0 12px; font-size: 14px; line-height: 20px; color: oklch(0.708 0 0); } .ds-tag { align-self: flex-start; padding: 2px 8px; border-radius: 18px; background: oklch(0.269 0 0); font-size: 11px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }"
     },
     {
       "name": "Hero badge",
@@ -241,12 +241,12 @@
   ],
   "narrative": {
     "northStar": "The night shift terminal",
-    "overview": "The site reads like a developer's screen after hours: near-black, set entirely in a monospace face, quiet, and a little wry. The studio's whole pitch is that you talk to the people who write the code, so the interface looks like where that code gets written. Section labels are code comments, the hero carries a shell-script joke, and a field of slow, faint stars drifts behind everything, nudged toward the cursor.\n\nDensity is calm and editorial rather than dashboard-tight: one column of sections, generous vertical gaps, short measure for prose, and cards that sit on the stars as translucent glass instead of opaque panels. Color is almost absent. The only hue on the page is a single blue-to-cyan light sweep that crosses the wordmark once on load; project screenshots carry the rest of the color.\n\nDark is the canonical theme and the default. A light theme exists via the toggle but is secondary and not yet tuned; design and review against dark first.",
+    "overview": "The site reads like a developer's screen after hours: near-black, set entirely in a monospace face, quiet, and a little wry. The studio's whole pitch is that you talk to the people who write the code, so the interface looks like where that code gets written. The hero carries a shell-script joke, and a field of slow, faint stars drifts behind everything, nudged toward the cursor.\n\nDensity is calm and editorial rather than dashboard-tight: one column of sections, generous vertical gaps, short measure for prose, and cards that sit on the stars as translucent glass instead of opaque panels. Color is almost absent. The only hue on the page is a single blue-to-cyan light sweep that crosses the wordmark once on load; project screenshots carry the rest of the color.\n\nDark is the canonical theme and the default. A light theme exists via the toggle but is secondary and not yet tuned; design and review against dark first.",
     "keyCharacteristics": [
       "Monospace everywhere: JetBrains Mono for display, headings, body and labels.",
       "Strict grayscale UI on a near-black canvas; color only from the logo shine and real screenshots.",
       "Translucent glass cards (30% slate, backdrop blur, hairline ring) floating over a star field.",
-      "Developer-flavoured microcopy as ornament: // label, numbered 01 steps, tabular stats.",
+      "Developer-flavoured microcopy: numbered 01 steps, tabular stats. Headlines stand on their own, with no label above them.",
       "Motion that settles once: staggered blur-in entrance, a single shine sweep, scroll reveals that move but never fade. All gated by prefers-reduced-motion."
     ],
     "rules": [
@@ -266,8 +266,8 @@
         "section": "typography"
       },
       {
-        "name": "The Comment Label Rule",
-        "body": "Every section opens with a lowercase-in-copy, uppercase-rendered // label above its headline. It's the system's signature; don't drop it or swap it for an eyebrow pill.",
+        "name": "The Bare Headline Rule",
+        "body": "A section opens with its headline and nothing above it: no // label, no eyebrow, no kicker. Don't bring them back in any form.",
         "section": "typography"
       },
       {
@@ -279,7 +279,7 @@
     "dos": [
       "Do design and review in dark mode first; it is the default and the reference.",
       "Do set every new piece of text in JetBrains Mono and build hierarchy from size, weight (400–700), tracking and lightness.",
-      "Do open every section with the SectionHeader (// label + headline), left-aligned.",
+      "Do open every section with the SectionHeader headline, left-aligned, with no label above it.",
       "Do put content surfaces on glass: slate at 30%, backdrop blur, 1px hairline, 24px corners, through shadcn `Card`.",
       "Do gate every animation behind prefers-reduced-motion: no-preference and make content fully visible without JS (CSS reveals move content 32px, they never fade it, so text never fails contrast mid-animation).",
       "Do keep prose to a max width of 42rem and supporting text in fog."
@@ -287,7 +287,7 @@
     "donts": [
       "Don't add hue to UI chrome: no colored buttons, links, borders, icon tints or section backgrounds (The Monochrome Rule).",
       "Don't reuse the blue-cyan shine anywhere but the hero wordmark, or let it loop (The One Spark Rule).",
-      "Don't introduce a second typeface, including Inter, which is installed but intentionally unused.",
+      "Don't introduce a second typeface.",
       "Don't make surfaces opaque over the star field, or stack heavy drop shadows; depth is translucency.",
       "Don't center-align section headers or the hero.",
       "Don't treat the current light theme as a reference; its glass cards turn flat grey and need their own pass before light mode is designed against."

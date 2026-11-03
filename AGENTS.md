@@ -34,7 +34,7 @@ This is an Astro.js project with React, TypeScript, Tailwind CSS v4, and shadcn/
 
 ## Component Usage Guidelines
 - Before creating a new component, always check if shadcn or animate-ui already provides one that serves the purpose — avoid custom components when an existing one suffices
-- When composing new components using shadcn or animate-ui primitives, place them under `src/components/custom/` (e.g., `animated-code-display.tsx`)
+- When composing new components using shadcn or animate-ui primitives, place them under `src/components/custom/` (e.g., `faq-accordion.tsx`)
 - Prefer animated components from animate-ui over static alternatives (e.g., `ThemeTogglerButton` over a plain `ThemeToggle`)
 
 ## Internationalization (i18n)

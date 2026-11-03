@@ -59,6 +59,13 @@ function GravityStarsBackground({
     typeof window !== "undefined" && "ontouchstart" in window
   )
   const dprRef = React.useRef(1)
+  const reducedMotion = React.useMemo(
+    () =>
+      typeof window !== "undefined"
+        ? window.matchMedia("(prefers-reduced-motion: reduce)")
+        : ({ matches: true } as MediaQueryList),
+    []
+  )
   const canvasSizeRef = React.useRef({ width: 800, height: 600 })
 
   const readColor = React.useCallback(() => {
@@ -277,11 +284,16 @@ function GravityStarsBackground({
     (ctx: CanvasRenderingContext2D) => {
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
       const color = readColor()
+      const el = containerRef.current
+      const glowVar = el
+        ? parseFloat(getComputedStyle(el).getPropertyValue("--stars-glow"))
+        : NaN
+      const glow = Number.isNaN(glowVar) ? 1 : glowVar
       const currentDpr = dprRef.current
       for (const p of starsRef.current) {
         ctx.save()
         ctx.shadowColor = color
-        ctx.shadowBlur = glowIntensity * (p.glowMultiplier || 1) * 2
+        ctx.shadowBlur = glowIntensity * (p.glowMultiplier || 1) * 2 * glow
         ctx.globalAlpha = p.opacity
         ctx.fillStyle = color
         ctx.beginPath()
@@ -305,11 +317,12 @@ function GravityStarsBackground({
       if (!canvas) return
       const ctx = canvas.getContext("2d")
       if (!ctx) return
-      updateStars()
+      // Reduced motion: the stars stay put and ignore the cursor
+      if (!reducedMotion.matches) updateStars()
       drawStars(ctx)
       animRef.current = requestAnimationFrame(tick)
     },
-    [updateStars, drawStars]
+    [updateStars, drawStars, reducedMotion]
   )
 
   React.useEffect(() => {
@@ -329,12 +342,13 @@ function GravityStarsBackground({
       const rect = canvas.getBoundingClientRect()
       mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
     }
-    if (!isTouchDevice.current) {
+    const isTouch = isTouchDevice.current
+    if (!isTouch) {
       window.addEventListener("mousemove", onGlobalMove)
     }
     return () => {
       window.removeEventListener("resize", onResize)
-      if (!isTouchDevice.current) {
+      if (!isTouch) {
         window.removeEventListener("mousemove", onGlobalMove)
       }
       if (ro && container) ro.disconnect()

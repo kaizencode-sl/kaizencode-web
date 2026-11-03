@@ -17,15 +17,21 @@ import { cn } from "@/lib/utils"
 const getIcon = (
   effective: ThemeSelection,
   resolved: Resolved,
-  modes: ThemeSelection[]
+  modes: ThemeSelection[],
+  animate: boolean
 ) => {
   const theme = modes.includes("system") ? effective : resolved
+  // Keyed so the incoming icon remounts and spins in on every switch, but
+  // only once the user has toggled: the first render (page load) stays still
+  const enter = animate
+    ? "animate-in fade-in spin-in-90 zoom-in-50 duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:animate-none"
+    : undefined
   return theme === "system" ? (
-    <Monitor />
+    <Monitor key="system" className={enter} />
   ) : theme === "dark" ? (
-    <Sun />
+    <Sun key="dark" className={enter} />
   ) : (
-    <Moon />
+    <Moon key="light" className={enter} />
   )
 }
 
@@ -56,6 +62,7 @@ function ThemeTogglerButton({
   ...props
 }: ThemeTogglerButtonProps) {
   const { theme, resolvedTheme, setTheme } = useTheme()
+  const [toggled, setToggled] = React.useState(false)
 
   return (
     <ThemeTogglerPrimitive
@@ -71,11 +78,16 @@ function ThemeTogglerButton({
           className={cn(buttonVariants({ variant, size, className }))}
           onClick={(e) => {
             onClick?.(e)
-            toggleTheme(getNextTheme(effective, modes))
+            setToggled(true)
+            const rect = e.currentTarget.getBoundingClientRect()
+            toggleTheme(getNextTheme(effective, modes), {
+              x: rect.left + rect.width / 2,
+              y: rect.top + rect.height / 2,
+            })
           }}
           {...props}
         >
-          {getIcon(effective, resolved, modes)}
+          {getIcon(effective, resolved, modes, toggled)}
         </button>
       )}
     </ThemeTogglerPrimitive>

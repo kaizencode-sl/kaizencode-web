@@ -6,13 +6,15 @@ import { flushSync } from "react-dom"
 type ThemeSelection = "light" | "dark" | "system"
 type Resolved = "light" | "dark"
 type Direction = "btt" | "ttb" | "ltr" | "rtl"
+// Viewport point the new theme grows from, as a circle (e.g. the button's center)
+type Origin = { x: number; y: number }
 
 type ChildrenRender =
   | React.ReactNode
   | ((state: {
       resolved: Resolved
       effective: ThemeSelection
-      toggleTheme: (theme: ThemeSelection) => void
+      toggleTheme: (theme: ThemeSelection, origin?: Origin) => void
     }) => React.ReactNode)
 
 function getSystemEffective(): Resolved {
@@ -55,39 +57,28 @@ function ThemeToggler({
   children,
   ...props
 }: ThemeTogglerProps) {
-  const [preview, setPreview] = React.useState<null | {
-    effective: ThemeSelection
-    resolved: Resolved
-  }>(null)
+  const fromProps = () => ({
+    effective: theme,
+    resolved:
+      resolvedTheme ?? ((theme === "system" ? "light" : theme) as Resolved),
+  })
   const [current, setCurrent] = React.useState<{
     effective: ThemeSelection
     resolved: Resolved
-  }>({
-    effective: theme,
-    resolved: resolvedTheme ?? (theme === "system" ? "light" : theme) as Resolved,
-  })
+  }>(fromProps)
 
-  React.useEffect(() => {
-    setCurrent({
-      effective: theme,
-      resolved: resolvedTheme ?? (theme === "system" ? "light" : theme) as Resolved,
-    })
-  }, [theme, resolvedTheme])
-
-  React.useEffect(() => {
-    if (
-      preview &&
-      theme === preview.effective &&
-      resolvedTheme === preview.resolved
-    ) {
-      setPreview(null)
-    }
-  }, [theme, resolvedTheme, preview])
+  // Follow the theme props when they change, during render rather than in an
+  // effect (https://react.dev/learn/you-might-not-need-an-effect)
+  const [prevProps, setPrevProps] = React.useState({ theme, resolvedTheme })
+  if (prevProps.theme !== theme || prevProps.resolvedTheme !== resolvedTheme) {
+    setPrevProps({ theme, resolvedTheme })
+    setCurrent(fromProps())
+  }
 
   const [fromClip, toClip] = getClipKeyframes(direction)
 
   const toggleTheme = React.useCallback(
-    async (theme: ThemeSelection) => {
+    async (theme: ThemeSelection, origin?: Origin) => {
       const resolved = theme === "system" ? getSystemEffective() : theme
 
       setCurrent({ effective: theme, resolved })
@@ -100,7 +91,7 @@ function ThemeToggler({
 
       if (!document.startViewTransition) {
         flushSync(() => {
-          setPreview({ effective: theme, resolved })
+          setCurrent({ effective: theme, resolved })
         })
         setTheme(theme)
         return
@@ -108,20 +99,39 @@ function ThemeToggler({
 
       await document.startViewTransition(() => {
         flushSync(() => {
-          setPreview({ effective: theme, resolved })
+          setCurrent({ effective: theme, resolved })
           document.documentElement.classList.toggle("dark", resolved === "dark")
         })
       }).ready
 
-      document.documentElement
-        .animate(
-          { clipPath: [fromClip, toClip] },
-          {
-            duration: 700,
-            easing: "ease-in-out",
-            pseudoElement: "::view-transition-new(root)",
-          }
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches
+      let keyframes: Keyframe[] | PropertyIndexedKeyframes
+      if (reduce) {
+        keyframes = { opacity: [0, 1] }
+      } else if (origin) {
+        // Radius to the farthest viewport corner, so the circle covers everything
+        const r = Math.hypot(
+          Math.max(origin.x, window.innerWidth - origin.x),
+          Math.max(origin.y, window.innerHeight - origin.y)
         )
+        keyframes = {
+          clipPath: [
+            `circle(0px at ${origin.x}px ${origin.y}px)`,
+            `circle(${r}px at ${origin.x}px ${origin.y}px)`,
+          ],
+        }
+      } else {
+        keyframes = { clipPath: [fromClip, toClip] }
+      }
+
+      document.documentElement
+        .animate(keyframes, {
+          duration: reduce ? 200 : 900,
+          easing: reduce ? "ease" : "cubic-bezier(0.16, 1, 0.3, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        })
         .finished.finally(() => {
           setTheme(theme)
         })
@@ -149,4 +159,5 @@ export {
   type ThemeSelection,
   type Resolved,
   type Direction,
+  type Origin,
 }

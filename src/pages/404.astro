@@ -14,13 +14,11 @@ const lang = getLangFromUrl(url)
 const messages: Record<Lang, { title: string; description: string }> = {
   en: {
     title: "404 — Page not found",
-    description:
-      "The page you're looking for doesn't exist or has been moved.",
+    description: "The page you're looking for doesn't exist or has been moved.",
   },
   es: {
     title: "404 — Página no encontrada",
-    description:
-      "La página que buscas no existe o ha sido movida.",
+    description: "La página que buscas no existe o ha sido movida.",
   },
 }
 
@@ -29,33 +27,32 @@ const { title, description } = messages[lang] ?? messages[defaultLang]
 
 <Layout lang={lang} title={title} description={description}>
   <Header client:load lang={lang} />
-  <div class="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-6xl flex-col px-6">
+  <div
+    class="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-6xl flex-col px-6"
+  >
     <main
       id="main-content"
       class="flex flex-1 flex-col items-start justify-center gap-6 py-16"
     >
-      <span
-        class="hero-in font-mono text-xs tracking-widest text-muted-foreground uppercase"
-        style="--i: 0"
-      >
-        // error 404
-      </span>
       <h1
-        class="hero-in text-5xl leading-tight font-bold tracking-tighter text-balance sm:text-7xl"
-        style="--i: 1"
+        class="hero-in text-[min(3rem,12vw)] leading-tight font-bold tracking-tighter text-balance sm:text-[min(4.5rem,11vw)]"
+        style="--i: 0"
       >
         {title.replace("404 — ", "")}
       </h1>
       <p
         class="hero-in max-w-2xl text-base text-muted-foreground sm:text-lg"
-        style="--i: 2"
+        style="--i: 1"
       >
         {description}
       </p>
-      <div class="hero-in mt-2" style="--i: 3">
+      <div class="hero-in mt-2" style="--i: 2">
         <a
           href={localizePath(lang)}
-          class={buttonVariants({ size: "lg", className: "h-11 px-6" })}
+          class={buttonVariants({
+            size: "lg",
+            className: "h-auto min-h-11 px-6 py-2 whitespace-normal shrink",
+          })}
         >
           <ArrowLeft className="size-4" />
           {lang === "en" ? "Go home" : "Volver al inicio"}

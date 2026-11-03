@@ -143,7 +143,7 @@ const faqSchema = {
     <section class="flex flex-col items-start">
       <a
         href={homeHref}
-        class="hero-in mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        class="hero-in mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground pointer-coarse:mb-3 pointer-coarse:min-h-11"
         style="--i: 0"
       >
         <ArrowLeft className="size-3.5" />
@@ -152,13 +152,13 @@ const faqSchema = {
       <div class="hero-in mb-6" style="--i: 1">
         <Badge
           variant="outline"
-          className="px-3 font-mono text-xs tracking-widest"
+          className="h-auto max-w-full px-3 font-mono text-xs tracking-widest whitespace-normal"
         >
           {badge}
         </Badge>
       </div>
       <h1
-        class="hero-in max-w-3xl text-4xl leading-tight font-bold tracking-tighter text-balance sm:text-6xl"
+        class="hero-in max-w-3xl text-[min(2.25rem,10vw)] leading-tight font-bold tracking-tighter text-balance sm:text-[min(3.75rem,9.5vw)]"
         style="--i: 2"
       >
         {heading}
@@ -179,9 +179,9 @@ const faqSchema = {
                   alt={t(member.nameKey)}
                   width="56"
                   height="56"
-                  class="size-14 rounded-full bg-muted object-cover"
+                  class="size-14 shrink-0 rounded-full bg-muted object-cover"
                 />
-                <div class="flex flex-col gap-1">
+                <div class="flex min-w-0 flex-col gap-1">
                   <span class="inline-flex items-center gap-1.5 font-semibold">
                     <MapPin className="size-4" />
                     {t("city.contact.title").replace("{city}", cityName)}
@@ -195,8 +195,8 @@ const faqSchema = {
                     href={member.linkedin}
                     target="_blank"
                     rel="noopener"
-                    aria-label={`${t("about.linkedin.label")} ${t(member.nameKey)}`}
-                    class="inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                    aria-label={`${t("about.linkedin.label")} ${t(member.nameKey)} ${t("a11y.newTab")}`}
+                    class="inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline pointer-coarse:min-h-11"
                   >
                     {t("about.linkedin")}
                     <ExternalLink className="size-3" />
@@ -210,7 +210,10 @@ const faqSchema = {
       <div class="hero-in mt-8 flex flex-wrap gap-3" style="--i: 5">
         <a
           href={mailto}
-          class={buttonVariants({ size: "lg", className: "h-11 px-6" })}
+          class={buttonVariants({
+            size: "lg",
+            className: "h-auto min-h-11 px-6 py-2 whitespace-normal shrink",
+          })}
         >
           {t("webdesign.cta.button")}
           <ArrowRight className="size-4" />
@@ -220,7 +223,8 @@ const faqSchema = {
           class={buttonVariants({
             variant: "outline",
             size: "lg",
-            className: "h-11 border-foreground/20 px-6",
+            className:
+              "h-auto min-h-11 border-foreground/20 px-6 py-2 whitespace-normal shrink",
           })}
         >
           {t("hero.cta.secondary")}
@@ -229,19 +233,14 @@ const faqSchema = {
     </section>
 
     <section class="reveal flex flex-col gap-8">
-      <SectionHeader
-        label={t("webdesign.includes.label")}
-        title={t("webdesign.includes.title")}
-      />
+      <SectionHeader title={t("webdesign.includes.title")} />
       <div class="grid gap-6 sm:grid-cols-2">
         {
           includes.map(({ title, text, icon: Icon }) => (
             <Card size="sm">
               <CardHeader>
-                <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-300 group-hover/card:bg-primary/20">
-                  <Icon className="size-5" />
-                </div>
-                <CardTitle>
+                <CardTitle className="flex items-center gap-2.5">
+                  <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
                   <h3>{title}</h3>
                 </CardTitle>
                 <CardDescription>{text}</CardDescription>
@@ -253,10 +252,7 @@ const faqSchema = {
     </section>
 
     <section class="reveal flex flex-col gap-8">
-      <SectionHeader
-        label={t("section.process.label")}
-        title={t("webdesign.process.title")}
-      />
+      <SectionHeader title={t("webdesign.process.title")} />
       <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {
           steps.map((step, i) => (
@@ -276,10 +272,7 @@ const faqSchema = {
     </section>
 
     <section id="projects" class="reveal flex flex-col gap-8">
-      <SectionHeader
-        label={t("section.projects.label")}
-        title={t("webdesign.projects.title")}
-      />
+      <SectionHeader title={t("webdesign.projects.title")} />
       <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {
           projects.map(({ slug, name, text, href, caseHref }) => (
@@ -302,11 +295,11 @@ const faqSchema = {
                   </CardTitle>
                   <CardDescription>{text}</CardDescription>
                 </CardHeader>
-                <div class="mt-auto flex flex-wrap gap-x-5 gap-y-2 px-5">
+                <div class="mt-auto flex flex-wrap gap-x-5 gap-y-2 px-5 pointer-coarse:gap-y-0">
                   {caseHref && (
                     <a
                       href={caseHref}
-                      class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
+                      class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
                     >
                       {t("project.case")}
                       <ArrowRight className="size-3.5" />
@@ -316,10 +309,11 @@ const faqSchema = {
                     href={href}
                     target="_blank"
                     rel="noopener"
-                    class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
+                    class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
                   >
                     {t("project.visit")}
                     <ExternalLink className="size-3.5" />
+                    <span class="sr-only">{t("a11y.newTab")}</span>
                   </a>
                 </div>
               </Card>
@@ -330,18 +324,12 @@ const faqSchema = {
     </section>
 
     <section class="reveal flex flex-col gap-8">
-      <SectionHeader
-        label={t("section.faq.label")}
-        title={t("webdesign.faq.title")}
-      />
+      <SectionHeader title={t("webdesign.faq.title")} />
       <FaqAccordion client:visible faqs={faqs} />
     </section>
 
     <section class="reveal flex flex-col gap-8">
-      <SectionHeader
-        label={t("city.others.label")}
-        title={t("city.others.title")}
-      />
+      <SectionHeader title={t("city.others.title")} />
       <ul class="flex flex-wrap gap-3">
         {
           otherLocations.map(({ label, href }) => (
@@ -351,7 +339,8 @@ const faqSchema = {
                 class={buttonVariants({
                   variant: "outline",
                   size: "lg",
-                  className: "h-11 border-foreground/20 px-5",
+                  className:
+                    "h-auto min-h-11 shrink border-foreground/20 px-5 py-2 whitespace-normal",
                 })}
               >
                 <MapPin className="size-3.5" />
@@ -381,4 +370,4 @@ const faqSchema = {
     </footer>
   </main>
 </div>
-<BackToTop client:load />
+<BackToTop client:idle label={t("a11y.top")} />

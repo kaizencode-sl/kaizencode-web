@@ -6,8 +6,10 @@ import { cn } from '@/lib/utils';
 
 type AnyProps = Record<string, unknown>;
 
+// Astro adds its own tags (astro-dev-toolbar…) to HTMLElementTagNameMap,
+// which motion's prop map doesn't know; leave them out
 type DOMMotionProps<T extends HTMLElement = HTMLElement> = Omit<
-  HTMLMotionProps<keyof HTMLElementTagNameMap>,
+  HTMLMotionProps<Exclude<keyof HTMLElementTagNameMap, `astro-${string}`>>,
   'ref'
 > & { ref?: React.Ref<T> };
 
@@ -58,33 +60,33 @@ function mergeProps<T extends HTMLElement>(
   return merged;
 }
 
+// One motion wrapper per element type, created once at module level so the
+// rendered component type is stable across renders
+const motionCache = new Map<React.ElementType, React.ElementType>();
+function toMotion(type: React.ElementType): React.ElementType {
+  if (typeof type === 'object' && type !== null && isMotionComponent(type))
+    return type;
+  let created = motionCache.get(type);
+  if (!created) {
+    created = motion.create(type as Parameters<typeof motion.create>[0]);
+    motionCache.set(type, created);
+  }
+  return created;
+}
+
 function Slot<T extends HTMLElement = HTMLElement>({
   children,
   ref,
   ...props
 }: SlotProps<T>) {
-  const isAlreadyMotion =
-    typeof children.type === 'object' &&
-    children.type !== null &&
-    isMotionComponent(children.type);
-
-  const Base = React.useMemo(
-    () =>
-      isAlreadyMotion
-        ? (children.type as React.ElementType)
-        : motion.create(children.type as React.ElementType),
-    [isAlreadyMotion, children.type],
-  );
-
   if (!React.isValidElement(children)) return null;
 
   const { ref: childRef, ...childProps } = children.props as AnyProps;
 
-  const mergedProps = mergeProps(childProps, props);
-
-  return (
-    <Base {...mergedProps} ref={mergeRefs(childRef as React.Ref<T>, ref)} />
-  );
+  return React.createElement(toMotion(children.type as React.ElementType), {
+    ...mergeProps(childProps, props),
+    ref: mergeRefs(childRef as React.Ref<T>, ref),
+  });
 }
 
 export {
