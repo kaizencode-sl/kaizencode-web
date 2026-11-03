@@ -148,7 +148,7 @@ export const ui = {
       "Taberna Jovi is a British-style pub in the old town of Cuenca, open since 1977 and known for its classic cocktails. We designed and built its new website, and we've been working with them for years.",
     "case.jovi.sector": "Hospitality · cocktail bar",
     "case.jovi.services": "Design, development, maintenance",
-    "case.jovi.since": "Several years",
+    "case.jovi.since": "3+ years",
     "case.jovi.challenge.1":
       "Their previous website was badly outdated and hadn't been maintained in a long time. It didn't reflect what Taberna Jovi is, the menu was hard to find and out of date, and the site did little to help new customers find them on Google.",
     "case.jovi.challenge.2":
@@ -432,7 +432,7 @@ export const ui = {
       "Taberna Jovi es un pub de estilo británico en el casco antiguo de Cuenca, abierto desde 1977 y conocido por su coctelería clásica. Diseñamos y desarrollamos su nueva web, y llevamos años trabajando con ellos.",
     "case.jovi.sector": "Hostelería · coctelería",
     "case.jovi.services": "Diseño, desarrollo, mantenimiento",
-    "case.jovi.since": "Varios años",
+    "case.jovi.since": "+3 años",
     "case.jovi.challenge.1":
       "Su web anterior estaba muy desactualizada y llevaba tiempo sin ningún mantenimiento. No reflejaba lo que es Taberna Jovi, la carta era difícil de encontrar y no estaba al día, y la web apenas ayudaba a que nuevos clientes los encontraran en Google.",
     "case.jovi.challenge.2":
