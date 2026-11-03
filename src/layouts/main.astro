@@ -4,6 +4,7 @@ import { ClientRouter } from "astro:transitions"
 import { ui, languages, defaultLang, type Lang } from "@/i18n/ui"
 import { getAlternatePath } from "@/i18n/utils"
 import { team } from "@/lib/team"
+import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars"
 
 export interface Props {
   lang?: Lang
@@ -124,12 +125,24 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
     <ClientRouter />
     <script is:inline>
       ;(function () {
+        const html = document.documentElement
         const setTheme = () => {
           const theme = localStorage.getItem("theme") || "dark"
-          document.documentElement.className = theme + " scroll-smooth"
+          html.className = theme + " scroll-smooth"
+        }
+        // Hide GSAP entrance targets until GSAP takes over (see
+        // src/lib/animations.ts); give up after 3s so content never stays hidden
+        const holdForAnimations = () => {
+          if (matchMedia("(prefers-reduced-motion: reduce)").matches) return
+          html.dataset.anim = ""
+          setTimeout(() => delete html.dataset.anim, 3000)
         }
         setTheme()
-        document.addEventListener("astro:after-swap", setTheme)
+        holdForAnimations()
+        document.addEventListener("astro:after-swap", () => {
+          setTheme()
+          holdForAnimations()
+        })
       })()
     </script>
 
@@ -168,6 +181,29 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
     >
       Skip to content
     </a>
+    <!-- GSAP fades this wrapper, not the React element, so hydration still
+         matches the server HTML -->
+    <div class="stars-in fixed inset-0">
+      <GravityStarsBackground
+        client:idle
+        starsCount={60}
+        starsOpacity={0.6}
+        glowIntensity={12}
+        movementSpeed={0.2}
+        mouseGravity="attract"
+        className="will-change-transform"
+      />
+    </div>
     <slot />
+    <script>
+      import { initAnimations } from "@/lib/animations"
+
+      let cleanup: (() => void) | undefined
+      document.addEventListener("astro:page-load", () => {
+        cleanup = initAnimations()
+        delete document.documentElement.dataset.anim
+      })
+      document.addEventListener("astro:before-swap", () => cleanup?.())
+    </script>
   </body>
 </html>

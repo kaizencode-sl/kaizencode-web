@@ -54,9 +54,9 @@ src/
 pnpm dlx shadcn@latest add button
 ```
 
-## Developing with opencode
+## Developing with Claude Code
 
-This project is configured for [opencode](https://opencode.ai) — an AI-powered coding assistant for the terminal.
+This project is configured for [Claude Code](https://claude.com/claude-code).
 
 ### MCP servers
 
@@ -64,16 +64,16 @@ The following MCPs are available when working on this project:
 
 | MCP | Scope | Purpose |
 |-----|-------|---------|
-| **shadcn** | Project-level (`opencode.json`) | Add and discover shadcn/ui components |
-| **Astro docs** | Project-level (`opencode.json`) | Query Astro framework documentation |
-| **context7** | Global (`~/.config/opencode/opencode.json`) | Query docs for any library (React, Tailwind, motion, etc.) |
+| **shadcn** | Project-level (`.mcp.json`) | Add and discover shadcn/ui components |
+| **Astro docs** | Project-level (`.mcp.json`) | Query Astro framework documentation |
+| **context7** | Plugin / user-level | Query docs for any library (React, Tailwind, motion, etc.) |
 
-### Using MCPs with opencode
+### Using MCPs with Claude Code
 
-Ask opencode to use these tools directly in conversation:
+Ask Claude to use these tools directly in conversation:
 
 - *"Add a card component with shadcn"* — uses the shadcn MCP to discover and add components
 - *"How do I use Astro's image optimization?"* — fetches docs from the Astro docs MCP
 - *"Show me React 19 use() hook examples"* — queries context7 for library docs and examples
 
-The `AGENTS.md` file contains project-specific instructions for opencode, including conventions for component placement, text casing, and development workflow.
+The `AGENTS.md` file contains project-specific instructions, including conventions for component placement, text casing, and development workflow.

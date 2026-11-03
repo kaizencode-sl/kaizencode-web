@@ -2,10 +2,14 @@
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { buttonVariants } from "@/components/ui/button"
+import ContactSection from "@/components/custom/contact-section.astro"
+import { FaqAccordion } from "@/components/custom/faq-accordion"
 import { Header } from "@/components/custom/header"
 import { SectionHeader } from "@/components/custom/section-header"
 import { BackToTop } from "@/components/custom/back-to-top"
@@ -15,10 +19,10 @@ import {
   Search,
   Zap,
   Wrench,
-  Mail,
   ExternalLink,
   MapPin,
   ArrowRight,
+  ArrowLeft,
 } from "lucide-react"
 import { localizePath, useTranslations } from "@/i18n/utils"
 import { type Lang } from "@/i18n/ui"
@@ -82,17 +86,20 @@ const steps = [
 
 const projects = [
   {
+    slug: "agora",
     name: t("project.agora"),
     text: t("webdesign.projects.agora"),
     href: "https://www.agoraacademy.es/",
   },
   {
+    slug: "jovi",
     name: t("project.jovi"),
     text: t("webdesign.projects.jovi"),
     href: "https://www.tabernajovi.es/",
     caseHref: localizePath(lang, caseStudyPath("jovi")),
   },
   {
+    slug: "albinana",
     name: t("project.albinana"),
     text: t("webdesign.projects.albinana"),
     href: "https://www.farmaciaalbinana.es/",
@@ -129,79 +136,109 @@ const faqSchema = {
 <Header client:load lang={lang} />
 
 <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
-  <main id="main-content" class="flex flex-1 flex-col gap-20 py-16">
+  <main
+    id="main-content"
+    class="flex flex-1 flex-col gap-24 py-16 [&_section[id]]:scroll-mt-24"
+  >
     <section class="flex flex-col items-start">
       <a
         href={homeHref}
-        class="mb-6 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        class="hero-in mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        style="--i: 0"
       >
-        ← {t("webdesign.back")}
+        <ArrowLeft className="size-3.5" />
+        {t("webdesign.back")}
       </a>
-      <Badge
-        variant="outline"
-        className="mb-6 px-3 font-mono text-xs tracking-widest"
-      >
-        {badge}
-      </Badge>
+      <div class="hero-in mb-6" style="--i: 1">
+        <Badge
+          variant="outline"
+          className="px-3 font-mono text-xs tracking-widest"
+        >
+          {badge}
+        </Badge>
+      </div>
       <h1
-        class="max-w-3xl text-4xl leading-tight font-bold tracking-tighter sm:text-6xl"
+        class="hero-in max-w-3xl text-4xl leading-tight font-bold tracking-tighter text-balance sm:text-6xl"
+        style="--i: 2"
       >
         {heading}
       </h1>
-      <p class="mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
+      <p
+        class="hero-in mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
+        style="--i: 3"
+      >
         {intro}
       </p>
       {
         member && cityName && (
-          <div class="mt-8 flex items-center gap-4 rounded-xl border border-border/50 bg-secondary/30 p-4">
-            <img
-              src={member.avatar}
-              alt={t(member.nameKey)}
-              width="56"
-              height="56"
-              class="size-14 rounded-full bg-muted object-cover"
-            />
-            <div class="flex flex-col gap-1">
-              <span class="inline-flex items-center gap-1 font-semibold">
-                <MapPin className="size-4" />
-                {t("city.contact.title").replace("{city}", cityName)}
-              </span>
-              <span class="max-w-xl text-sm text-muted-foreground">
-                {t("city.contact.text")
-                  .replace("{name}", t(member.nameKey))
-                  .replace("{city}", cityName)}
-              </span>
-              <a
-                href={member.linkedin}
-                target="_blank"
-                rel="noopener"
-                aria-label={`${t("about.linkedin.label")} ${t(member.nameKey)}`}
-                class="inline-flex items-center gap-1 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-              >
-                {t("about.linkedin")}
-                <ExternalLink className="size-3" />
-              </a>
-            </div>
+          <div class="hero-in mt-8" style="--i: 4">
+            <Card size="sm">
+              <CardContent className="flex items-center gap-4">
+                <img
+                  src={member.avatar}
+                  alt={t(member.nameKey)}
+                  width="56"
+                  height="56"
+                  class="size-14 rounded-full bg-muted object-cover"
+                />
+                <div class="flex flex-col gap-1">
+                  <span class="inline-flex items-center gap-1.5 font-semibold">
+                    <MapPin className="size-4" />
+                    {t("city.contact.title").replace("{city}", cityName)}
+                  </span>
+                  <span class="max-w-xl text-sm text-muted-foreground">
+                    {t("city.contact.text")
+                      .replace("{name}", t(member.nameKey))
+                      .replace("{city}", cityName)}
+                  </span>
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={`${t("about.linkedin.label")} ${t(member.nameKey)}`}
+                    class="inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                  >
+                    {t("about.linkedin")}
+                    <ExternalLink className="size-3" />
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         )
       }
-      <a
-        href={mailto}
-        class="mt-8 inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-      >
-        <Mail className="size-4" />
-        {t("webdesign.cta.button")}
-      </a>
+      <div class="hero-in mt-8 flex flex-wrap gap-3" style="--i: 5">
+        <a
+          href={mailto}
+          class={buttonVariants({ size: "lg", className: "h-11 px-6" })}
+        >
+          {t("webdesign.cta.button")}
+          <ArrowRight className="size-4" />
+        </a>
+        <a
+          href="#projects"
+          class={buttonVariants({
+            variant: "outline",
+            size: "lg",
+            className: "h-11 border-foreground/20 px-6",
+          })}
+        >
+          {t("hero.cta.secondary")}
+        </a>
+      </div>
     </section>
 
-    <section class="flex flex-col gap-8">
-      <SectionHeader label="// 01" title={t("webdesign.includes.title")} />
+    <section class="reveal flex flex-col gap-8">
+      <SectionHeader
+        label={t("webdesign.includes.label")}
+        title={t("webdesign.includes.title")}
+      />
       <div class="grid gap-6 sm:grid-cols-2">
         {
           includes.map(({ title, text, icon: Icon }) => (
-            <Card size="sm" className="bg-secondary/30">
+            <Card size="sm">
               <CardHeader>
-                <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-300 group-hover/card:bg-primary/20">
                   <Icon className="size-5" />
                 </div>
                 <CardTitle>
@@ -215,84 +252,107 @@ const faqSchema = {
       </div>
     </section>
 
-    <section class="flex flex-col gap-8">
-      <SectionHeader label="// 02" title={t("webdesign.process.title")} />
-      <ol class="grid gap-4 sm:grid-cols-4">
+    <section class="reveal flex flex-col gap-8">
+      <SectionHeader
+        label={t("section.process.label")}
+        title={t("webdesign.process.title")}
+      />
+      <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {
           steps.map((step, i) => (
-            <li class="flex flex-col gap-2 rounded-xl border border-border/50 bg-secondary/30 p-4">
-              <span class="font-mono text-xs text-muted-foreground">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span class="text-sm">{step}</span>
+            <li class="flex">
+              <Card size="sm" className="w-full">
+                <CardContent className="flex flex-col gap-2">
+                  <span class="font-mono text-xs text-muted-foreground">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span class="text-sm">{step}</span>
+                </CardContent>
+              </Card>
             </li>
           ))
         }
       </ol>
     </section>
 
-    <section class="flex flex-col gap-8">
-      <SectionHeader label="// 03" title={t("webdesign.projects.title")} />
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <section id="projects" class="reveal flex flex-col gap-8">
+      <SectionHeader
+        label={t("section.projects.label")}
+        title={t("webdesign.projects.title")}
+      />
+      <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {
-          projects.map(({ name, text, href, caseHref }) => (
-            <Card size="sm" className="bg-secondary/30">
-              <CardHeader>
-                <CardTitle>
-                  <h3>
+          projects.map(({ slug, name, text, href, caseHref }) => (
+            <li class="flex">
+              <Card className="w-full pt-0">
+                <img
+                  src={`/projects/${slug}.webp`}
+                  srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
+                  sizes="(min-width: 1152px) 360px, (min-width: 640px) 50vw, 100vw"
+                  alt={`${t("project.image.alt")} ${name}`}
+                  width="1280"
+                  height="800"
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[16/10] w-full border-b border-border/50 bg-muted object-cover object-top"
+                />
+                <CardHeader>
+                  <CardTitle>
+                    <h3>{name}</h3>
+                  </CardTitle>
+                  <CardDescription>{text}</CardDescription>
+                </CardHeader>
+                <div class="mt-auto flex flex-wrap gap-x-5 gap-y-2 px-5">
+                  {caseHref && (
                     <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener"
-                      class="inline-flex items-center gap-1.5 transition-colors hover:text-muted-foreground"
+                      href={caseHref}
+                      class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
                     >
-                      {name}
-                      <ExternalLink className="size-3.5" />
+                      {t("project.case")}
+                      <ArrowRight className="size-3.5" />
                     </a>
-                  </h3>
-                </CardTitle>
-                <CardDescription>{text}</CardDescription>
-                {caseHref && (
+                  )}
                   <a
-                    href={caseHref}
-                    class="mt-2 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
+                    href={href}
+                    target="_blank"
+                    rel="noopener"
+                    class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
                   >
-                    {t("project.case")}
-                    <ArrowRight className="size-3.5" />
+                    {t("project.visit")}
+                    <ExternalLink className="size-3.5" />
                   </a>
-                )}
-              </CardHeader>
-            </Card>
+                </div>
+              </Card>
+            </li>
           ))
         }
-      </div>
+      </ul>
     </section>
 
-    <section class="flex flex-col gap-8">
-      <SectionHeader label="// 04" title={t("webdesign.faq.title")} />
-      <div class="flex flex-col gap-6">
-        {
-          faqs.map(({ q, a }) => (
-            <div class="flex flex-col gap-2 border-b border-border/50 pb-6">
-              <h3 class="font-semibold">{q}</h3>
-              <p class="text-muted-foreground">{a}</p>
-            </div>
-          ))
-        }
-      </div>
+    <section class="reveal flex flex-col gap-8">
+      <SectionHeader
+        label={t("section.faq.label")}
+        title={t("webdesign.faq.title")}
+      />
+      <FaqAccordion client:visible faqs={faqs} />
     </section>
 
-    <section class="flex flex-col gap-4">
-      <h2 class="text-xl font-semibold tracking-tight">
-        {t("city.others.title")}
-      </h2>
+    <section class="reveal flex flex-col gap-8">
+      <SectionHeader
+        label={t("city.others.label")}
+        title={t("city.others.title")}
+      />
       <ul class="flex flex-wrap gap-3">
         {
           otherLocations.map(({ label, href }) => (
             <li>
               <a
                 href={href}
-                class="inline-flex items-center gap-1.5 rounded-lg border border-border/50 bg-secondary/30 px-4 py-2 text-sm transition-colors hover:bg-secondary/60"
+                class={buttonVariants({
+                  variant: "outline",
+                  size: "lg",
+                  className: "h-11 border-foreground/20 px-5",
+                })}
               >
                 <MapPin className="size-3.5" />
                 {label}
@@ -303,21 +363,13 @@ const faqSchema = {
       </ul>
     </section>
 
-    <section
-      class="flex flex-col items-start gap-4 rounded-2xl border border-border/50 bg-secondary/30 p-8"
-    >
-      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-        {t("webdesign.cta.title")}
-      </h2>
-      <p class="max-w-2xl text-muted-foreground">{t("webdesign.cta.text")}</p>
-      <a
-        href={mailto}
-        class="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-      >
-        <Mail className="size-4" />
-        {t("webdesign.cta.button")}
-      </a>
-    </section>
+    <ContactSection
+      lang={lang}
+      title="webdesign.cta.title"
+      text="webdesign.cta.text"
+      button="webdesign.cta.button"
+      subject="webdesign.cta.subject"
+    />
 
     <footer
       class="flex flex-col items-start justify-between gap-4 border-t border-border/50 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-2"

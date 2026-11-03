@@ -68,7 +68,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="relative transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-foreground after:transition-all after:duration-300 hover:text-foreground hover:after:w-full"
+                  className="transition-colors hover:text-foreground"
                 >
                   {link.label}
                 </a>
@@ -87,7 +87,11 @@ export function Header({ lang = defaultLang }: HeaderProps) {
 
               <Sheet>
                 <SheetTrigger asChild className="md:hidden">
-                  <Button variant="ghost" size="icon-sm" aria-label={t("nav.menu")}>
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    aria-label={t("nav.menu")}
+                  >
                     <Menu className="size-5" />
                   </Button>
                 </SheetTrigger>

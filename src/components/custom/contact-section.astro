@@ -1,0 +1,63 @@
+---
+import { buttonVariants } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Mail } from "lucide-react"
+import { useTranslations } from "@/i18n/utils"
+import { type Lang, type UiKey } from "@/i18n/ui"
+
+// The closing contact panel shared by every page, composed from shadcn's Card
+// and button; each page brings its own pitch and email subject
+export interface Props {
+  lang: Lang
+  title: UiKey
+  text: UiKey
+  button: UiKey
+  subject: UiKey
+}
+
+const { lang, title, text, button, subject } = Astro.props
+const t = useTranslations(lang)
+const email = "contact@kaizencode.es"
+const mailto = `mailto:${email}?subject=${encodeURIComponent(t(subject))}`
+---
+
+<section id="contacto" class="reveal scroll-mt-24">
+  <Card className="gap-8 py-6 hover:translate-y-0 hover:shadow-sm sm:py-10">
+    <CardHeader className="gap-3 px-6 sm:px-10">
+      <span
+        class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
+      >
+        {t("section.contact.label")}
+      </span>
+      <CardTitle className="text-2xl font-semibold tracking-tight sm:text-3xl">
+        <h2>{t(title)}</h2>
+      </CardTitle>
+      <CardDescription className="max-w-2xl text-base">
+        {t(text)}
+      </CardDescription>
+    </CardHeader>
+    <CardContent className="flex flex-col items-start gap-3 px-6 sm:px-10">
+      <a
+        href={mailto}
+        class={buttonVariants({ size: "lg", className: "h-11 px-6" })}
+      >
+        <Mail className="size-4" />
+        {t(button)}
+      </a>
+      <p class="text-sm text-muted-foreground">
+        {t("contact.description")}{" "}
+        <a
+          href={mailto}
+          class="font-medium break-all text-foreground underline-offset-4 hover:underline"
+          >{email}</a
+        >
+      </p>
+    </CardContent>
+  </Card>
+</section>

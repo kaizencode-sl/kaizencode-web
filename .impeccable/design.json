@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-03T00:00:00Z",
+  "title": "Design System: Kaizencode",
+  "extensions": {
+    "colorMeta": {
+      "night": {
+        "role": "neutral",
+        "displayName": "Night",
+        "canonical": "oklch(0.145 0 0)",
+        "tonalRamp": [
+          "oklch(0.145 0 0)",
+          "oklch(0.205 0 0)",
+          "oklch(0.269 0 0)",
+          "oklch(0.371 0 0)",
+          "oklch(0.439 0 0)",
+          "oklch(0.556 0 0)",
+          "oklch(0.708 0 0)",
+          "oklch(0.922 0 0)"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "oklch(0.205 0 0)"
+      },
+      "slate": {
+        "role": "neutral",
+        "displayName": "Slate",
+        "canonical": "oklch(0.269 0 0)"
+      },
+      "ash": {
+        "role": "neutral",
+        "displayName": "Ash",
+        "canonical": "oklch(0.556 0 0)"
+      },
+      "fog": {
+        "role": "neutral",
+        "displayName": "Fog",
+        "canonical": "oklch(0.708 0 0)"
+      },
+      "chalk": {
+        "role": "primary",
+        "displayName": "Chalk",
+        "canonical": "oklch(0.922 0 0)",
+        "tonalRamp": [
+          "oklch(0.371 0 0)",
+          "oklch(0.439 0 0)",
+          "oklch(0.556 0 0)",
+          "oklch(0.708 0 0)",
+          "oklch(0.87 0 0)",
+          "oklch(0.922 0 0)",
+          "oklch(0.97 0 0)",
+          "oklch(0.985 0 0)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(0.985 0 0)"
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(1 0 0 / 10%)"
+      },
+      "shine-blue": {
+        "role": "tertiary",
+        "displayName": "Shine blue",
+        "canonical": "oklch(0.78 0.15 255)",
+        "tonalRamp": [
+          "oklch(0.25 0.06 255)",
+          "oklch(0.35 0.09 255)",
+          "oklch(0.45 0.12 255)",
+          "oklch(0.55 0.14 255)",
+          "oklch(0.65 0.15 255)",
+          "oklch(0.78 0.15 255)",
+          "oklch(0.87 0.09 255)",
+          "oklch(0.95 0.03 255)"
+        ]
+      },
+      "shine-cyan": {
+        "role": "tertiary",
+        "displayName": "Shine cyan",
+        "canonical": "oklch(0.85 0.12 195)",
+        "tonalRamp": [
+          "oklch(0.25 0.05 195)",
+          "oklch(0.35 0.07 195)",
+          "oklch(0.45 0.09 195)",
+          "oklch(0.55 0.11 195)",
+          "oklch(0.7 0.12 195)",
+          "oklch(0.85 0.12 195)",
+          "oklch(0.91 0.07 195)",
+          "oklch(0.96 0.03 195)"
+        ]
+      },
+      "error-red": {
+        "role": "semantic",
+        "displayName": "Error red",
+        "canonical": "oklch(0.704 0.191 22.216)"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The hero wordmark only."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Hero descriptive heading and the about highlight."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section h2s."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles and FAQ questions."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Hero support text and section intros, in fog."
+      },
+      "body-sm": {
+        "displayName": "Body small",
+        "purpose": "Card descriptions, steps, in-card links."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "// section labels, project type, hero badge."
+      },
+      "tag": {
+        "displayName": "Tag",
+        "purpose": "Tech and service tags in cards."
+      }
+    },
+    "shadows": [
+      {
+        "name": "rest",
+        "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "purpose": "Default card."
+      },
+      {
+        "name": "lift",
+        "value": "0 10px 15px -3px oklch(0.922 0 0 / 5%), 0 4px 6px -4px oklch(0.922 0 0 / 5%)",
+        "purpose": "Every card on hover, with translateY(-4px); the contact panel opts out."
+      }
+    ],
+    "motion": [
+      {
+        "name": "hero-in",
+        "value": "0.9s cubic-bezier(0.2, 0.7, 0.2, 1), stagger 90ms via --i",
+        "purpose": "Hero entrance: fade, 18px rise and 6px blur, element by element."
+      },
+      {
+        "name": "hero-shine",
+        "value": "1.6s ease-in-out, 0.9s delay, once",
+        "purpose": "Single blue-cyan sweep across the wordmark."
+      },
+      {
+        "name": "reveal",
+        "value": "view() timeline, entry 0 to 240px, translate 32px",
+        "purpose": "Section scroll reveal; moves only, never fades."
+      },
+      {
+        "name": "hover",
+        "value": "300ms",
+        "purpose": "Card lift, nav link color, icon tile tint."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Chalk fill, the single filled call to action.",
+      "html": "<a class=\"ds-btn ds-btn-primary\" href=\"#\">Pide presupuesto <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 24px; border-radius: 18px; border: 1px solid transparent; font: 500 14px/20px 'JetBrains Mono Variable', monospace; text-decoration: none; transition: all 150ms; outline: none; } .ds-btn-primary { background: oklch(0.922 0 0); color: oklch(0.205 0 0); } .ds-btn-primary:hover { background: oklch(0.922 0 0 / 80%); } .ds-btn:focus-visible { border-color: oklch(0.556 0 0); box-shadow: 0 0 0 3px oklch(0.556 0 0 / 30%); } .ds-btn:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Outline button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action next to the primary.",
+      "html": "<a class=\"ds-btn-o\" href=\"#\">Ver proyectos</a>",
+      "css": ".ds-btn-o { display: inline-flex; align-items: center; height: 44px; padding: 0 24px; border-radius: 18px; border: 1px solid oklch(0.985 0 0 / 20%); background: transparent; color: oklch(0.985 0 0); font: 500 14px/20px 'JetBrains Mono Variable', monospace; text-decoration: none; transition: all 150ms; outline: none; } .ds-btn-o:hover { background: oklch(1 0 0 / 4.5%); } .ds-btn-o:focus-visible { border-color: oklch(0.556 0 0); box-shadow: 0 0 0 3px oklch(0.556 0 0 / 30%); }"
+    },
+    {
+      "name": "Section header",
+      "kind": "custom",
+      "description": "The // comment label above every section headline.",
+      "html": "<div class=\"ds-sh\"><span class=\"ds-sh-label\">// lo que hacemos</span><h2 class=\"ds-sh-title\">En qué te ayudamos</h2></div>",
+      "css": ".ds-sh { display: flex; flex-direction: column; gap: 8px; } .ds-sh-label { font: 400 12px/16px 'JetBrains Mono Variable', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: oklch(0.708 0 0); } .ds-sh-title { margin: 0; font: 600 30px/36px 'JetBrains Mono Variable', monospace; letter-spacing: -0.025em; color: oklch(0.985 0 0); }"
+    },
+    {
+      "name": "Glass service card",
+      "kind": "card",
+      "refersTo": "card-sm",
+      "description": "Translucent card over the star field, with icon tile, title, description and tag; lifts on hover.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-icon\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m16 18 6-6-6-6\"/><path d=\"m8 6-6 6 6 6\"/></svg></div><h3 class=\"ds-card-title\">Software a medida e IA</h3><p class=\"ds-card-desc\">Automatizamos tareas repetitivas con flujos de n8n y agentes a medida.</p><span class=\"ds-tag\">Agentes IA | n8n | APIs</span></div>",
+      "css": ".ds-card { display: flex; flex-direction: column; gap: 6px; max-width: 320px; padding: 16px; border-radius: 24px; background: oklch(0.269 0 0 / 30%); backdrop-filter: blur(4px); box-shadow: 0 0 0 1px oklch(0.985 0 0 / 10%), 0 1px 3px 0 rgb(0 0 0 / 0.1); color: oklch(0.985 0 0); font-family: 'JetBrains Mono Variable', monospace; transition: all 300ms; } .ds-card:hover { transform: translateY(-4px); box-shadow: 0 0 0 1px oklch(0.985 0 0 / 10%), 0 10px 15px -3px oklch(0.922 0 0 / 5%); } .ds-icon { display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; margin-bottom: 4px; border-radius: 14px; background: oklch(0.922 0 0 / 10%); color: oklch(0.922 0 0); transition: background 300ms; } .ds-card:hover .ds-icon { background: oklch(0.922 0 0 / 20%); } .ds-card-title { margin: 0; font-size: 16px; line-height: 24px; font-weight: 500; } .ds-card-desc { margin: 0 0 12px; font-size: 14px; line-height: 20px; color: oklch(0.708 0 0); } .ds-tag { align-self: flex-start; padding: 2px 8px; border-radius: 18px; background: oklch(0.269 0 0); font-size: 10px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }"
+    },
+    {
+      "name": "Hero badge",
+      "kind": "chip",
+      "refersTo": "badge-outline",
+      "description": "Outline mono badge above the hero wordmark.",
+      "html": "<span class=\"ds-badge\">Estudio de software y e-commerce</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; height: 20px; padding: 2px 12px; border: 1px solid oklch(1 0 0 / 10%); border-radius: 18px; color: oklch(0.985 0 0); font: 500 12px/16px 'JetBrains Mono Variable', monospace; letter-spacing: 0.1em; }"
+    },
+    {
+      "name": "Header navigation",
+      "kind": "nav",
+      "description": "Sticky blurred header; fog links turn paper on hover, no underline.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-brand\" href=\"#\">kaizencode</a><div class=\"ds-nav-links\"><a href=\"#\">Nuestros proyectos</a><a href=\"#\">Servicios</a><a href=\"#\">Sobre nosotros</a><a href=\"#\">Contacto</a></div></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: oklch(0.145 0 0 / 60%); backdrop-filter: blur(24px); border-bottom: 1px solid oklch(1 0 0 / 5%); font-family: 'JetBrains Mono Variable', monospace; } .ds-nav-brand { color: oklch(0.985 0 0); font-size: 18px; font-weight: 700; letter-spacing: -0.05em; text-decoration: none; } .ds-nav-links { display: flex; gap: 24px; font-size: 14px; } .ds-nav-links a { color: oklch(0.708 0 0); text-decoration: none; transition: color 150ms; } .ds-nav-links a:hover, .ds-nav-links a:focus-visible { color: oklch(0.985 0 0); outline: none; }"
+    },
+    {
+      "name": "Process step",
+      "kind": "custom",
+      "refersTo": "card-sm",
+      "description": "Numbered small Card in the how-we-work grid.",
+      "html": "<div class=\"ds-step\"><span class=\"ds-step-n\">01</span><span class=\"ds-step-t\">Nos cuentas tu negocio y lo que quieres conseguir.</span></div>",
+      "css": ".ds-step { display: flex; flex-direction: column; gap: 8px; max-width: 240px; padding: 16px; border-radius: 24px; box-shadow: 0 0 0 1px oklch(0.985 0 0 / 10%); background: oklch(0.269 0 0 / 30%); backdrop-filter: blur(4px); font-family: 'JetBrains Mono Variable', monospace; color: oklch(0.985 0 0); } .ds-step-n { font-size: 12px; color: oklch(0.708 0 0); } .ds-step-t { font-size: 14px; line-height: 20px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The night shift terminal",
+    "overview": "The site reads like a developer's screen after hours: near-black, set entirely in a monospace face, quiet, and a little wry. The studio's whole pitch is that you talk to the people who write the code, so the interface looks like where that code gets written. Section labels are code comments, the hero carries a shell-script joke, and a field of slow, faint stars drifts behind everything, nudged toward the cursor.\n\nDensity is calm and editorial rather than dashboard-tight: one column of sections, generous vertical gaps, short measure for prose, and cards that sit on the stars as translucent glass instead of opaque panels. Color is almost absent. The only hue on the page is a single blue-to-cyan light sweep that crosses the wordmark once on load; project screenshots carry the rest of the color.\n\nDark is the canonical theme and the default. A light theme exists via the toggle but is secondary and not yet tuned; design and review against dark first.",
+    "keyCharacteristics": [
+      "Monospace everywhere: JetBrains Mono for display, headings, body and labels.",
+      "Strict grayscale UI on a near-black canvas; color only from the logo shine and real screenshots.",
+      "Translucent glass cards (30% slate, backdrop blur, hairline ring) floating over a star field.",
+      "Developer-flavoured microcopy as ornament: // label, numbered 01 steps, tabular stats.",
+      "Motion that settles once: staggered blur-in entrance, a single shine sweep, scroll reveals that move but never fade. All gated by prefers-reduced-motion."
+    ],
+    "rules": [
+      {
+        "name": "The Monochrome Rule",
+        "body": "UI chrome is grayscale. Hierarchy comes from lightness (paper → fog → slate), never from hue. If a new element seems to need a color, it needs contrast or size instead.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Spark Rule",
+        "body": "The blue-cyan shine appears once per page, on the wordmark, and plays once. A second spark makes it decoration instead of a signature.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Everything is JetBrains Mono. Hierarchy is size, weight, tracking and lightness; never introduce a second display or body face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Comment Label Rule",
+        "body": "Every section opens with a lowercase-in-copy, uppercase-rendered // label above its headline. It's the system's signature; don't drop it or swap it for an eyebrow pill.",
+        "section": "typography"
+      },
+      {
+        "name": "The Glass Over Stars Rule",
+        "body": "Surfaces that sit on the page are translucent (slate 30% + blur + hairline), never opaque fills. The stars must stay faintly visible through every card.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do design and review in dark mode first; it is the default and the reference.",
+      "Do set every new piece of text in JetBrains Mono and build hierarchy from size, weight (400–700), tracking and lightness.",
+      "Do open every section with the SectionHeader (// label + headline), left-aligned.",
+      "Do put content surfaces on glass: slate at 30%, backdrop blur, 1px hairline, 24px corners, through shadcn `Card`.",
+      "Do gate every animation behind prefers-reduced-motion: no-preference and make content fully visible without JS (CSS reveals move content 32px, they never fade it, so text never fails contrast mid-animation).",
+      "Do keep prose to a max width of 42rem and supporting text in fog."
+    ],
+    "donts": [
+      "Don't add hue to UI chrome: no colored buttons, links, borders, icon tints or section backgrounds (The Monochrome Rule).",
+      "Don't reuse the blue-cyan shine anywhere but the hero wordmark, or let it loop (The One Spark Rule).",
+      "Don't introduce a second typeface, including Inter, which is installed but intentionally unused.",
+      "Don't make surfaces opaque over the star field, or stack heavy drop shadows; depth is translucency.",
+      "Don't center-align section headers or the hero.",
+      "Don't treat the current light theme as a reference; its glass cards turn flat grey and need their own pass before light mode is designed against."
+    ]
+  }
+}

@@ -2,6 +2,9 @@
 import Layout from "@/layouts/main.astro"
 import { defaultLang, type Lang } from "@/i18n/ui"
 import { getLangFromUrl, localizePath } from "@/i18n/utils"
+import { Header } from "@/components/custom/header"
+import { buttonVariants } from "@/components/ui/button"
+import { ArrowLeft } from "lucide-react"
 
 // Determine the language from the URL path
 const url = Astro.url
@@ -25,26 +28,39 @@ const { title, description } = messages[lang] ?? messages[defaultLang]
 ---
 
 <Layout lang={lang} title={title} description={description}>
-  <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col items-center justify-center px-6">
+  <Header client:load lang={lang} />
+  <div class="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-6xl flex-col px-6">
     <main
       id="main-content"
-      class="flex flex-col items-center gap-6 text-center"
+      class="flex flex-1 flex-col items-start justify-center gap-6 py-16"
     >
-      <span class="font-mono text-[10rem] font-bold leading-none tracking-tighter text-primary/10">
-        404
+      <span
+        class="hero-in font-mono text-xs tracking-widest text-muted-foreground uppercase"
+        style="--i: 0"
+      >
+        // error 404
       </span>
-      <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">
-        {title}
+      <h1
+        class="hero-in text-5xl leading-tight font-bold tracking-tighter text-balance sm:text-7xl"
+        style="--i: 1"
+      >
+        {title.replace("404 — ", "")}
       </h1>
-      <p class="max-w-md text-muted-foreground">
+      <p
+        class="hero-in max-w-2xl text-base text-muted-foreground sm:text-lg"
+        style="--i: 2"
+      >
         {description}
       </p>
-      <a
-        href={localizePath(lang)}
-        class="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-      >
-        {lang === "en" ? "Go home" : "Volver al inicio"}
-      </a>
+      <div class="hero-in mt-2" style="--i: 3">
+        <a
+          href={localizePath(lang)}
+          class={buttonVariants({ size: "lg", className: "h-11 px-6" })}
+        >
+          <ArrowLeft className="size-4" />
+          {lang === "en" ? "Go home" : "Volver al inicio"}
+        </a>
+      </div>
     </main>
   </div>
 </Layout>

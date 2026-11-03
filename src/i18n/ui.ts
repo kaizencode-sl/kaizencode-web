@@ -94,6 +94,7 @@ export const ui = {
     "city.contact.text":
       "{name} is one of the three Kaizencode partners. You can meet in person in {city} or by video call, whichever you prefer.",
     "city.others.title": "We also work in",
+    "city.others.label": "// locations",
     "city.others.spain": "Anywhere in Spain (remote)",
     "hero.support":
       "We build every project from scratch, with no templates, and you talk directly to the people who build it. No salespeople, no middlemen.",
@@ -131,6 +132,9 @@ export const ui = {
     "case.challenge.title": "The challenge",
     "case.work.title": "What we do",
     "case.value.title": "What it brings",
+    "case.challenge.label": "// context",
+    "case.work.label": "// our work",
+    "case.value.label": "// results",
     "case.visit": "Visit the online store",
     "case.cta.title": "Got a platform that needs a team to look after it?",
     "case.cta.text":
@@ -227,12 +231,7 @@ export const ui = {
     "section.contact.title": "Shall we talk about your project?",
     "section.contact.text":
       "Tell us what you have in mind, even if it is not fully clear yet. We will get back to you with ideas and a first proposal, no strings attached.",
-    "contact.email.label": "Email us",
     "contact.email.subject": "Quote request",
-    "contact.whatsapp.label": "WhatsApp",
-    "contact.whatsapp.value": "Message us on WhatsApp",
-    "contact.call.label": "Book a 15-minute call",
-    "contact.call.value": "Pick a day and time",
     "service.web.link": "Web design for businesses",
     "webdesign.title":
       "Web design for businesses and shops in Spain | Kaizencode",
@@ -244,6 +243,7 @@ export const ui = {
     "webdesign.intro":
       "We are three partner developers based in Cuenca, Valencia and Málaga. We code every website from scratch, with no templates, so your business shows up on Google, explains clearly what it offers and turns visits into calls, bookings or sales. And you talk directly to the people who build it.",
     "webdesign.includes.title": "What your website includes",
+    "webdesign.includes.label": "// your website",
     "webdesign.includes.1.title": "Custom design",
     "webdesign.includes.1.text":
       "No templates: we design your website around your brand and your customers, starting with mobile.",
@@ -376,6 +376,7 @@ export const ui = {
     "city.contact.text":
       "{name} es uno de los tres socios de Kaizencode. Podéis reuniros en persona en {city} o por videollamada, como prefieras.",
     "city.others.title": "También trabajamos en",
+    "city.others.label": "// dónde estamos",
     "city.others.spain": "Toda España (en remoto)",
     "hero.support":
       "Programamos cada proyecto desde cero, sin plantillas, y hablas directamente con quien lo construye. Sin comerciales ni intermediarios.",
@@ -413,6 +414,9 @@ export const ui = {
     "case.challenge.title": "El reto",
     "case.work.title": "Qué hacemos",
     "case.value.title": "Qué aporta",
+    "case.challenge.label": "// contexto",
+    "case.work.label": "// nuestro trabajo",
+    "case.value.label": "// resultados",
     "case.visit": "Ver la tienda online",
     "case.cta.title":
       "¿Tienes una plataforma que necesita un equipo que la cuide?",
@@ -511,12 +515,7 @@ export const ui = {
     "section.contact.title": "¿Hablamos de tu proyecto?",
     "section.contact.text":
       "Cuéntanos qué tienes en mente, aunque todavía no lo tengas del todo claro. Te respondemos con ideas y una primera propuesta, sin compromiso.",
-    "contact.email.label": "Escríbenos",
     "contact.email.subject": "Solicitud de presupuesto",
-    "contact.whatsapp.label": "WhatsApp",
-    "contact.whatsapp.value": "Escríbenos por WhatsApp",
-    "contact.call.label": "Reserva una llamada de 15 minutos",
-    "contact.call.value": "Elige día y hora",
     "service.web.link": "Diseño web para negocios",
     "webdesign.title": "Diseño web para negocios y comercios | Kaizencode",
     "webdesign.description":
@@ -527,6 +526,7 @@ export const ui = {
     "webdesign.intro":
       "Somos tres socios desarrolladores en Cuenca, Valencia y Málaga. Programamos cada web desde cero, sin plantillas, para que tu negocio aparezca en Google, explique bien lo que ofrece y convierta visitas en llamadas, reservas o ventas. Y hablas directamente con quien la construye.",
     "webdesign.includes.title": "Qué incluye tu web",
+    "webdesign.includes.label": "// tu web",
     "webdesign.includes.1.title": "Diseño a medida",
     "webdesign.includes.1.text":
       "Nada de plantillas: diseñamos tu web para tu marca y tus clientes, empezando por el móvil.",
