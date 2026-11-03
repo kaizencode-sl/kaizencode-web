@@ -68,6 +68,7 @@ const projects = [
     description: t("project.centauro.description"),
     tags: t("project.centauro.tags").split(","),
     href: "https://shop.centauro.es/",
+    caseHref: localizePath(lang, "/proyectos/centauro/"),
   },
   {
     slug: "jovi",
@@ -308,54 +309,67 @@ const cardClass = "bg-secondary/30 backdrop-blur-sm"
         class="-mx-6 flex cursor-grab snap-x snap-mandatory scroll-px-6 [scrollbar-width:none] gap-6 overflow-x-auto px-6 pb-2 data-[at-end=false]:[mask-image:linear-gradient(to_right,#000_75%,transparent)] [&::-webkit-scrollbar]:hidden"
       >
         {
-          projects.map(({ slug, name, type, description, tags, href }) => (
-            <li class="flex w-[85%] shrink-0 snap-start sm:w-[calc((100%-1.5rem)/1.6)] lg:w-[calc((100%-3rem)/2.6)]">
-              <Card className={cn(cardClass, "w-full pt-0")}>
-                <img
-                  src={`/projects/${slug}.webp`}
-                  srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
-                  sizes="(min-width: 1152px) 420px, (min-width: 640px) 60vw, 85vw"
-                  alt={`${t("project.image.alt")} ${name}`}
-                  width="1280"
-                  height="800"
-                  loading="lazy"
-                  decoding="async"
-                  draggable="false"
-                  class="aspect-[16/10] w-full border-b border-border/50 bg-muted object-cover object-top"
-                />
-                <CardHeader>
-                  <span class="font-mono text-xs tracking-widest text-muted-foreground uppercase">
-                    {type}
-                  </span>
-                  <CardTitle>
-                    <h3>{name}</h3>
-                  </CardTitle>
-                  <CardDescription>{description}</CardDescription>
-                </CardHeader>
-                <CardContent className="mt-auto flex flex-col items-start gap-4">
-                  <div class="flex flex-wrap gap-2">
-                    {tags.map((tag) => (
-                      <Badge
-                        variant="secondary"
-                        className="font-mono text-[10px] tracking-wider uppercase"
+          projects.map(
+            ({ slug, name, type, description, tags, href, caseHref }) => (
+              <li class="flex w-[85%] shrink-0 snap-start sm:w-[calc((100%-1.5rem)/1.6)] lg:w-[calc((100%-3rem)/2.6)]">
+                <Card className={cn(cardClass, "w-full pt-0")}>
+                  <img
+                    src={`/projects/${slug}.webp`}
+                    srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
+                    sizes="(min-width: 1152px) 420px, (min-width: 640px) 60vw, 85vw"
+                    alt={`${t("project.image.alt")} ${name}`}
+                    width="1280"
+                    height="800"
+                    loading="lazy"
+                    decoding="async"
+                    draggable="false"
+                    class="aspect-[16/10] w-full border-b border-border/50 bg-muted object-cover object-top"
+                  />
+                  <CardHeader>
+                    <span class="font-mono text-xs tracking-widest text-muted-foreground uppercase">
+                      {type}
+                    </span>
+                    <CardTitle>
+                      <h3>{name}</h3>
+                    </CardTitle>
+                    <CardDescription>{description}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="mt-auto flex flex-col items-start gap-4">
+                    <div class="flex flex-wrap gap-2">
+                      {tags.map((tag) => (
+                        <Badge
+                          variant="secondary"
+                          className="font-mono text-[10px] tracking-wider uppercase"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                    <div class="flex flex-wrap gap-x-5 gap-y-2">
+                      {caseHref && (
+                        <a
+                          href={caseHref}
+                          class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
+                        >
+                          {t("project.case")}
+                          <ArrowRight className="size-3.5" />
+                        </a>
+                      )}
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener"
+                        class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
                       >
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener"
-                    class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
-                  >
-                    {t("project.visit")}
-                    <ExternalLink className="size-3.5" />
-                  </a>
-                </CardContent>
-              </Card>
-            </li>
-          ))
+                        {t("project.visit")}
+                        <ExternalLink className="size-3.5" />
+                      </a>
+                    </div>
+                  </CardContent>
+                </Card>
+              </li>
+            )
+          )
         }
       </ul>
       <div class="flex justify-center" data-carousel-dots>

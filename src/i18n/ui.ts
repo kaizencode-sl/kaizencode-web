@@ -9,7 +9,8 @@ export const defaultLang: Lang = "es"
 
 export const ui = {
   en: {
-    "site.title": "Web design, online stores & custom software in Spain | Kaizencode",
+    "site.title":
+      "Web design, online stores & custom software in Spain | Kaizencode",
     "site.description":
       "We design and build websites, online stores and custom software for businesses all over Spain. Our own code, no templates, and direct contact with the developers.",
     "nav.projects": "Our projects",
@@ -100,8 +101,8 @@ export const ui = {
     "hero.cta.secondary": "See our work",
     "project.centauro.type": "B2B online store",
     "project.centauro.description":
-      "B2B catalogue and online store for a distributor of veterinary products, where vet clinics place their orders.",
-    "project.centauro.tags": "E-commerce,B2B,catalogue",
+      "Support, new features and a new design for the B2B online store of a veterinary products distributor, built on SAP Commerce.",
+    "project.centauro.tags": "E-commerce,B2B,SAP Commerce",
     "project.agora.type": "Academy",
     "project.agora.description":
       "Website for a maths academy in Cuenca. Today it ranks first on Google when searching for maths academies in the city.",
@@ -119,10 +120,58 @@ export const ui = {
     "projects.prev": "Previous projects",
     "projects.next": "Next projects",
     "projects.goto": "Go to project",
+    "project.case": "Read the case study",
+    "case.badge": "Case study",
+    "case.back": "Back to projects",
+    "case.facts.client": "Client",
+    "case.facts.sector": "Sector",
+    "case.facts.platform": "Platform",
+    "case.facts.services": "Services",
+    "case.facts.since": "Working together",
+    "case.challenge.title": "The challenge",
+    "case.work.title": "What we do",
+    "case.value.title": "What it brings",
+    "case.visit": "Visit the online store",
+    "case.cta.title": "Got a platform that needs a team to look after it?",
+    "case.cta.text":
+      "We take over projects that are already running, even on complex technology like SAP Commerce. Tell us what you have and we'll tell you how we can help.",
+    "case.cta.button": "Write to us",
+    "case.cta.subject": "Support and development for my platform",
+    "case.centauro.title":
+      "SAP Commerce support for B2B e-commerce: Centauro case study",
+    "case.centauro.description":
+      "SAP Commerce (Hybris) support and maintenance for Centauro's B2B e-commerce: new features, a new design and more than 2 years keeping it running.",
+    "case.centauro.heading":
+      "Support and evolution of a B2B e-commerce on SAP Commerce",
+    "case.centauro.intro":
+      "Centauro distributes veterinary products, accessories and equipment to vet clinics, and its online store is where those clinics place their orders. For more than two years we've been keeping it running, making it grow and renewing its design.",
+    "case.centauro.sector": "Veterinary distribution (B2B)",
+    "case.centauro.services": "Support, new features, redesign",
+    "case.centauro.since": "More than 2 years",
+    "case.centauro.challenge.1":
+      "We didn't start from scratch. The store was already up and running on SAP Commerce (formerly SAP Hybris), an enterprise commerce platform that is as powerful as it is complex.",
+    "case.centauro.challenge.2":
+      "It's also a critical part of the business: if the store stops, clinics can't order. The challenge was to take over a system we hadn't built, understand it inside out and keep evolving it without ever interrupting daily operations.",
+    "case.centauro.work.support.title": "Support and maintenance",
+    "case.centauro.work.support.text":
+      "We fix incidents, keep the platform stable and up to date, and are the team Centauro calls when something needs attention.",
+    "case.centauro.work.features.title": "New features",
+    "case.centauro.work.features.text":
+      "We build the features the business needs as it grows, working within everything a platform like SAP Commerce involves.",
+    "case.centauro.work.design.title": "New design",
+    "case.centauro.work.design.text":
+      "We're renewing the store's interface so that clinics find what they need and place their orders more easily.",
+    "case.centauro.value.1":
+      "A long-term relationship: more than two years working side by side.",
+    "case.centauro.value.2":
+      "A single team that knows the platform end to end, from the code to the business.",
+    "case.centauro.value.3":
+      "Continuous evolution without stopping the store clinics rely on every day.",
     "section.process.label": "// how we work",
     "section.testimonials.label": "// testimonials",
     "section.testimonials.title": "What our clients say",
-    "about.highlight": "You talk directly to the person who codes your website.",
+    "about.highlight":
+      "You talk directly to the person who codes your website.",
     "about.role.omar": "Software engineer · e-commerce",
     "about.role.misha": "Software engineer · e-commerce",
     "about.role.jose": "Frontend developer · websites & e-commerce",
@@ -149,11 +198,13 @@ export const ui = {
     "contact.call.label": "Book a 15-minute call",
     "contact.call.value": "Pick a day and time",
     "service.web.link": "Web design for businesses",
-    "webdesign.title": "Web design for businesses and shops in Spain | Kaizencode",
+    "webdesign.title":
+      "Web design for businesses and shops in Spain | Kaizencode",
     "webdesign.description":
       "Web design for businesses: fast websites, custom-coded with no templates and built to rank on Google. Direct contact with the developers.",
     "webdesign.badge": "Web design",
-    "webdesign.heading": "Website design for businesses that want more customers",
+    "webdesign.heading":
+      "Website design for businesses that want more customers",
     "webdesign.intro":
       "We are three partner developers based in Cuenca, Valencia and Málaga. We code every website from scratch, with no templates, so your business shows up on Google, explains clearly what it offers and turns visits into calls, bookings or sales. And you talk directly to the people who build it.",
     "webdesign.includes.title": "What your website includes",
@@ -172,10 +223,12 @@ export const ui = {
     "webdesign.process.title": "How we work",
     "webdesign.process.1":
       "You tell us about your business and what you want to achieve, by phone or in person.",
-    "webdesign.process.2": "We send you a clear proposal: scope, timeline and budget.",
+    "webdesign.process.2":
+      "We send you a clear proposal: scope, timeline and budget.",
     "webdesign.process.3":
       "We design and build your website, and you see and review it at every step.",
-    "webdesign.process.4": "We launch it, set it up on Google and stay by your side.",
+    "webdesign.process.4":
+      "We launch it, set it up on Google and stay by your side.",
     "webdesign.projects.title": "Some of our work",
     "webdesign.projects.agora":
       "Maths academy in Cuenca. It ranks first on Google when searching for maths academies in the city.",
@@ -294,8 +347,8 @@ export const ui = {
     "hero.cta.secondary": "Ver proyectos",
     "project.centauro.type": "Tienda online B2B",
     "project.centauro.description":
-      "Catálogo y tienda online B2B para un distribuidor de productos zoosanitarios, donde las clínicas veterinarias hacen sus pedidos.",
-    "project.centauro.tags": "E-commerce,B2B,catálogo",
+      "Soporte, nuevos desarrollos y nuevo diseño para la tienda online B2B de un distribuidor zoosanitario, construida sobre SAP Commerce.",
+    "project.centauro.tags": "E-commerce,B2B,SAP Commerce",
     "project.agora.type": "Academia",
     "project.agora.description":
       "Web para una academia de matemáticas de Cuenca. Hoy aparece la primera en Google al buscar academias de matemáticas en la ciudad.",
@@ -313,6 +366,54 @@ export const ui = {
     "projects.prev": "Proyectos anteriores",
     "projects.next": "Siguientes proyectos",
     "projects.goto": "Ir al proyecto",
+    "project.case": "Ver caso de estudio",
+    "case.badge": "Caso de estudio",
+    "case.back": "Volver a proyectos",
+    "case.facts.client": "Cliente",
+    "case.facts.sector": "Sector",
+    "case.facts.platform": "Plataforma",
+    "case.facts.services": "Servicios",
+    "case.facts.since": "Trabajando juntos",
+    "case.challenge.title": "El reto",
+    "case.work.title": "Qué hacemos",
+    "case.value.title": "Qué aporta",
+    "case.visit": "Ver la tienda online",
+    "case.cta.title":
+      "¿Tienes una plataforma que necesita un equipo que la cuide?",
+    "case.cta.text":
+      "Nos hacemos cargo de proyectos que ya están en marcha, incluso sobre tecnologías complejas como SAP Commerce. Cuéntanos qué tienes y te decimos cómo podemos ayudarte.",
+    "case.cta.button": "Escríbenos",
+    "case.cta.subject": "Soporte y desarrollo para mi plataforma",
+    "case.centauro.title":
+      "Soporte SAP Commerce para e-commerce B2B: caso Centauro",
+    "case.centauro.description":
+      "Soporte y mantenimiento SAP Commerce (Hybris) del e-commerce B2B de Centauro: nuevos desarrollos, nuevo diseño y más de 2 años manteniéndolo en marcha.",
+    "case.centauro.heading":
+      "Soporte y evolución de un e-commerce B2B en SAP Commerce",
+    "case.centauro.intro":
+      "Centauro distribuye productos zoosanitarios, accesorios y equipamiento para clínicas veterinarias, y su tienda online es donde esas clínicas hacen sus pedidos. Desde hace más de dos años nos encargamos de mantenerla, hacerla crecer y renovar su diseño.",
+    "case.centauro.sector": "Distribución veterinaria (B2B)",
+    "case.centauro.services": "Soporte, nuevos desarrollos, rediseño",
+    "case.centauro.since": "Más de 2 años",
+    "case.centauro.challenge.1":
+      "No partimos de cero. La tienda ya estaba en marcha sobre SAP Commerce (antes SAP Hybris), una plataforma de comercio empresarial tan potente como compleja.",
+    "case.centauro.challenge.2":
+      "Además, es una pieza crítica del negocio: si la tienda se para, las clínicas no pueden pedir. El reto era hacernos cargo de un sistema que no habíamos construido, entenderlo a fondo y seguir haciéndolo evolucionar sin interrumpir nunca la operación diaria.",
+    "case.centauro.work.support.title": "Soporte y mantenimiento",
+    "case.centauro.work.support.text":
+      "Resolvemos incidencias, mantenemos la plataforma estable y al día, y somos el equipo al que Centauro llama cuando algo necesita atención.",
+    "case.centauro.work.features.title": "Nuevos desarrollos",
+    "case.centauro.work.features.text":
+      "Construimos las funcionalidades que el negocio necesita a medida que crece, trabajando con todo lo que implica una plataforma como SAP Commerce.",
+    "case.centauro.work.design.title": "Nuevo diseño",
+    "case.centauro.work.design.text":
+      "Estamos renovando la interfaz de la tienda para que las clínicas encuentren lo que buscan y hagan sus pedidos con más facilidad.",
+    "case.centauro.value.1":
+      "Una relación a largo plazo: más de dos años trabajando codo con codo.",
+    "case.centauro.value.2":
+      "Un único equipo que conoce la plataforma de punta a punta, del código al negocio.",
+    "case.centauro.value.3":
+      "Evolución continua sin parar la tienda de la que dependen las clínicas cada día.",
     "section.process.label": "// cómo trabajamos",
     "section.testimonials.label": "// opiniones",
     "section.testimonials.title": "Lo que dicen nuestros clientes",
@@ -347,7 +448,8 @@ export const ui = {
     "webdesign.description":
       "Diseño web para negocios: webs rápidas, programadas a medida y sin plantillas, pensadas para aparecer en Google. Trato directo con los desarrolladores.",
     "webdesign.badge": "Diseño web",
-    "webdesign.heading": "Diseño de páginas web para negocios que quieren más clientes",
+    "webdesign.heading":
+      "Diseño de páginas web para negocios que quieren más clientes",
     "webdesign.intro":
       "Somos tres socios desarrolladores en Cuenca, Valencia y Málaga. Programamos cada web desde cero, sin plantillas, para que tu negocio aparezca en Google, explique bien lo que ofrece y convierta visitas en llamadas, reservas o ventas. Y hablas directamente con quien la construye.",
     "webdesign.includes.title": "Qué incluye tu web",

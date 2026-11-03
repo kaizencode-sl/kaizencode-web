@@ -3,6 +3,9 @@ import { ui, defaultLang, type Lang, type UiKey } from "./ui"
 // Local landings that only exist in Spanish (e.g. /diseno-web-cuenca/)
 const spanishOnlyPath = /^\/diseno-web-[^/]+\/?$/
 
+// Sections whose slug changes in English (Spanish path → English path)
+const englishSlugs: [string, string][] = [["/proyectos/", "/projects/"]]
+
 export function getLangFromUrl(url: URL): Lang {
   const first = url.pathname.split("/").filter(Boolean)[0]
   return first === "en" ? "en" : defaultLang
@@ -14,14 +17,20 @@ export function useTranslations(lang: Lang) {
   }
 }
 
-// Builds a site path for a language: Spanish at the root, English under /en/
+// Builds a site path for a language from its Spanish path: Spanish at the
+// root, English under /en/ with translated slugs
 export function localizePath(lang: Lang, path = "/"): string {
-  return lang === defaultLang ? path : `/${lang}${path}`
+  if (lang === defaultLang) return path
+  const slug = englishSlugs.find(([es]) => path.startsWith(es))
+  return `/${lang}${slug ? slug[1] + path.slice(slug[0].length) : path}`
 }
 
-// Path of the current page without its language prefix
+// Spanish path of the current page, without language prefix or translated slugs
 export function stripLang(pathname: string): string {
-  return pathname.replace(/^\/en(?=\/|$)/, "") || "/"
+  const path = pathname.replace(/^\/en(?=\/|$)/, "") || "/"
+  if (path === pathname) return path
+  const slug = englishSlugs.find(([, en]) => path.startsWith(en))
+  return slug ? slug[0] + path.slice(slug[1].length) : path
 }
 
 // Equivalent of `pathname` in `lang`, or null when that version doesn't exist
