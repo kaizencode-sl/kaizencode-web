@@ -34,6 +34,7 @@ export const team = [
   avatar: string
 }[]
 
-export function cityPath(lang: string, city: City) {
-  return `${lang === "en" ? "" : `/${lang}`}/diseno-web-${city}/`
+// City landings only exist in Spanish, so every language links to them
+export function cityPath(city: City) {
+  return `/diseno-web-${city}/`
 }

@@ -19,7 +19,7 @@ import {
   ExternalLink,
   MapPin,
 } from "lucide-react"
-import { useTranslations } from "@/i18n/utils"
+import { localizePath, useTranslations } from "@/i18n/utils"
 import { type Lang } from "@/i18n/ui"
 import { cities, cityPath, team, type City } from "@/lib/team"
 
@@ -30,8 +30,8 @@ export interface Props {
 
 const { lang, city } = Astro.props
 const t = useTranslations(lang)
-const homeHref = lang === "en" ? "/" : `/${lang}/`
-const genericHref = lang === "en" ? "/diseno-web/" : `/${lang}/diseno-web/`
+const homeHref = localizePath(lang)
+const genericHref = localizePath(lang, "/diseno-web/")
 
 const cityName = city && t(`city.${city}`)
 const member = city && team.find((m) => m.city === city)
@@ -44,7 +44,7 @@ const intro = city ? t(`city.${city}.intro`) : t("webdesign.intro")
 const otherLocations = [
   ...cities
     .filter((c) => c !== city)
-    .map((c) => ({ label: t(`city.${c}`), href: cityPath(lang, c) })),
+    .map((c) => ({ label: t(`city.${c}`), href: cityPath(c) })),
   ...(city ? [{ label: t("city.others.spain"), href: genericHref }] : []),
 ]
 

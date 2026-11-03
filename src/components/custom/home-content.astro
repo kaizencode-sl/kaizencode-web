@@ -30,7 +30,7 @@ import {
   MapPin,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { useTranslations } from "@/i18n/utils"
+import { localizePath, useTranslations } from "@/i18n/utils"
 import { team, cityPath } from "@/lib/team"
 import { type Lang } from "@/i18n/ui"
 
@@ -113,7 +113,7 @@ const services = [
     description: t("service.web.description"),
     icon: Palette,
     badge: t("service.web.badge"),
-    href: lang === "en" ? "/diseno-web/" : `/${lang}/diseno-web/`,
+    href: localizePath(lang, "/diseno-web/"),
   },
 ]
 
@@ -130,7 +130,7 @@ const members = team.map(({ nameKey, roleKey, city, linkedin, avatar }) => ({
   linkedin,
   src: avatar,
   city: t(`city.${city}`),
-  cityHref: cityPath(lang, city),
+  cityHref: cityPath(city),
 }))
 
 const faqs = [

@@ -42,7 +42,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
   const t = (key: keyof (typeof ui)[typeof defaultLang]) =>
     ui[lang]?.[key] ?? ui[defaultLang][key]
 
-  const homeHref = lang === "en" ? base : `${base}${lang}/`
+  const homeHref = lang === defaultLang ? base : `${base}${lang}/`
 
   const navLinks = [
     { label: t("nav.projects"), href: `${homeHref}#projects` },

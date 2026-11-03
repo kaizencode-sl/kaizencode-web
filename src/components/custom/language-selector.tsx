@@ -3,6 +3,7 @@
 import { useCallback } from "react"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { languages, type Lang } from "@/i18n/ui"
+import { getAlternatePath, localizePath } from "@/i18n/utils"
 
 interface LanguageSelectorProps {
   currentLang: Lang
@@ -10,10 +11,10 @@ interface LanguageSelectorProps {
 
 export function LanguageSelector({ currentLang }: LanguageSelectorProps) {
   const navigate = useCallback((value: Lang) => {
-    const segments = window.location.pathname.split("/").filter(Boolean)
-    const rest = segments[0] === "es" ? segments.slice(1) : segments
-    const path = rest.length ? rest.join("/") + "/" : ""
-    window.location.href = value === "en" ? "/" + path : `/${value}/` + path
+    // Spanish-only city landings fall back to the generic web design page
+    window.location.href =
+      getAlternatePath(window.location.pathname, value) ??
+      localizePath(value, "/diseno-web/")
   }, [])
 
   return (

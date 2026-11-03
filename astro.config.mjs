@@ -15,7 +15,7 @@ export default defineConfig({
     react(),
     sitemap({
       i18n: {
-        defaultLocale: "en",
+        defaultLocale: "es",
         locales: {
           en: "en-US",
           es: "es-ES",
@@ -23,9 +23,17 @@ export default defineConfig({
       },
     }),
   ],
+  // Spanish used to live under /es/ — keep those URLs working
+  redirects: {
+    "/es": "/",
+    "/es/diseno-web": "/diseno-web/",
+    "/es/diseno-web-cuenca": "/diseno-web-cuenca/",
+    "/es/diseno-web-malaga": "/diseno-web-malaga/",
+    "/es/diseno-web-valencia": "/diseno-web-valencia/",
+  },
   i18n: {
     locales: ["en", "es"],
-    defaultLocale: "en",
+    defaultLocale: "es",
     routing: {
       prefixDefaultLocale: false,
     },

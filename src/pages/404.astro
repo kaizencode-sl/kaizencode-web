@@ -1,7 +1,7 @@
 ---
 import Layout from "@/layouts/main.astro"
 import { defaultLang, type Lang } from "@/i18n/ui"
-import { getLangFromUrl } from "@/i18n/utils"
+import { getLangFromUrl, localizePath } from "@/i18n/utils"
 
 // Determine the language from the URL path
 const url = Astro.url
@@ -40,7 +40,7 @@ const { title, description } = messages[lang] ?? messages[defaultLang]
         {description}
       </p>
       <a
-        href={lang === "en" ? "/" : `/${lang}/`}
+        href={localizePath(lang)}
         class="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
       >
         {lang === "en" ? "Go home" : "Volver al inicio"}
