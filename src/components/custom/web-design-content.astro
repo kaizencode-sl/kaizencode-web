@@ -1,0 +1,320 @@
+---
+import { Badge } from "@/components/ui/badge"
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Header } from "@/components/custom/header"
+import { SectionHeader } from "@/components/custom/section-header"
+import { BackToTop } from "@/components/custom/back-to-top"
+import { DevelopedByKaizencode } from "@/components/ui/developed-by-kaizencode"
+import {
+  Palette,
+  Search,
+  Zap,
+  Wrench,
+  Mail,
+  ExternalLink,
+  MapPin,
+} from "lucide-react"
+import { useTranslations } from "@/i18n/utils"
+import { type Lang } from "@/i18n/ui"
+import { cities, cityPath, team, type City } from "@/lib/team"
+
+export interface Props {
+  lang: Lang
+  city?: City
+}
+
+const { lang, city } = Astro.props
+const t = useTranslations(lang)
+const homeHref = lang === "en" ? "/" : `/${lang}/`
+const genericHref = lang === "en" ? "/diseno-web/" : `/${lang}/diseno-web/`
+
+const cityName = city && t(`city.${city}`)
+const member = city && team.find((m) => m.city === city)
+const badge = cityName
+  ? `${t("webdesign.badge")} · ${cityName}`
+  : t("webdesign.badge")
+const heading = city ? t(`city.${city}.heading`) : t("webdesign.heading")
+const intro = city ? t(`city.${city}.intro`) : t("webdesign.intro")
+
+const otherLocations = [
+  ...cities
+    .filter((c) => c !== city)
+    .map((c) => ({ label: t(`city.${c}`), href: cityPath(lang, c) })),
+  ...(city ? [{ label: t("city.others.spain"), href: genericHref }] : []),
+]
+
+const includes = [
+  {
+    title: t("webdesign.includes.1.title"),
+    text: t("webdesign.includes.1.text"),
+    icon: Palette,
+  },
+  {
+    title: t("webdesign.includes.2.title"),
+    text: t("webdesign.includes.2.text"),
+    icon: Search,
+  },
+  {
+    title: t("webdesign.includes.3.title"),
+    text: t("webdesign.includes.3.text"),
+    icon: Zap,
+  },
+  {
+    title: t("webdesign.includes.4.title"),
+    text: t("webdesign.includes.4.text"),
+    icon: Wrench,
+  },
+]
+
+const steps = [
+  t("webdesign.process.1"),
+  t("webdesign.process.2"),
+  t("webdesign.process.3"),
+  t("webdesign.process.4"),
+]
+
+const projects = [
+  {
+    name: t("project.agora"),
+    text: t("webdesign.projects.agora"),
+    href: "https://www.agoraacademy.es/",
+  },
+  {
+    name: t("project.jovi"),
+    text: t("webdesign.projects.jovi"),
+    href: "https://www.tabernajovi.es/",
+  },
+  {
+    name: t("project.albinana"),
+    text: t("webdesign.projects.albinana"),
+    href: "https://www.farmaciaalbinana.es/",
+  },
+]
+// Show the local project first on the Valencia page
+if (city === "valencia") projects.reverse()
+
+const faqs = [
+  { q: t("webdesign.faq.1.q"), a: t("webdesign.faq.1.a") },
+  { q: t("webdesign.faq.2.q"), a: t("webdesign.faq.2.a") },
+  { q: t("webdesign.faq.3.q"), a: t("webdesign.faq.3.a") },
+]
+
+const mailto = `mailto:contact@kaizencode.es?subject=${encodeURIComponent(t("webdesign.cta.subject"))}`
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+}
+---
+
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(faqSchema)}
+/>
+
+<Header client:load lang={lang} />
+
+<div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
+  <main id="main-content" class="flex flex-1 flex-col gap-20 py-16">
+    <section class="flex flex-col items-start">
+      <a
+        href={homeHref}
+        class="mb-6 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        ← {t("webdesign.back")}
+      </a>
+      <Badge
+        variant="outline"
+        className="mb-6 px-3 font-mono text-xs tracking-widest"
+      >
+        {badge}
+      </Badge>
+      <h1
+        class="max-w-3xl text-4xl leading-tight font-bold tracking-tighter sm:text-6xl"
+      >
+        {heading}
+      </h1>
+      <p class="mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
+        {intro}
+      </p>
+      {
+        member && cityName && (
+          <div class="mt-8 flex items-center gap-4 rounded-xl border border-border/50 bg-secondary/30 p-4">
+            <img
+              src={member.avatar}
+              alt={t(member.nameKey)}
+              width="56"
+              height="56"
+              class="size-14 rounded-full bg-muted object-cover"
+            />
+            <div class="flex flex-col gap-1">
+              <span class="inline-flex items-center gap-1 font-semibold">
+                <MapPin className="size-4" />
+                {t("city.contact.title").replace("{city}", cityName)}
+              </span>
+              <span class="max-w-xl text-sm text-muted-foreground">
+                {t("city.contact.text")
+                  .replace("{name}", t(member.nameKey))
+                  .replace("{city}", cityName)}
+              </span>
+              <a
+                href={member.linkedin}
+                target="_blank"
+                rel="noopener"
+                aria-label={`${t("about.linkedin.label")} ${t(member.nameKey)}`}
+                class="inline-flex items-center gap-1 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+              >
+                {t("about.linkedin")}
+                <ExternalLink className="size-3" />
+              </a>
+            </div>
+          </div>
+        )
+      }
+      <a
+        href={mailto}
+        class="mt-8 inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+      >
+        <Mail className="size-4" />
+        {t("webdesign.cta.button")}
+      </a>
+    </section>
+
+    <section class="flex flex-col gap-8">
+      <SectionHeader label="// 01" title={t("webdesign.includes.title")} />
+      <div class="grid gap-6 sm:grid-cols-2">
+        {
+          includes.map(({ title, text, icon: Icon }) => (
+            <Card size="sm" className="bg-secondary/30">
+              <CardHeader>
+                <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Icon className="size-5" />
+                </div>
+                <CardTitle>
+                  <h3>{title}</h3>
+                </CardTitle>
+                <CardDescription>{text}</CardDescription>
+              </CardHeader>
+            </Card>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-8">
+      <SectionHeader label="// 02" title={t("webdesign.process.title")} />
+      <ol class="grid gap-4 sm:grid-cols-4">
+        {
+          steps.map((step, i) => (
+            <li class="flex flex-col gap-2 rounded-xl border border-border/50 bg-secondary/30 p-4">
+              <span class="font-mono text-xs text-muted-foreground">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span class="text-sm">{step}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="flex flex-col gap-8">
+      <SectionHeader label="// 03" title={t("webdesign.projects.title")} />
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          projects.map(({ name, text, href }) => (
+            <Card size="sm" className="bg-secondary/30">
+              <CardHeader>
+                <CardTitle>
+                  <h3>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener"
+                      class="inline-flex items-center gap-1.5 transition-colors hover:text-muted-foreground"
+                    >
+                      {name}
+                      <ExternalLink className="size-3.5" />
+                    </a>
+                  </h3>
+                </CardTitle>
+                <CardDescription>{text}</CardDescription>
+              </CardHeader>
+            </Card>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-8">
+      <SectionHeader label="// 04" title={t("webdesign.faq.title")} />
+      <div class="flex flex-col gap-6">
+        {
+          faqs.map(({ q, a }) => (
+            <div class="flex flex-col gap-2 border-b border-border/50 pb-6">
+              <h3 class="font-semibold">{q}</h3>
+              <p class="text-muted-foreground">{a}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class="text-xl font-semibold tracking-tight">
+        {t("city.others.title")}
+      </h2>
+      <ul class="flex flex-wrap gap-3">
+        {
+          otherLocations.map(({ label, href }) => (
+            <li>
+              <a
+                href={href}
+                class="inline-flex items-center gap-1.5 rounded-lg border border-border/50 bg-secondary/30 px-4 py-2 text-sm transition-colors hover:bg-secondary/60"
+              >
+                <MapPin className="size-3.5" />
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section
+      class="flex flex-col items-start gap-4 rounded-2xl border border-border/50 bg-secondary/30 p-8"
+    >
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+        {t("webdesign.cta.title")}
+      </h2>
+      <p class="max-w-2xl text-muted-foreground">{t("webdesign.cta.text")}</p>
+      <a
+        href={mailto}
+        class="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+      >
+        <Mail className="size-4" />
+        {t("webdesign.cta.button")}
+      </a>
+    </section>
+
+    <footer
+      class="flex flex-col items-start justify-between gap-4 border-t border-border/50 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-2"
+    >
+      <span class="text-sm"
+        >&copy; {new Date().getFullYear()} {t("footer.copyright")}</span
+      >
+      <DevelopedByKaizencode lang={lang} />
+    </footer>
+  </main>
+</div>
+<BackToTop client:load />

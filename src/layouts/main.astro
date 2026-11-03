@@ -1,7 +1,8 @@
 ---
 import "@/styles/global.css"
 import { ClientRouter } from "astro:transitions"
-import type { Lang } from "@/i18n/ui"
+import { ui, type Lang } from "@/i18n/ui"
+import { team } from "@/lib/team"
 
 export interface Props {
   lang?: Lang
@@ -39,7 +40,7 @@ const pathWithoutLang = pathname.startsWith("/es/")
     : pathname
 
 const enUrl = `${siteOrigin}${pathWithoutLang}`
-const esUrl = `${siteOrigin}/es${pathWithoutLang === "/" ? "" : pathWithoutLang}`
+const esUrl = `${siteOrigin}/es${pathWithoutLang}`
 
 // og:locale format: en → en_US, es → es_ES
 const ogLocaleMap: Record<Lang, string> = { en: "en_US", es: "es_ES" }
@@ -130,12 +131,25 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
       type="application/ld+json"
       set:html={JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "Organization",
+        "@type": "ProfessionalService",
         name: "Kaizencode",
         url: siteOrigin,
         logo: `${siteOrigin}${basePath}favicon/favicon.svg`,
+        image: ogImageUrl,
         description,
-        sameAs: ["https://kaizencode.es"],
+        email: "contact@kaizencode.es",
+        areaServed: [
+          { "@type": "Country", name: "España" },
+          { "@type": "City", name: "Cuenca" },
+          { "@type": "City", name: "Valencia" },
+          { "@type": "City", name: "Málaga" },
+        ],
+        sameAs: ["https://www.instagram.com/kaizencode/"],
+        founder: team.map(({ nameKey, linkedin }) => ({
+          "@type": "Person",
+          name: ui[lang][nameKey],
+          sameAs: [linkedin],
+        })),
       })}
     />
   </head>

@@ -7,19 +7,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { buttonVariants } from "@/components/ui/button"
 import { Header } from "@/components/custom/header"
 import { SectionHeader } from "@/components/custom/section-header"
-import { Effect } from "@/components/animate-ui/primitives/effects/effect"
 import { BackToTop } from "@/components/custom/back-to-top"
 import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars"
-import { AnimatedCodeDisplay } from "@/components/custom/animated-code-display"
-import { HeroTextCarousel } from "@/components/custom/hero-text-carousel"
 import { HeroTitle } from "@/components/custom/hero-title"
-import { ProjectFiles } from "@/components/custom/project-files"
-import { AboutSection } from "@/components/custom/about-section"
 import { DevelopedByKaizencode } from "@/components/ui/developed-by-kaizencode"
-import { ShoppingCart, Code, Palette, Mail } from "lucide-react"
+import {
+  ShoppingCart,
+  Code,
+  Palette,
+  Mail,
+  MessageCircle,
+  CalendarClock,
+  ExternalLink,
+  ArrowRight,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Quote,
+  MapPin,
+} from "lucide-react"
+import { cn } from "@/lib/utils"
 import { useTranslations } from "@/i18n/utils"
+import { team, cityPath } from "@/lib/team"
 import { type Lang } from "@/i18n/ui"
 
 export interface Props {
@@ -29,41 +41,57 @@ export interface Props {
 const { lang } = Astro.props
 const t = useTranslations(lang)
 
-const projects = [
+// Fill these in to show the matching blocks; empty values stay hidden
+const whatsappUrl = ""
+const calendlyUrl = ""
+const testimonials: {
+  client: string
+  name: string
+  role: Record<Lang, string>
+  quote: Record<Lang, string>
+}[] = []
+
+const stats = [
   {
-    label: "e-commerce",
-    links: [
-      { label: t("project.centauro"), href: "https://shop.centauro.es/" },
-    ],
+    value: t("hero3.stat.experience"),
+    label: t("hero3.stat.experience.label"),
   },
-  {
-    label: "web",
-    links: [
-      { label: t("project.agora"), href: "https://www.agoraacademy.es/" },
-      {
-        label: t("project.albinana"),
-        href: "https://www.farmaciaalbinana.es/",
-      },
-      {
-        label: t("project.tabernajovi"),
-        href: "https://www.tabernajovi.es/",
-      },
-    ],
-  },
+  { value: t("hero3.stat.projects"), label: t("hero3.stat.projects.label") },
+  { value: t("hero3.stat.members"), label: t("hero3.stat.members.label") },
 ]
 
-const members = [
+const projects = [
   {
-    name: t("about.member.omar"),
-    src: "https://avatars.githubusercontent.com/kaizen-omarcaja?size=80",
+    slug: "centauro",
+    name: t("project.centauro"),
+    type: t("project.centauro.type"),
+    description: t("project.centauro.description"),
+    tags: t("project.centauro.tags").split(","),
+    href: "https://shop.centauro.es/",
   },
   {
-    name: t("about.member.misha"),
-    src: "https://avatars.githubusercontent.com/kaizen-misha?size=80",
+    slug: "jovi",
+    name: t("project.jovi"),
+    type: t("project.jovi.type"),
+    description: t("project.jovi.description"),
+    tags: t("project.jovi.tags").split(","),
+    href: "https://www.tabernajovi.es/",
   },
   {
-    name: t("about.member.jose"),
-    src: "https://avatars.githubusercontent.com/kaizen-josemaria?size=80",
+    slug: "agora",
+    name: t("project.agora"),
+    type: t("project.agora.type"),
+    description: t("project.agora.description"),
+    tags: t("project.agora.tags").split(","),
+    href: "https://www.agoraacademy.es/",
+  },
+  {
+    slug: "albinana",
+    name: t("project.albinana"),
+    type: t("project.albinana.type"),
+    description: t("project.albinana.description"),
+    tags: t("project.albinana.tags").split(","),
+    href: "https://www.farmaciaalbinana.es/",
   },
 ]
 
@@ -85,18 +113,83 @@ const services = [
     description: t("service.web.description"),
     icon: Palette,
     badge: t("service.web.badge"),
+    href: lang === "en" ? "/diseno-web/" : `/${lang}/diseno-web/`,
   },
 ]
+
+const steps = [
+  t("webdesign.process.1"),
+  t("webdesign.process.2"),
+  t("webdesign.process.3"),
+  t("webdesign.process.4"),
+]
+
+const members = team.map(({ nameKey, roleKey, city, linkedin, avatar }) => ({
+  name: t(nameKey),
+  role: t(roleKey),
+  linkedin,
+  src: avatar,
+  city: t(`city.${city}`),
+  cityHref: cityPath(lang, city),
+}))
+
+const faqs = [
+  { q: t("faq.price.q"), a: t("faq.price.a") },
+  { q: t("faq.code.q"), a: t("faq.code.a") },
+  { q: t("faq.maintenance.q"), a: t("faq.maintenance.a") },
+  { q: t("faq.remote.q"), a: t("faq.remote.a") },
+]
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+}
+
+const mailto = `mailto:contact@kaizencode.es?subject=${encodeURIComponent(t("contact.email.subject"))}`
+
+const contacts = [
+  {
+    icon: Mail,
+    label: t("contact.email.label"),
+    value: "contact@kaizencode.es",
+    href: mailto,
+  },
+  {
+    icon: MessageCircle,
+    label: t("contact.whatsapp.label"),
+    value: t("contact.whatsapp.value"),
+    href: whatsappUrl,
+  },
+  {
+    icon: CalendarClock,
+    label: t("contact.call.label"),
+    value: t("contact.call.value"),
+    href: calendlyUrl,
+  },
+].filter(({ href }) => href)
+
+const cardClass = "bg-secondary/30 backdrop-blur-sm"
 ---
 
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(faqSchema)}
+/>
+
 <GravityStarsBackground
-  client:load
+  client:idle
   starsCount={60}
   starsOpacity={0.6}
   glowIntensity={12}
   movementSpeed={0.2}
   mouseGravity="attract"
-  className="fixed inset-0 will-change-transform"
+  className="stars-in fixed inset-0 will-change-transform"
 />
 
 <Header client:load lang={lang} />
@@ -104,135 +197,605 @@ const services = [
 <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
   <main
     id="main-content"
-    class="flex flex-1 flex-col justify-center gap-24 py-16"
+    class="flex flex-1 flex-col justify-center gap-24 py-16 [&_section[id]]:scroll-mt-24"
   >
     <section class="flex flex-col items-start">
-      <Badge
-        variant="outline"
-        className="mb-6 px-3 font-mono text-xs tracking-widest"
-      >
-        {t("hero.badge")}
-      </Badge>
-      <HeroTitle
-        client:load
-        text="Kaizencode"
-        className="text-5xl leading-tight font-bold tracking-tighter sm:text-7xl"
-      />
-      <p class="mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
-        <HeroTextCarousel
-          client:load
-          prefix={t("hero.carousel.prefix")}
-          words={t("hero.carousel.words").split(",")}
-          suffix={t("hero.carousel.suffix")}
+      <div class="hero-in mb-6" style="--i: 0">
+        <Badge
+          variant="outline"
+          className="px-3 font-mono text-xs tracking-widest"
+        >
+          {t("hero.badge")}
+        </Badge>
+      </div>
+      <h1>
+        <HeroTitle
+          text="Kaizencode"
+          className="text-5xl leading-tight font-bold tracking-tighter sm:text-7xl"
+          wordClassName="hero-shine"
         />
+        <span
+          class="hero-in mt-2 block max-w-2xl text-xl font-semibold tracking-tight text-foreground/90 sm:text-2xl"
+          style="--i: 3"
+        >
+          {t("hero.heading")}
+        </span>
+      </h1>
+      <p
+        class="hero-in mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg"
+        style="--i: 4"
+      >
+        {t("hero.support")}
       </p>
-    </section>
-
-    <section class="flex flex-col gap-12 sm:flex-row">
-      <Effect client:load inView slide fade className="min-w-0 flex-1">
-        <AnimatedCodeDisplay
-          client:load
-          className="h-[180px] w-full rounded-xl border border-border/50 bg-secondary/30 backdrop-blur-sm"
-          filename={t("code.filename")}
-          code={t("code.content")}
-          duration={9000}
-        />
-      </Effect>
-      <Effect
-        client:load
-        inView
-        slide
-        fade
-        delay={150}
-        className="min-w-0 flex-1"
+      <div class="hero-in mt-8 flex flex-wrap gap-3" style="--i: 5">
+        <a
+          href="#contacto"
+          class={buttonVariants({ size: "lg", className: "h-11 px-6" })}
+        >
+          {t("hero.cta.primary")}
+          <ArrowRight className="size-4" />
+        </a>
+        <a
+          href="#projects"
+          class={buttonVariants({
+            variant: "outline",
+            size: "lg",
+            className: "h-11 border-foreground/20 px-6",
+          })}
+        >
+          {t("hero.cta.secondary")}
+        </a>
+      </div>
+      <ul
+        class="mt-10 flex flex-wrap gap-x-8 gap-y-3 font-mono text-sm text-muted-foreground"
       >
-        <Card size="sm" className="bg-secondary/30 backdrop-blur-sm">
-          <CardHeader>
-            <div
-              class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary"
-            >
-              <Mail className="size-5" />
-            </div>
-            <CardDescription>{t("contact.description")}</CardDescription>
-            <CardTitle>
-              <a
-                href="mailto:contact@kaizencode.es"
-                class="text-foreground transition-colors hover:text-muted-foreground"
+        {
+          stats.map(({ value, label }, i) => (
+            <li class="hero-in" style={`--i: ${6 + i}`}>
+              <span
+                class="font-semibold text-foreground tabular-nums"
+                data-count-up
               >
-                contact@kaizencode.es
-              </a>
-            </CardTitle>
-          </CardHeader>
-        </Card>
-      </Effect>
+                {value}
+              </span>{" "}
+              {label}
+            </li>
+          ))
+        }
+      </ul>
     </section>
 
-    <Effect client:load inView slide fade>
-      <section id="projects" class="flex flex-col gap-8">
+    <section id="projects" class="reveal flex flex-col gap-8">
+      <div class="flex items-end justify-between gap-4">
         <SectionHeader
           label={t("section.projects.label")}
           title={t("section.projects.title")}
         />
-        <div class="min-w-0">
-          <ProjectFiles client:load lang={lang} categories={projects} />
+        <div class="hidden gap-2 sm:flex">
+          <button
+            type="button"
+            data-carousel-prev
+            aria-controls="projects-carousel"
+            aria-label={t("projects.prev")}
+            class={buttonVariants({
+              variant: "outline",
+              size: "icon",
+              className: "border-foreground/20",
+            })}
+          >
+            <ChevronLeft className="size-4" />
+          </button>
+          <button
+            type="button"
+            data-carousel-next
+            aria-controls="projects-carousel"
+            aria-label={t("projects.next")}
+            class={buttonVariants({
+              variant: "outline",
+              size: "icon",
+              className: "border-foreground/20",
+            })}
+          >
+            <ChevronRight className="size-4" />
+          </button>
         </div>
-      </section>
-    </Effect>
-
-    <Effect client:load inView slide fade>
-      <section id="services" class="flex flex-col gap-8">
-        <SectionHeader
-          label={t("section.services.label")}
-          title={t("section.services.title")}
-        />
-        <div class="grid gap-6 sm:grid-cols-3">
-          {
-            services.map(({ title, description, icon: Icon, badge }) => (
-              <Card
-                key={title}
-                size="sm"
-                className="group/card bg-secondary/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5"
-              >
+      </div>
+      <!-- Native scroll-snap carousel: swipeable and fully visible without JS.
+           The next card always peeks out and fades so it reads as scrollable -->
+      <ul
+        id="projects-carousel"
+        data-at-end="false"
+        class="-mx-6 flex cursor-grab snap-x snap-mandatory scroll-px-6 [scrollbar-width:none] gap-6 overflow-x-auto px-6 pb-2 data-[at-end=false]:[mask-image:linear-gradient(to_right,#000_75%,transparent)] [&::-webkit-scrollbar]:hidden"
+      >
+        {
+          projects.map(({ slug, name, type, description, tags, href }) => (
+            <li class="flex w-[85%] shrink-0 snap-start sm:w-[calc((100%-1.5rem)/1.6)] lg:w-[calc((100%-3rem)/2.6)]">
+              <Card className={cn(cardClass, "w-full pt-0")}>
+                <img
+                  src={`/projects/${slug}.webp`}
+                  srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
+                  sizes="(min-width: 1152px) 420px, (min-width: 640px) 60vw, 85vw"
+                  alt={`${t("project.image.alt")} ${name}`}
+                  width="1280"
+                  height="800"
+                  loading="lazy"
+                  decoding="async"
+                  draggable="false"
+                  class="aspect-[16/10] w-full border-b border-border/50 bg-muted object-cover object-top"
+                />
                 <CardHeader>
-                  <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-300 group-hover/card:bg-primary/20">
-                    <Icon className="size-5" />
-                  </div>
-                  <CardTitle>{title}</CardTitle>
+                  <span class="font-mono text-xs tracking-widest text-muted-foreground uppercase">
+                    {type}
+                  </span>
+                  <CardTitle>
+                    <h3>{name}</h3>
+                  </CardTitle>
                   <CardDescription>{description}</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <Badge
-                    variant="secondary"
-                    className="font-mono text-[10px] tracking-wider uppercase"
+                <CardContent className="mt-auto flex flex-col items-start gap-4">
+                  <div class="flex flex-wrap gap-2">
+                    {tags.map((tag) => (
+                      <Badge
+                        variant="secondary"
+                        className="font-mono text-[10px] tracking-wider uppercase"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener"
+                    class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
                   >
-                    {badge}
-                  </Badge>
+                    {t("project.visit")}
+                    <ExternalLink className="size-3.5" />
+                  </a>
                 </CardContent>
               </Card>
-            ))
-          }
-        </div>
-      </section>
-    </Effect>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="flex justify-center" data-carousel-dots>
+        {
+          projects.map(({ name }, i) => (
+            <button
+              type="button"
+              data-carousel-dot={i}
+              aria-controls="projects-carousel"
+              aria-label={`${t("projects.goto")} ${name}`}
+              aria-current={i === 0 ? "true" : "false"}
+              class="group p-2"
+            >
+              <span class="block h-2 w-2 rounded-full bg-foreground/25 transition-all group-hover:bg-foreground/50 group-aria-[current=true]:w-6 group-aria-[current=true]:bg-foreground" />
+            </button>
+          ))
+        }
+      </div>
+    </section>
 
-    <Effect client:load inView slide fade>
-      <section id="about" class="flex flex-col gap-8">
-        <AboutSection
-          client:load
-          label={t("about.label")}
-          title={t("about.title")}
-          description={t("about.description")}
-          members={members}
-        />
-      </section>
-    </Effect>
+    <section id="services" class="reveal flex flex-col gap-8">
+      <SectionHeader
+        label={t("section.services.label")}
+        title={t("section.services.title")}
+      />
+      <div class="grid gap-6 md:grid-cols-3">
+        {
+          services.map(({ title, description, icon: Icon, badge, href }) => (
+            <Card
+              size="sm"
+              className={cn(
+                cardClass,
+                "transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5"
+              )}
+            >
+              <CardHeader>
+                <div class="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-300 group-hover/card:bg-primary/20">
+                  <Icon className="size-5" />
+                </div>
+                <CardTitle>
+                  <h3>{title}</h3>
+                </CardTitle>
+                <CardDescription>{description}</CardDescription>
+              </CardHeader>
+              <CardContent className="mt-auto flex flex-col items-start gap-4">
+                <Badge
+                  variant="secondary"
+                  className="font-mono text-[10px] tracking-wider uppercase"
+                >
+                  {badge}
+                </Badge>
+                {href && (
+                  <a
+                    href={href}
+                    class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
+                  >
+                    {t("service.web.link")}
+                    <ArrowRight className="size-3.5" />
+                  </a>
+                )}
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="reveal flex flex-col gap-8">
+      <SectionHeader
+        label={t("section.process.label")}
+        title={t("webdesign.process.title")}
+      />
+      <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          steps.map((step, i) => (
+            <li class="flex flex-col gap-2 rounded-xl border border-border/50 bg-secondary/30 p-4 backdrop-blur-sm">
+              <span class="font-mono text-xs text-muted-foreground">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span class="text-sm">{step}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    {
+      testimonials.length > 0 && (
+        <section class="reveal flex flex-col gap-8">
+          <SectionHeader
+            label={t("section.testimonials.label")}
+            title={t("section.testimonials.title")}
+          />
+          <div class="grid gap-6 md:grid-cols-3">
+            {testimonials.map(({ client, name, role, quote }) => (
+              <Card size="sm" className={cardClass}>
+                <CardHeader>
+                  <Quote className="size-5 text-muted-foreground" />
+                  <blockquote class="text-base">{quote[lang]}</blockquote>
+                </CardHeader>
+                <CardContent className="mt-auto text-sm text-muted-foreground">
+                  <p class="font-medium text-foreground">{name}</p>
+                  <p>
+                    {role[lang]} · {client}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <section id="about" class="reveal flex flex-col gap-8">
+      <SectionHeader label={t("about.label")} title={t("about.title")} />
+      <div class="flex flex-col gap-3">
+        <p class="max-w-2xl text-xl font-semibold tracking-tight sm:text-2xl">
+          {t("about.highlight")}
+        </p>
+        <p class="max-w-2xl text-base text-muted-foreground sm:text-lg">
+          {t("about.description")}
+        </p>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-3">
+        {
+          members.map(({ name, role, linkedin, src, city, cityHref }) => (
+            <Card size="sm" className={cardClass}>
+              <CardHeader className="flex items-center gap-4">
+                <img
+                  src={src}
+                  alt={name}
+                  width="56"
+                  height="56"
+                  loading="lazy"
+                  class="size-14 rounded-full bg-muted object-cover"
+                />
+                <div class="flex flex-col gap-1">
+                  <CardTitle>
+                    <h3>{name}</h3>
+                  </CardTitle>
+                  <CardDescription>{role}</CardDescription>
+                  <div class="flex flex-wrap gap-x-4">
+                    <a
+                      href={cityHref}
+                      class="inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                    >
+                      <MapPin className="size-3" />
+                      {city}
+                    </a>
+                    <a
+                      href={linkedin}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={`${t("about.linkedin.label")} ${name}`}
+                      class="inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                    >
+                      {t("about.linkedin")}
+                      <ExternalLink className="size-3" />
+                    </a>
+                  </div>
+                </div>
+              </CardHeader>
+            </Card>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="reveal flex flex-col gap-8">
+      <SectionHeader
+        label={t("section.faq.label")}
+        title={t("webdesign.faq.title")}
+      />
+      <div class="flex flex-col">
+        {
+          faqs.map(({ q, a }) => (
+            <details class="group border-b border-border/50 py-5">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-md font-semibold focus-visible:ring-3 focus-visible:ring-ring/30 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
+                <h3>{q}</h3>
+                <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+              </summary>
+              <p class="mt-3 max-w-3xl text-muted-foreground">{a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </section>
+
+    <section
+      id="contacto"
+      class="reveal flex flex-col gap-8 rounded-2xl border border-border/50 bg-secondary/30 p-6 backdrop-blur-sm sm:p-10"
+    >
+      <div class="flex flex-col gap-3">
+        <span
+          class="font-mono text-xs tracking-widest text-muted-foreground uppercase"
+        >
+          {t("section.contact.label")}
+        </span>
+        <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+          {t("section.contact.title")}
+        </h2>
+        <p class="max-w-2xl text-muted-foreground">
+          {t("section.contact.text")}
+        </p>
+      </div>
+      <ul
+        class={cn(
+          "grid gap-4",
+          contacts.length === 1 && "max-w-md",
+          contacts.length === 2 && "md:grid-cols-2",
+          contacts.length === 3 && "md:grid-cols-3"
+        )}
+      >
+        {
+          contacts.map(({ icon: Icon, label, value, href }) => {
+            const content = (
+              <>
+                <div class="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Icon className="size-5" />
+                </div>
+                <span class="text-sm text-muted-foreground">{label}</span>
+                <span class="font-medium break-all">{value}</span>
+              </>
+            )
+            const itemClass =
+              "flex h-full flex-col items-start gap-2 rounded-xl border border-border/50 bg-background/40 p-4"
+            return (
+              <li>
+                {href ? (
+                  <a
+                    href={href}
+                    target={href.startsWith("http") ? "_blank" : undefined}
+                    rel={href.startsWith("http") ? "noopener" : undefined}
+                    class={cn(
+                      itemClass,
+                      "transition-colors hover:bg-background/70 focus-visible:ring-3 focus-visible:ring-ring/30 focus-visible:outline-none"
+                    )}
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <div class={itemClass}>{content}</div>
+                )}
+              </li>
+            )
+          })
+        }
+      </ul>
+    </section>
 
     <footer
       class="flex flex-col items-start justify-between gap-4 border-t border-border/50 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-2"
     >
-      <span class="text-sm">&copy; {new Date().getFullYear()} {t("footer.copyright")}</span>
+      <span class="text-sm"
+        >&copy; {new Date().getFullYear()} {t("footer.copyright")}</span
+      >
       <DevelopedByKaizencode lang={lang} />
     </footer>
   </main>
 </div>
 <BackToTop client:load />
+
+<script>
+  // Projects carousel: scrolling is native (touch, trackpad, keyboard); this
+  // adds arrows, dots, the end-of-list fade and mouse drag
+  function initProjectsCarousel() {
+    const track = document.getElementById("projects-carousel")
+    if (!track) return
+    const prev = document.querySelector<HTMLButtonElement>(
+      "[data-carousel-prev]"
+    )
+    const next = document.querySelector<HTMLButtonElement>(
+      "[data-carousel-next]"
+    )
+    const dots = [
+      ...document.querySelectorAll<HTMLButtonElement>("[data-carousel-dot]"),
+    ]
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)")
+
+    // Card width + gap, measured once per resize instead of on every scroll
+    let step = 1
+    const measure = () => {
+      const item = track.firstElementChild as HTMLElement | null
+      step = item
+        ? item.offsetWidth + parseFloat(getComputedStyle(track).columnGap)
+        : 1
+    }
+    const maxScroll = () => track.scrollWidth - track.clientWidth
+    const current = () => Math.round(track.scrollLeft / step)
+
+    // Programmatic scrolls run their own eased animation with snapping off:
+    // with snapping on, the browser re-snaps mid-animation and it stutters
+    let frame = 0
+    const animateTo = (index: number) => {
+      cancelAnimationFrame(frame)
+      const from = track.scrollLeft
+      const to = Math.min(Math.max(index, 0) * step, maxScroll())
+      const duration = reduceMotion.matches ? 0 : 450
+      const start = performance.now()
+      track.style.scrollSnapType = "none"
+      const tick = (now: number) => {
+        const p = duration ? Math.min((now - start) / duration, 1) : 1
+        const eased = 1 - Math.pow(1 - p, 3)
+        track.scrollLeft = from + (to - from) * eased
+        if (p < 1) frame = requestAnimationFrame(tick)
+        else track.style.scrollSnapType = ""
+      }
+      frame = requestAnimationFrame(tick)
+    }
+
+    let atEnd: boolean | undefined
+    let active = -1
+    let pending = false
+    const update = () => {
+      pending = false
+      const end = track.scrollLeft >= maxScroll() - 1
+      if (prev) prev.disabled = track.scrollLeft <= 1
+      if (next) next.disabled = end
+      // Only touch attributes when they change, to avoid restyling each frame
+      if (end !== atEnd) {
+        atEnd = end
+        track.dataset.atEnd = String(end)
+      }
+      const index = end ? dots.length - 1 : current()
+      if (index !== active) {
+        active = index
+        dots.forEach((dot, i) =>
+          dot.setAttribute("aria-current", String(i === index))
+        )
+      }
+    }
+    const scheduleUpdate = () => {
+      if (pending) return
+      pending = true
+      requestAnimationFrame(update)
+    }
+
+    prev?.addEventListener("click", () => animateTo(current() - 1))
+    next?.addEventListener("click", () => animateTo(current() + 1))
+    dots.forEach((dot, i) => dot.addEventListener("click", () => animateTo(i)))
+
+    // Mouse drag (touch and trackpads already scroll natively). On release
+    // a quick flick moves one card in its direction, otherwise the nearest
+    let dragging = false
+    let moved = false
+    let startX = 0
+    let startLeft = 0
+    let lastX = 0
+    let lastTime = 0
+    let velocity = 0
+    track.addEventListener("pointerdown", (e) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return
+      cancelAnimationFrame(frame)
+      dragging = true
+      moved = false
+      startX = lastX = e.clientX
+      startLeft = track.scrollLeft
+      lastTime = e.timeStamp
+      velocity = 0
+    })
+    window.addEventListener("pointermove", (e) => {
+      if (!dragging) return
+      const dx = e.clientX - startX
+      if (!moved && Math.abs(dx) > 5) {
+        moved = true
+        track.style.scrollSnapType = "none"
+        track.classList.add("cursor-grabbing", "select-none")
+      }
+      if (!moved) return
+      track.scrollLeft = startLeft - dx
+      const dt = e.timeStamp - lastTime
+      if (dt > 0) velocity = (e.clientX - lastX) / dt
+      lastX = e.clientX
+      lastTime = e.timeStamp
+    })
+    window.addEventListener("pointerup", (e) => {
+      if (!dragging) return
+      dragging = false
+      if (!moved) return
+      track.classList.remove("cursor-grabbing", "select-none")
+      // Ignore velocity if the mouse stopped before being released
+      const flick = e.timeStamp - lastTime < 100 ? velocity : 0
+      const position = track.scrollLeft / step
+      const target =
+        flick < -0.3
+          ? Math.ceil(position)
+          : flick > 0.3
+            ? Math.floor(position)
+            : Math.round(position)
+      animateTo(target)
+    })
+    // A drag should not open the project link under the cursor
+    track.addEventListener(
+      "click",
+      (e) => {
+        if (!moved) return
+        e.preventDefault()
+        e.stopPropagation()
+        moved = false
+      },
+      true
+    )
+    // Native link dragging would otherwise swallow the pointer events
+    track.querySelectorAll("a").forEach((a) => (a.draggable = false))
+
+    track.addEventListener("scroll", scheduleUpdate, { passive: true })
+    window.addEventListener("resize", () => {
+      measure()
+      scheduleUpdate()
+    })
+    measure()
+    update()
+  }
+
+  // Hero stats count up from 0 ("10+", "20+"...). Without JS or with reduced
+  // motion they simply show their final value
+  function initCountUp() {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    document.querySelectorAll<HTMLElement>("[data-count-up]").forEach((el) => {
+      const match = el.textContent?.trim().match(/^(\d+)(.*)$/)
+      if (!match) return
+      const target = Number(match[1])
+      const suffix = match[2]
+      const delay = 700
+      const duration = 1400
+      const start = performance.now() + delay
+      // Reserve the final width so the counting does not shift the layout
+      el.style.display = "inline-block"
+      el.style.minWidth = `${match[0].length}ch`
+      el.textContent = `0${suffix}`
+      const tick = (now: number) => {
+        const p = Math.min(Math.max((now - start) / duration, 0), 1)
+        const eased = 1 - Math.pow(1 - p, 4)
+        el.textContent = `${Math.round(target * eased)}${suffix}`
+        if (p < 1) requestAnimationFrame(tick)
+      }
+      requestAnimationFrame(tick)
+    })
+  }
+
+  document.addEventListener("astro:page-load", initProjectsCarousel)
+  document.addEventListener("astro:page-load", initCountUp)
+</script>

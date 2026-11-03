@@ -42,10 +42,13 @@ export function Header({ lang = defaultLang }: HeaderProps) {
   const t = (key: keyof (typeof ui)[typeof defaultLang]) =>
     ui[lang]?.[key] ?? ui[defaultLang][key]
 
+  const homeHref = lang === "en" ? base : `${base}${lang}/`
+
   const navLinks = [
-    { label: t("nav.projects"), href: "#projects" },
-    { label: t("nav.services"), href: "#services" },
-    { label: t("nav.about"), href: "#about" },
+    { label: t("nav.projects"), href: `${homeHref}#projects` },
+    { label: t("nav.services"), href: `${homeHref}#services` },
+    { label: t("nav.about"), href: `${homeHref}#about` },
+    { label: t("nav.contact"), href: `${homeHref}#contacto` },
   ]
 
   return (
@@ -54,7 +57,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
         <header className="sticky top-0 z-50 border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
             <a
-              href={lang === "en" ? base : `${base}${lang}/`}
+              href={homeHref}
               className="text-lg font-bold tracking-tighter no-underline"
             >
               {`/{`}
@@ -79,11 +82,12 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                 size="sm"
                 direction="ltr"
                 modes={["light", "dark"]}
+                aria-label={t("nav.theme")}
               />
 
               <Sheet>
                 <SheetTrigger asChild className="md:hidden">
-                  <Button variant="ghost" size="icon-sm" aria-label="Menu">
+                  <Button variant="ghost" size="icon-sm" aria-label={t("nav.menu")}>
                     <Menu className="size-5" />
                   </Button>
                 </SheetTrigger>
@@ -95,7 +99,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                   <div className="flex h-full flex-col gap-14 px-6 pt-4 pb-8">
                     <div className="flex items-center justify-between">
                       <a
-              href={lang === "en" ? base : `${base}${lang}/`}
+                        href={homeHref}
                         className="text-lg font-bold tracking-tighter no-underline"
                       >
                         {`/{`}
@@ -104,7 +108,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                         <Button
                           variant="ghost"
                           size="icon-sm"
-                          aria-label="Close menu"
+                          aria-label={t("nav.menu.close")}
                         >
                           <X className="size-5" />
                         </Button>

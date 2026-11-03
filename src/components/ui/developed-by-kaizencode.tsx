@@ -16,7 +16,7 @@ function DevelopedByKaizencode({ lang = defaultLang, className, ...props }: Reac
       <Heart className="size-3.5 fill-current text-red-500 sm:size-4" />
       <span>{ui[lang]?.["footer.developed.by"] ?? ui[defaultLang]["footer.developed.by"]}</span>
       <a
-        href="https://kaizencode.es"
+        href={lang === "es" ? "https://www.kaizencode.es/es/" : "https://www.kaizencode.es/"}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-0.5 font-medium text-foreground transition-colors hover:text-primary"
