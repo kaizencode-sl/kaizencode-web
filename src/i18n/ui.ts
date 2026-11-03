@@ -137,6 +137,42 @@ export const ui = {
       "We take over projects that are already running, even on complex technology like SAP Commerce. Tell us what you have and we'll tell you how we can help.",
     "case.cta.button": "Write to us",
     "case.cta.subject": "Support and development for my platform",
+    "case.facts.location": "Location",
+    "case.visit.web": "Visit the website",
+    "case.results.title": "Results",
+    "case.jovi.title": "Web design for a cocktail bar in Cuenca: Taberna Jovi",
+    "case.jovi.description":
+      "Redesign and development of the website of Taberna Jovi, a cocktail bar in Cuenca's old town since 1977: a new image, an up-to-date menu and better Google rankings.",
+    "case.jovi.heading": "A new website for a historic cocktail bar in Cuenca",
+    "case.jovi.intro":
+      "Taberna Jovi is a British-style pub in the old town of Cuenca, open since 1977 and known for its classic cocktails. We designed and built its new website, and we've been working with them for years.",
+    "case.jovi.sector": "Hospitality · cocktail bar",
+    "case.jovi.services": "Design, development, maintenance",
+    "case.jovi.since": "Several years",
+    "case.jovi.challenge.1":
+      "Their previous website was badly outdated and hadn't been maintained in a long time. It didn't reflect what Taberna Jovi is, the menu was hard to find and out of date, and the site did little to help new customers find them on Google.",
+    "case.jovi.challenge.2":
+      "The goals were clear: an image that lives up to the bar, a visible and up-to-date menu and, above all, better rankings on Google.",
+    "case.jovi.work.design.title": "New image",
+    "case.jovi.work.design.text":
+      "A design built from scratch that conveys the atmosphere of the bar and its history since 1977, and looks good on any phone.",
+    "case.jovi.work.menu.title": "A menu you can actually find",
+    "case.jovi.work.menu.text":
+      "The menu has its own page, one tap away from anywhere on the site, and is kept up to date.",
+    "case.jovi.work.seo.title": "Built for Google",
+    "case.jovi.work.seo.text":
+      "A fast website in Spanish and English, optimised for search engines so it's easy to find for anyone looking for a drink in Cuenca.",
+    "case.jovi.stats.seo": "SEO in Google Lighthouse",
+    "case.jovi.stats.practices": "Best practices in Google Lighthouse",
+    "case.jovi.stats.performance": "Desktop performance in Google Lighthouse",
+    "case.jovi.stats.note":
+      "Measured with Google Lighthouse on tabernajovi.es in November 2026.",
+    "case.jovi.value.1":
+      "A website that finally lives up to the bar and its history.",
+    "case.jovi.value.2":
+      "A menu that's visible and up to date, in Spanish and English.",
+    "case.jovi.value.3":
+      "A relationship that goes on: years later, we're still looking after their website.",
     "case.centauro.title":
       "SAP Commerce support for B2B e-commerce: Centauro case study",
     "case.centauro.description":
@@ -384,6 +420,44 @@ export const ui = {
       "Nos hacemos cargo de proyectos que ya están en marcha, incluso sobre tecnologías complejas como SAP Commerce. Cuéntanos qué tienes y te decimos cómo podemos ayudarte.",
     "case.cta.button": "Escríbenos",
     "case.cta.subject": "Soporte y desarrollo para mi plataforma",
+    "case.facts.location": "Ubicación",
+    "case.visit.web": "Ver la web",
+    "case.results.title": "Resultados",
+    "case.jovi.title":
+      "Diseño web para coctelería en Cuenca: caso Taberna Jovi",
+    "case.jovi.description":
+      "Rediseño y desarrollo de la web de Taberna Jovi, coctelería del casco antiguo de Cuenca desde 1977: nueva imagen, carta siempre actualizada y mejor posicionamiento en Google.",
+    "case.jovi.heading": "Nueva web para una coctelería histórica de Cuenca",
+    "case.jovi.intro":
+      "Taberna Jovi es un pub de estilo británico en el casco antiguo de Cuenca, abierto desde 1977 y conocido por su coctelería clásica. Diseñamos y desarrollamos su nueva web, y llevamos años trabajando con ellos.",
+    "case.jovi.sector": "Hostelería · coctelería",
+    "case.jovi.services": "Diseño, desarrollo, mantenimiento",
+    "case.jovi.since": "Varios años",
+    "case.jovi.challenge.1":
+      "Su web anterior estaba muy desactualizada y llevaba tiempo sin ningún mantenimiento. No reflejaba lo que es Taberna Jovi, la carta era difícil de encontrar y no estaba al día, y la web apenas ayudaba a que nuevos clientes los encontraran en Google.",
+    "case.jovi.challenge.2":
+      "Los objetivos estaban claros: una imagen a la altura del local, una carta visible y actualizada y, sobre todo, mejorar su posicionamiento en Google.",
+    "case.jovi.work.design.title": "Nueva imagen",
+    "case.jovi.work.design.text":
+      "Un diseño hecho desde cero que transmite el ambiente del local y su historia desde 1977, y que se ve bien en cualquier móvil.",
+    "case.jovi.work.menu.title": "Una carta que se encuentra",
+    "case.jovi.work.menu.text":
+      "La carta tiene su propia página, a un toque desde cualquier parte de la web, y se mantiene al día.",
+    "case.jovi.work.seo.title": "Pensada para Google",
+    "case.jovi.work.seo.text":
+      "Una web rápida, en español e inglés y optimizada para buscadores, para que la encuentre cualquiera que busque dónde tomar algo en Cuenca.",
+    "case.jovi.stats.seo": "SEO en Google Lighthouse",
+    "case.jovi.stats.practices": "Buenas prácticas en Google Lighthouse",
+    "case.jovi.stats.performance":
+      "Rendimiento en escritorio en Google Lighthouse",
+    "case.jovi.stats.note":
+      "Medido con Google Lighthouse sobre tabernajovi.es en noviembre de 2026.",
+    "case.jovi.value.1":
+      "Una web que por fin está a la altura del local y de su historia.",
+    "case.jovi.value.2":
+      "Una carta visible y actualizada, en español y en inglés.",
+    "case.jovi.value.3":
+      "Una relación que continúa: años después, seguimos cuidando su web.",
     "case.centauro.title":
       "Soporte SAP Commerce para e-commerce B2B: caso Centauro",
     "case.centauro.description":

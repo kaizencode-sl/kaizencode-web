@@ -18,10 +18,12 @@ import {
   Mail,
   ExternalLink,
   MapPin,
+  ArrowRight,
 } from "lucide-react"
 import { localizePath, useTranslations } from "@/i18n/utils"
 import { type Lang } from "@/i18n/ui"
 import { cities, cityPath, team, type City } from "@/lib/team"
+import { caseStudyPath } from "@/lib/case-studies"
 
 export interface Props {
   lang: Lang
@@ -88,6 +90,7 @@ const projects = [
     name: t("project.jovi"),
     text: t("webdesign.projects.jovi"),
     href: "https://www.tabernajovi.es/",
+    caseHref: localizePath(lang, caseStudyPath("jovi")),
   },
   {
     name: t("project.albinana"),
@@ -232,7 +235,7 @@ const faqSchema = {
       <SectionHeader label="// 03" title={t("webdesign.projects.title")} />
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {
-          projects.map(({ name, text, href }) => (
+          projects.map(({ name, text, href, caseHref }) => (
             <Card size="sm" className="bg-secondary/30">
               <CardHeader>
                 <CardTitle>
@@ -249,6 +252,15 @@ const faqSchema = {
                   </h3>
                 </CardTitle>
                 <CardDescription>{text}</CardDescription>
+                {caseHref && (
+                  <a
+                    href={caseHref}
+                    class="mt-2 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
+                  >
+                    {t("project.case")}
+                    <ArrowRight className="size-3.5" />
+                  </a>
+                )}
               </CardHeader>
             </Card>
           ))

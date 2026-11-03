@@ -32,6 +32,7 @@ import {
 import { cn } from "@/lib/utils"
 import { localizePath, useTranslations } from "@/i18n/utils"
 import { team, cityPath } from "@/lib/team"
+import { caseStudyPath } from "@/lib/case-studies"
 import { type Lang } from "@/i18n/ui"
 
 export interface Props {
@@ -68,7 +69,7 @@ const projects = [
     description: t("project.centauro.description"),
     tags: t("project.centauro.tags").split(","),
     href: "https://shop.centauro.es/",
-    caseHref: localizePath(lang, "/proyectos/centauro/"),
+    caseHref: localizePath(lang, caseStudyPath("centauro")),
   },
   {
     slug: "jovi",
@@ -77,6 +78,7 @@ const projects = [
     description: t("project.jovi.description"),
     tags: t("project.jovi.tags").split(","),
     href: "https://www.tabernajovi.es/",
+    caseHref: localizePath(lang, caseStudyPath("jovi")),
   },
   {
     slug: "agora",
