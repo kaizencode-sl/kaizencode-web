@@ -29,12 +29,12 @@ export const ui = {
     "section.services.title": "Services",
     "service.ecommerce.title": "E-commerce",
     "service.ecommerce.description":
-      "Scalable platforms for selling anything — from storefront to checkout.",
+      "Scalable platforms for selling anything, from storefront to checkout.",
     "service.ecommerce.badge": "Shopify | custom",
     "service.custom.title": "Custom solutions",
     "service.custom.description":
-      "Tailored software to automate, integrate, and grow your business.",
-    "service.custom.badge": "APIs | automation",
+      "Tailored software and AI automation to empower your business, from n8n workflows to custom agents.",
+    "service.custom.badge": "AI agents | n8n | APIs",
     "service.web.title": "Beautiful webs",
     "service.web.description":
       "Modern, performant websites that look as good as they feel.",
@@ -42,6 +42,7 @@ export const ui = {
     "project.centauro": "Centauro e-commerce",
     "project.agora": "Ágora Academy",
     "project.albinana": "Albiñana Pharmacy",
+    "project.tabernajovi": "Taberna Jovi",
     "folder.projects": "projects",
     "code.filename": "kaizencode.sh",
     "code.content": `./kaizencode.sh build-my-project\n\nworks on my machine...\neh, good enough 🚀\ndeployed`,
@@ -82,12 +83,12 @@ export const ui = {
     "section.services.title": "Servicios",
     "service.ecommerce.title": "E-commerce",
     "service.ecommerce.description":
-      "Plataformas escalables para vender de todo — desde la tienda hasta el pago.",
+      "Plataformas escalables para vender de todo, desde la tienda hasta el pago.",
     "service.ecommerce.badge": "Shopify | personalizado",
     "service.custom.title": "Soluciones personalizadas",
     "service.custom.description":
-      "Software a medida para automatizar, integrar y hacer crecer tu negocio.",
-    "service.custom.badge": "APIs | automatización",
+      "Software a medida y automatización con IA para impulsar tu negocio, desde flujos con n8n hasta agentes personalizados.",
+    "service.custom.badge": "Agentes IA | n8n | APIs",
     "service.web.title": "Webs atractivas",
     "service.web.description":
       "Sitios web modernos y rápidos que se ven tan bien como se sienten.",
@@ -95,6 +96,7 @@ export const ui = {
     "project.centauro": "Centauro e-commerce",
     "project.agora": "Academia Ágora",
     "project.albinana": "Farmacia Albiñana",
+    "project.tabernajovi": "Taberna Jovi",
     "folder.projects": "proyectos",
     "code.filename": "kaizencode.sh",
     "code.content": `./kaizencode.sh build-my-project\n\nfunciona en mi máquina...\neh, suficiente 🚀\ndesplegado`,
