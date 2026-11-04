@@ -224,9 +224,11 @@ const screens = study.screens
       screens && (
         <section class="reveal flex flex-col gap-8">
           <SectionHeader title={t("case.screens.title")} />
-          <ul class="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+          <ul
+            class="-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 lg:grid-cols-4"
+          >
             {screens.video && (
-              <li>
+              <li class="w-[68%] shrink-0 snap-center sm:w-auto">
                 <video
                   src={screens.video.src}
                   poster={screens.video.poster}
@@ -244,7 +246,7 @@ const screens = study.screens
               </li>
             )}
             {screens.images.map(({ src, alt }) => (
-              <li>
+              <li class="w-[68%] shrink-0 snap-center sm:w-auto">
                 <img
                   src={src}
                   alt={t(alt)}

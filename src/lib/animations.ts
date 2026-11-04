@@ -69,7 +69,13 @@ export function initAnimations() {
   })
 
   // Webfonts change heights after first layout
-  document.fonts.ready.then(() => ScrollTrigger.refresh())
+  document.fonts.ready.then(() => {
+    ScrollTrigger.refresh()
+    // After a ClientRouter swap the browser's own hash scroll runs before
+    // reveal/layout settles, so land on the target once it's stable
+    if (location.hash)
+      document.querySelector(location.hash)?.scrollIntoView()
+  })
 
   return () => {
     mm.revert()
