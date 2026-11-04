@@ -423,8 +423,8 @@ export function AppDemo({ lang = defaultLang }: { lang?: Lang }) {
         className="h-auto gap-2 bg-background px-3 py-1 font-mono text-xs tracking-widest uppercase"
       >
         <span className="relative flex size-2">
-          <span className="absolute inline-flex size-full rounded-full bg-primary opacity-75 motion-safe:animate-ping" />
-          <span className="relative inline-flex size-2 rounded-full bg-primary" />
+          <span className="absolute inline-flex size-full rounded-full bg-emerald-500 opacity-75 motion-safe:animate-ping" />
+          <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
         </span>
         {t("demo.live")}
       </Badge>
