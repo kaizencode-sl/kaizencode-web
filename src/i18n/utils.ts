@@ -1,7 +1,7 @@
 import { ui, defaultLang, type Lang, type UiKey } from "./ui"
 
-// Local landings that only exist in Spanish (e.g. /diseno-web-cuenca/)
-const spanishOnlyPath = /^\/diseno-web-[^/]+\/?$/
+// Local landings that only exist in Spanish (e.g. /desarrollo-software-cuenca/)
+const spanishOnlyPath = /^\/desarrollo-software-[^/]+\/?$/
 
 // Sections whose slug changes in English (Spanish path → English path)
 const englishSlugs: [string, string][] = [["/proyectos/", "/projects/"]]

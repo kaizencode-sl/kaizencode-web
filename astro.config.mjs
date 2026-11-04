@@ -27,9 +27,13 @@ export default defineConfig({
   redirects: {
     "/es": "/",
     "/es/diseno-web": "/diseno-web/",
-    "/es/diseno-web-cuenca": "/diseno-web-cuenca/",
-    "/es/diseno-web-malaga": "/diseno-web-malaga/",
-    "/es/diseno-web-valencia": "/diseno-web-valencia/",
+    "/es/diseno-web-cuenca": "/desarrollo-software-cuenca/",
+    "/es/diseno-web-malaga": "/desarrollo-software-malaga/",
+    "/es/diseno-web-valencia": "/desarrollo-software-valencia/",
+    // City pages now cover web, apps and AI, not just web design
+    "/diseno-web-cuenca": "/desarrollo-software-cuenca/",
+    "/diseno-web-malaga": "/desarrollo-software-malaga/",
+    "/diseno-web-valencia": "/desarrollo-software-valencia/",
   },
   i18n: {
     locales: ["en", "es"],

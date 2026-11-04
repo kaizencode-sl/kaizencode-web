@@ -53,7 +53,7 @@ export const ui = {
     "hero3.stat.members.label": "developers",
     "about.title": "About us",
     "about.description":
-      "We are Omar, Misha and José María, three partner developers based in Cuenca, Valencia and Málaga. We have spent over 10 years building websites, online stores and software, including e-commerce for large companies on SAP Commerce Cloud and Adobe Experience Manager. We love what we do and keep up to date, so your project is built with what works best today.",
+      "We are Omar, Misha and José María, three partner developers based in Cuenca, Valencia and Málaga. We have spent over 10 years building websites, online stores and software, including e-commerce for large companies on SAP Commerce Cloud and Adobe Experience Manager. Today we also build iOS apps and automations with AI agents. We love what we do and keep up to date, so your project is built with what works best today.",
     "about.member.omar": "Omar",
     "about.member.misha": "Misha",
     "about.member.jose": "José María",
@@ -71,29 +71,32 @@ export const ui = {
     "city.cuenca": "Cuenca",
     "city.valencia": "Valencia",
     "city.malaga": "Málaga",
-    "city.cuenca.title": "Web design in Cuenca | Kaizencode",
+    "city.cuenca.title":
+      "Software development, websites and AI in Cuenca | Kaizencode",
     "city.cuenca.description":
-      "Websites and online stores for businesses in Cuenca. Meet Omar, one of our partners, in person in the city, with the whole team working on your project.",
-    "city.cuenca.heading": "Website design in Cuenca",
+      "Websites, online stores, iOS apps and AI automation for businesses in Cuenca. Meet Omar, one of our partners, in person in the city, with the whole team working on your project.",
+    "city.cuenca.heading": "Software development, websites and AI in Cuenca",
     "city.cuenca.intro":
-      "Omar, one of the three Kaizencode partners, lives in Cuenca. If your business is in the city or anywhere in the province, you can meet in person to explain what you need, while the rest of the team works with you remotely. We know the city well: we built the website for Taberna Jovi, in the old town, and the one for Ágora, a maths academy that ranks first on Google in its sector.",
-    "city.valencia.title": "Web design in Valencia | Kaizencode",
+      "Omar, one of the three Kaizencode partners, lives in Cuenca. If your business is in the city or anywhere in the province, you can meet in person to explain what you need: a website, an online store, an iPhone app or an AI agent that takes repetitive work off your plate. We know the city well: we built the website for Taberna Jovi, in the old town, and for Ágora, a maths academy, we built the website that ranks first on Google and the iOS app they use to run the academy day to day.",
+    "city.valencia.title":
+      "Software development, websites and AI in Valencia | Kaizencode",
     "city.valencia.description":
-      "Websites and online stores for businesses in Valencia and its metropolitan area. Meet José María, one of our partners, in person, with the whole team working on your project.",
-    "city.valencia.heading": "Website design in Valencia",
+      "Websites, online stores, iOS apps and AI automation for businesses in Valencia and its metropolitan area. Meet José María, one of our partners, in person, with the whole team working on your project.",
+    "city.valencia.heading":
+      "Software development, websites and AI in Valencia",
     "city.valencia.intro":
-      "José María, one of the three Kaizencode partners, lives in Valencia. If your business is in the city or the metropolitan area, you can meet in person to explain what you need, while the rest of the team works with you remotely. We have worked with businesses in the area such as Farmacia Ortopedia Albiñana in Bétera.",
-    "city.malaga.title": "Web design in Málaga | Kaizencode",
+      "José María, one of the three Kaizencode partners, lives in Valencia. If your business is in the city or the metropolitan area, you can meet in person to explain what you need: a website, an online store, an iPhone app or an AI agent that takes repetitive work off your plate. We have worked with businesses in the area such as Farmacia Ortopedia Albiñana in Bétera, and we maintain B2B stores for national distributors.",
+    "city.malaga.title":
+      "Software development, websites and AI in Málaga | Kaizencode",
     "city.malaga.description":
-      "Websites and online stores for businesses in Málaga and the Costa del Sol, including multilingual sites for international customers. Meet Misha, one of our partners, in person.",
-    "city.malaga.heading": "Website design in Málaga",
+      "Websites, online stores, iOS apps and AI automation for businesses in Málaga and the Costa del Sol, including multilingual projects for international customers. Meet Misha, one of our partners, in person.",
+    "city.malaga.heading": "Software development, websites and AI in Málaga",
     "city.malaga.intro":
-      "Misha, one of the three Kaizencode partners, lives in Málaga. If your business is in Málaga or on the Costa del Sol, you can meet in person to explain what you need, while the rest of the team works with you remotely. We build multilingual websites, especially useful for businesses that serve tourists and international customers.",
+      "Misha, one of the three Kaizencode partners, lives in Málaga. If your business is in Málaga or on the Costa del Sol, you can meet in person to explain what you need: a multilingual website, an online store, an iPhone app or an AI agent that answers customers and handles repetitive tasks for you.",
     "city.contact.title": "Your contact in {city}",
     "city.contact.text":
       "{name} is one of the three Kaizencode partners. You can meet in person in {city} or by video call, whichever you prefer.",
     "city.others.title": "We also work in",
-    "city.others.spain": "Anywhere in Spain (remote)",
     "hero.support":
       "We build every project from scratch, with no templates, and you talk directly to the people who build it. No salespeople, no middlemen.",
     "hero.cta.primary": "Ask for a quote",
@@ -173,8 +176,7 @@ export const ui = {
       "AI-generated study materials for an academy: Ágora Academy",
     "case.agora.description":
       "Website with online resources and an AI workflow for Ágora Academy in Cuenca: notes, exercises and exams are generated automatically, on the website and as PDFs.",
-    "case.agora.heading":
-      "Notes, exercises and exams that write themselves",
+    "case.agora.heading": "Notes, exercises and exams that write themselves",
     "case.agora.intro":
       "For Ágora Academy, a maths academy in Cuenca, we built a website with online resources for its students and an automated process that creates the content: the academy describes what it needs and for which level, and the materials appear on the website and as PDFs.",
     "case.agora.sector": "Education · tutoring",
@@ -269,10 +271,22 @@ export const ui = {
       "Continuous evolution without stopping the store clinics rely on every day.",
     "section.testimonials.title": "What our clients say",
     "about.highlight":
-      "You talk directly to the person who codes your website.",
-    "about.role.omar": "Software engineer · e-commerce",
-    "about.role.misha": "Software engineer · e-commerce",
-    "about.role.jose": "Frontend developer · websites & e-commerce",
+      "You talk directly to the person who builds your project.",
+    "about.role.omar": "Software & applied AI engineer · e-commerce",
+    "about.role.misha": "Software & applied AI engineer · e-commerce",
+    "about.role.jose": "Frontend & applied AI engineer · websites & e-commerce",
+    "city.badge": "Software and AI",
+    "city.services.title": "What we can build for you",
+    "city.process.3":
+      "We build it in short iterations, and you see and try it at every step.",
+    "city.process.4":
+      "We launch it and stay by your side to keep improving it.",
+    "city.faq.1.q": "What kind of projects do you take on?",
+    "city.faq.1.a":
+      "Websites, online stores, iPhone apps and AI automations: from n8n workflows that connect your tools to custom agents. If it is software and it helps your business, let's talk.",
+    "city.faq.2.q": "Can AI really save time in a small business?",
+    "city.faq.2.a":
+      "Yes, when it targets a specific task: answering frequent questions, classifying emails, copying data between tools or preparing reports. We start with one process, measure the time saved and grow from there.",
     "about.linkedin": "LinkedIn",
     "about.linkedin.label": "LinkedIn profile of",
     "faq.price.q": "How much does a website cost?",
@@ -348,6 +362,7 @@ export const ui = {
     "webdesign.back": "Back to home",
     "service.custom.link": "Process automation with AI",
     "case.automation.link": "How we automate processes with AI",
+    "case.webdesign.link": "How we design websites",
     "service.mobile.title": "Mobile apps",
     "service.mobile.description":
       "Custom apps that put your business in your pocket: clients, bookings, payments or whatever you need, with Face ID, widgets and the same data as your website.",
@@ -531,7 +546,8 @@ export const ui = {
     "ecommerce.description":
       "We build and customise Shopify stores: setup, custom themes, apps and integrations, and migration from your current platform. Backed by enterprise e-commerce experience.",
     "ecommerce.badge": "Online stores · Shopify",
-    "ecommerce.heading": "Your Shopify store, built by people who know e-commerce",
+    "ecommerce.heading":
+      "Your Shopify store, built by people who know e-commerce",
     "ecommerce.intro":
       "We set up, design and develop Shopify stores that sell from day one. We bring the experience of keeping a large company’s e-commerce running, scaled to the size of your business.",
     "ecommerce.includes.title": "What we do on Shopify",
@@ -622,7 +638,7 @@ export const ui = {
     "hero3.stat.members.label": "desarrolladores",
     "about.title": "Sobre nosotros",
     "about.description":
-      "Somos Omar, Misha y José María, tres desarrolladores y socios en Cuenca, Valencia y Málaga. Llevamos más de 10 años programando webs, tiendas online y software, también e-commerce para grandes empresas con SAP Commerce Cloud y Adobe Experience Manager. Nos encanta lo que hacemos y estamos siempre al día, así que tu proyecto se construye con lo que mejor funciona hoy.",
+      "Somos Omar, Misha y José María, tres desarrolladores y socios en Cuenca, Valencia y Málaga. Llevamos más de 10 años programando webs, tiendas online y software, también e-commerce para grandes empresas con SAP Commerce Cloud y Adobe Experience Manager. Hoy también hacemos apps para iOS y automatizaciones con agentes de IA. Nos encanta lo que hacemos y estamos siempre al día, así que tu proyecto se construye con lo que mejor funciona hoy.",
     "about.member.omar": "Omar",
     "about.member.misha": "Misha",
     "about.member.jose": "José María",
@@ -640,29 +656,31 @@ export const ui = {
     "city.cuenca": "Cuenca",
     "city.valencia": "Valencia",
     "city.malaga": "Málaga",
-    "city.cuenca.title": "Diseño web en Cuenca | Kaizencode",
+    "city.cuenca.title":
+      "Desarrollo de software, webs e IA en Cuenca | Kaizencode",
     "city.cuenca.description":
-      "Webs y tiendas online para negocios de Cuenca. Reúnete en persona con Omar, uno de nuestros socios, en la ciudad, con todo el equipo trabajando en tu proyecto.",
-    "city.cuenca.heading": "Diseño de páginas web en Cuenca",
+      "Webs, tiendas online, apps para iOS y automatización con IA para negocios de Cuenca. Reúnete en persona con Omar, uno de nuestros socios, con todo el equipo trabajando en tu proyecto.",
+    "city.cuenca.heading": "Desarrollo de software, webs e IA en Cuenca",
     "city.cuenca.intro":
-      "Omar, uno de los tres socios de Kaizencode, vive en Cuenca. Si tu negocio está en la ciudad o en la provincia, podéis veros en persona para que le cuentes lo que necesitas, mientras el resto del equipo trabaja contigo en remoto. Conocemos bien la ciudad: hemos hecho la web de la Taberna Jovi, en el casco antiguo, y la de la academia de matemáticas Ágora, que aparece hoy la primera en Google en su sector.",
-    "city.valencia.title": "Diseño web en Valencia | Kaizencode",
+      "Omar, uno de los tres socios de Kaizencode, vive en Cuenca. Si tu negocio está en la ciudad o en la provincia, podéis veros en persona para que le cuentes lo que necesitas: una web, una tienda online, una app para iPhone o un agente de IA que haga por ti el trabajo repetitivo. Conocemos bien la ciudad: hicimos la web de la Taberna Jovi, en el casco antiguo, y para la academia de matemáticas Ágora hicimos la web que aparece la primera en Google y la app para iOS con la que gestionan la academia cada día.",
+    "city.valencia.title":
+      "Desarrollo de software, webs e IA en Valencia | Kaizencode",
     "city.valencia.description":
-      "Webs y tiendas online para negocios de Valencia y su área metropolitana. Reúnete en persona con José María, uno de nuestros socios, con todo el equipo trabajando en tu proyecto.",
-    "city.valencia.heading": "Diseño de páginas web en Valencia",
+      "Webs, tiendas online, apps para iOS y automatización con IA para negocios de Valencia y su área metropolitana. Reúnete en persona con José María, uno de nuestros socios, con todo el equipo trabajando en tu proyecto.",
+    "city.valencia.heading": "Desarrollo de software, webs e IA en Valencia",
     "city.valencia.intro":
-      "José María, uno de los tres socios de Kaizencode, vive en Valencia. Si tu negocio está en la ciudad o en el área metropolitana, podéis veros en persona para que le cuentes lo que necesitas, mientras el resto del equipo trabaja contigo en remoto. Hemos trabajado con negocios de la zona, como la Farmacia Ortopedia Albiñana de Bétera.",
-    "city.malaga.title": "Diseño web en Málaga | Kaizencode",
+      "José María, uno de los tres socios de Kaizencode, vive en Valencia. Si tu negocio está en la ciudad o en el área metropolitana, podéis veros en persona para que le cuentes lo que necesitas: una web, una tienda online, una app para iPhone o un agente de IA que haga por ti el trabajo repetitivo. Hemos trabajado con negocios de la zona, como la Farmacia Ortopedia Albiñana de Bétera, y mantenemos tiendas B2B de distribuidores nacionales.",
+    "city.malaga.title":
+      "Desarrollo de software, webs e IA en Málaga | Kaizencode",
     "city.malaga.description":
-      "Webs y tiendas online para negocios de Málaga y la Costa del Sol, también multiidioma para clientes internacionales. Reúnete en persona con Misha, uno de nuestros socios.",
-    "city.malaga.heading": "Diseño de páginas web en Málaga",
+      "Webs, tiendas online, apps para iOS y automatización con IA para negocios de Málaga y la Costa del Sol, también multiidioma para clientes internacionales. Reúnete en persona con Misha, uno de nuestros socios.",
+    "city.malaga.heading": "Desarrollo de software, webs e IA en Málaga",
     "city.malaga.intro":
-      "Misha, uno de los tres socios de Kaizencode, vive en Málaga. Si tu negocio está en Málaga o en la Costa del Sol, podéis veros en persona para que le cuentes lo que necesitas, mientras el resto del equipo trabaja contigo en remoto. Hacemos webs multiidioma, muy útiles si atiendes a turistas y clientes internacionales.",
+      "Misha, uno de los tres socios de Kaizencode, vive en Málaga. Si tu negocio está en Málaga o en la Costa del Sol, podéis veros en persona para que le cuentes lo que necesitas: una web multiidioma, una tienda online, una app para iPhone o un agente de IA que atienda a tus clientes y se encargue de las tareas repetitivas.",
     "city.contact.title": "Tu contacto en {city}",
     "city.contact.text":
       "{name} es uno de los tres socios de Kaizencode. Podéis reuniros en persona en {city} o por videollamada, como prefieras.",
     "city.others.title": "También trabajamos en",
-    "city.others.spain": "Toda España (en remoto)",
     "hero.support":
       "Programamos cada proyecto desde cero, sin plantillas, y hablas directamente con quien lo construye. Sin comerciales ni intermediarios.",
     "hero.cta.primary": "Pide presupuesto",
@@ -840,10 +858,23 @@ export const ui = {
     "case.centauro.value.3":
       "Evolución continua sin parar la tienda de la que dependen las clínicas cada día.",
     "section.testimonials.title": "Lo que dicen nuestros clientes",
-    "about.highlight": "Hablas directamente con quien programa tu web.",
-    "about.role.omar": "Ingeniero de software · e-commerce",
-    "about.role.misha": "Ingeniero de software · e-commerce",
-    "about.role.jose": "Desarrollador frontend · webs y e-commerce",
+    "about.highlight": "Hablas directamente con quien programa tu proyecto.",
+    "about.role.omar": "Ingeniero de software e IA aplicada · e-commerce",
+    "about.role.misha": "Ingeniero de software e IA aplicada · e-commerce",
+    "about.role.jose":
+      "Desarrollador frontend e ingeniero de IA aplicada · webs y e-commerce",
+    "city.badge": "Software e IA",
+    "city.services.title": "Qué podemos hacer por ti",
+    "city.process.3":
+      "Lo desarrollamos en entregas cortas, y lo ves y lo pruebas en cada paso.",
+    "city.process.4":
+      "Lo ponemos en marcha y seguimos a tu lado para mejorarlo.",
+    "city.faq.1.q": "¿Qué tipo de proyectos hacéis?",
+    "city.faq.1.a":
+      "Webs, tiendas online, apps para iPhone y automatizaciones con IA: desde flujos con n8n que conectan tus herramientas hasta agentes personalizados. Si es software y ayuda a tu negocio, hablemos.",
+    "city.faq.2.q": "¿De verdad la IA ahorra tiempo en un negocio pequeño?",
+    "city.faq.2.a":
+      "Sí, cuando se aplica a una tarea concreta: responder preguntas frecuentes, clasificar correos, pasar datos entre programas o preparar informes. Empezamos por un proceso, medimos el tiempo ahorrado y crecemos desde ahí.",
     "about.linkedin": "LinkedIn",
     "about.linkedin.label": "Perfil de LinkedIn de",
     "faq.price.q": "¿Cuánto cuesta una web?",
@@ -918,6 +949,7 @@ export const ui = {
     "webdesign.back": "Volver al inicio",
     "service.custom.link": "Automatización de procesos con IA",
     "case.automation.link": "Cómo automatizamos procesos con IA",
+    "case.webdesign.link": "Cómo diseñamos páginas web",
     "service.mobile.title": "Apps móviles",
     "service.mobile.description":
       "Apps a medida que ponen tu negocio en el bolsillo: clientes, citas, cobros o lo que necesites, con Face ID, widgets y los mismos datos que tu web.",
@@ -1101,7 +1133,8 @@ export const ui = {
     "ecommerce.description":
       "Creamos y personalizamos tiendas en Shopify: puesta en marcha, temas a medida, apps e integraciones y migración desde tu plataforma actual. Con experiencia en e-commerce de empresa.",
     "ecommerce.badge": "Tiendas online · Shopify",
-    "ecommerce.heading": "Tu tienda en Shopify, hecha por quien conoce el e-commerce",
+    "ecommerce.heading":
+      "Tu tienda en Shopify, hecha por quien conoce el e-commerce",
     "ecommerce.intro":
       "Montamos, diseñamos y desarrollamos tiendas en Shopify que venden desde el primer día. Aplicamos la experiencia de mantener el e-commerce de una gran empresa, a la medida de tu negocio.",
     "ecommerce.includes.title": "Qué hacemos en Shopify",
@@ -1117,7 +1150,8 @@ export const ui = {
     "ecommerce.includes.4.title": "Migración y crecimiento",
     "ecommerce.includes.4.text":
       "Pasamos tu tienda desde WooCommerce, PrestaShop u otra plataforma sin perder productos, clientes ni posicionamiento, y la seguimos mejorando después.",
-    "ecommerce.case.title": "Nuestra experiencia: el e-commerce B2B de Centauro",
+    "ecommerce.case.title":
+      "Nuestra experiencia: el e-commerce B2B de Centauro",
     "ecommerce.case.intro":
       "Desde hace más de dos años mantenemos y evolucionamos la tienda B2B de Centauro, donde las clínicas veterinarias hacen sus pedidos cada día. Funciona sobre SAP Commerce, una plataforma de empresa donde una parada son ventas perdidas.",
     "ecommerce.case.shopify":

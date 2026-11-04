@@ -23,7 +23,8 @@ export const team = [
     nameKey: "about.member.jose",
     roleKey: "about.role.jose",
     city: "valencia",
-    linkedin: "https://www.linkedin.com/in/jose-mar%C3%ADa-mart%C3%ADnez-840165172/",
+    linkedin:
+      "https://www.linkedin.com/in/jose-mar%C3%ADa-mart%C3%ADnez-840165172/",
     avatar: "https://avatars.githubusercontent.com/kaizen-josemaria?size=160",
   },
 ] as const satisfies readonly {
@@ -36,5 +37,5 @@ export const team = [
 
 // City landings only exist in Spanish, so every language links to them
 export function cityPath(city: City) {
-  return `/diseno-web-${city}/`
+  return `/desarrollo-software-${city}/`
 }

@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -17,6 +18,9 @@ import { DevelopedByKaizencode } from "@/components/ui/developed-by-kaizencode"
 import {
   Palette,
   Search,
+  ShoppingCart,
+  Smartphone,
+  Bot,
   Zap,
   Wrench,
   ExternalLink,
@@ -37,54 +41,94 @@ export interface Props {
 const { lang, city } = Astro.props
 const t = useTranslations(lang)
 const homeHref = localizePath(lang)
-const genericHref = localizePath(lang, "/diseno-web/")
-
 const cityName = city && t(`city.${city}`)
 const member = city && team.find((m) => m.city === city)
 const badge = cityName
-  ? `${t("webdesign.badge")} · ${cityName}`
+  ? `${t("city.badge")} · ${cityName}`
   : t("webdesign.badge")
 const heading = city ? t(`city.${city}.heading`) : t("webdesign.heading")
 const intro = city ? t(`city.${city}.intro`) : t("webdesign.intro")
 
-const otherLocations = [
-  ...cities
-    .filter((c) => c !== city)
-    .map((c) => ({ label: t(`city.${c}`), href: cityPath(c) })),
-  ...(city ? [{ label: t("city.others.spain"), href: genericHref }] : []),
-]
+const otherLocations = cities
+  .filter((c) => c !== city)
+  .map((c) => ({ label: t(`city.${c}`), href: cityPath(c) }))
 
-const includes = [
-  {
-    title: t("webdesign.includes.1.title"),
-    text: t("webdesign.includes.1.text"),
-    icon: Palette,
-  },
-  {
-    title: t("webdesign.includes.2.title"),
-    text: t("webdesign.includes.2.text"),
-    icon: Search,
-  },
-  {
-    title: t("webdesign.includes.3.title"),
-    text: t("webdesign.includes.3.text"),
-    icon: Zap,
-  },
-  {
-    title: t("webdesign.includes.4.title"),
-    text: t("webdesign.includes.4.text"),
-    icon: Wrench,
-  },
-]
+const includes: {
+  title: string
+  text: string
+  icon: typeof Palette
+  href?: string
+  link?: string
+}[] = city
+  ? [
+      {
+        title: t("service.custom.title"),
+        text: t("service.custom.description"),
+        icon: Bot,
+        href: localizePath(lang, "/automatizacion-ia/"),
+        link: t("service.custom.link"),
+      },
+      {
+        title: t("service.mobile.title"),
+        text: t("service.mobile.description"),
+        icon: Smartphone,
+        href: localizePath(lang, caseStudyPath("app-agora")),
+        link: t("service.mobile.link"),
+      },
+      {
+        title: t("service.web.title"),
+        text: t("service.web.description"),
+        icon: Palette,
+        href: localizePath(lang, "/diseno-web/"),
+        link: t("service.web.link"),
+      },
+      {
+        title: t("service.ecommerce.title"),
+        text: t("service.ecommerce.description"),
+        icon: ShoppingCart,
+        href: localizePath(lang, "/tiendas-online/"),
+        link: t("service.ecommerce.link"),
+      },
+    ]
+  : [
+      {
+        title: t("webdesign.includes.1.title"),
+        text: t("webdesign.includes.1.text"),
+        icon: Palette,
+      },
+      {
+        title: t("webdesign.includes.2.title"),
+        text: t("webdesign.includes.2.text"),
+        icon: Search,
+      },
+      {
+        title: t("webdesign.includes.3.title"),
+        text: t("webdesign.includes.3.text"),
+        icon: Zap,
+      },
+      {
+        title: t("webdesign.includes.4.title"),
+        text: t("webdesign.includes.4.text"),
+        icon: Wrench,
+      },
+    ]
 
 const steps = [
   t("webdesign.process.1"),
   t("webdesign.process.2"),
-  t("webdesign.process.3"),
-  t("webdesign.process.4"),
+  t(city ? "city.process.3" : "webdesign.process.3"),
+  t(city ? "city.process.4" : "webdesign.process.4"),
 ]
 
-const projects = [
+type Project = {
+  slug: string
+  name: string
+  text: string
+  href?: string
+  caseHref: string
+  alt?: string
+}
+const webProjects: Project[] = [
   {
     slug: "agora",
     name: t("project.agora"),
@@ -107,16 +151,55 @@ const projects = [
     caseHref: localizePath(lang, caseStudyPath("albinana")),
   },
 ]
-// Show the local project first on the Valencia page
-if (city === "valencia") projects.reverse()
+const appAgora: Project = {
+  slug: "app-agora",
+  name: t("project.appAgora"),
+  text: t("project.appAgora.description"),
+  caseHref: localizePath(lang, caseStudyPath("app-agora")),
+  alt: t("project.appAgora.image.alt"),
+}
+const centauro: Project = {
+  slug: "centauro",
+  name: t("project.centauro"),
+  text: t("project.centauro.description"),
+  href: "https://shop.centauro.es/",
+  caseHref: localizePath(lang, caseStudyPath("centauro")),
+}
+const [agora, jovi, albinana] = webProjects
+// Local work first; Málaga has none yet, so lead with the B2B store and the app
+const projects: Project[] = {
+  none: webProjects,
+  cuenca: [appAgora, agora, jovi],
+  valencia: [albinana, centauro, appAgora],
+  malaga: [centauro, appAgora, albinana],
+}[city ?? "none"]
 
-const faqs = [
-  { q: t("webdesign.faq.1.q"), a: t("webdesign.faq.1.a") },
-  { q: t("webdesign.faq.2.q"), a: t("webdesign.faq.2.a") },
-  { q: t("webdesign.faq.3.q"), a: t("webdesign.faq.3.a") },
-]
+const faqs = city
+  ? [
+      { q: t("city.faq.1.q"), a: t("city.faq.1.a") },
+      { q: t("city.faq.2.q"), a: t("city.faq.2.a") },
+      { q: t("faq.remote.q"), a: t("faq.remote.a") },
+    ]
+  : [
+      { q: t("webdesign.faq.1.q"), a: t("webdesign.faq.1.a") },
+      { q: t("webdesign.faq.2.q"), a: t("webdesign.faq.2.a") },
+      { q: t("webdesign.faq.3.q"), a: t("webdesign.faq.3.a") },
+    ]
+const cta = city
+  ? ({
+      title: "section.contact.title",
+      text: "section.contact.text",
+      button: "hero.cta.primary",
+      subject: "contact.email.subject",
+    } as const)
+  : ({
+      title: "webdesign.cta.title",
+      text: "webdesign.cta.text",
+      button: "webdesign.cta.button",
+      subject: "webdesign.cta.subject",
+    } as const)
 
-const mailto = `mailto:contact@kaizencode.es?subject=${encodeURIComponent(t("webdesign.cta.subject"))}`
+const mailto = `mailto:contact@kaizencode.es?subject=${encodeURIComponent(t(cta.subject))}`
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -217,7 +300,7 @@ const faqSchema = {
             className: "h-auto min-h-11 px-6 py-2 whitespace-normal shrink",
           })}
         >
-          {t("webdesign.cta.button")}
+          {t(cta.button)}
           <ArrowRight className="size-4" />
         </a>
         <a
@@ -235,11 +318,13 @@ const faqSchema = {
     </section>
 
     <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("webdesign.includes.title")} />
+      <SectionHeader
+        title={t(city ? "city.services.title" : "webdesign.includes.title")}
+      />
       <div class="grid gap-6 sm:grid-cols-2">
         {
-          includes.map(({ title, text, icon: Icon }) => (
-            <Card size="sm">
+          includes.map(({ title, text, icon: Icon, href, link }) => (
+            <Card size="sm" className="relative">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2.5">
                   <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
@@ -247,6 +332,17 @@ const faqSchema = {
                 </CardTitle>
                 <CardDescription>{text}</CardDescription>
               </CardHeader>
+              {href && (
+                <CardFooter className="mt-auto">
+                  <a
+                    href={href}
+                    class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
+                  >
+                    {link}
+                    <ArrowRight className="size-3.5" />
+                  </a>
+                </CardFooter>
+              )}
             </Card>
           ))
         }
@@ -277,18 +373,20 @@ const faqSchema = {
       <SectionHeader title={t("webdesign.projects.title")} />
       <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {
-          projects.map(({ slug, name, text, href, caseHref }) => (
+          projects.map(({ slug, name, text, href, caseHref, alt }) => (
             <li class="flex">
-              <Card className="w-full pt-0">
+              {/* As on the home page, the case study link stretches over the whole card; the visit link sits above it */}
+              <Card className="relative w-full pt-0">
                 <img
                   src={`/projects/${slug}.webp`}
                   srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
                   sizes="(min-width: 1152px) 360px, (min-width: 640px) 50vw, 100vw"
-                  alt={`${t("project.image.alt")} ${name}`}
+                  alt={alt ?? `${t("project.image.alt")} ${name}`}
                   width="1280"
                   height="800"
                   loading="lazy"
                   decoding="async"
+                  draggable="false"
                   class="aspect-[16/10] w-full border-b border-border/50 bg-muted object-cover object-top"
                 />
                 <CardHeader>
@@ -301,22 +399,24 @@ const faqSchema = {
                   {caseHref && (
                     <a
                       href={caseHref}
-                      class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
+                      class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
                     >
                       {t("project.case")}
                       <ArrowRight className="size-3.5" />
                     </a>
                   )}
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener"
-                    class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
-                  >
-                    {t("project.visit")}
-                    <ExternalLink className="size-3.5" />
-                    <span class="sr-only">{t("a11y.newTab")}</span>
-                  </a>
+                  {href && (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener"
+                      class="relative z-10 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
+                    >
+                      {t("project.visit")}
+                      <ExternalLink className="size-3.5" />
+                      <span class="sr-only">{t("a11y.newTab")}</span>
+                    </a>
+                  )}
                 </div>
               </Card>
             </li>
@@ -330,37 +430,33 @@ const faqSchema = {
       <FaqAccordion client:visible faqs={faqs} />
     </section>
 
-    <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("city.others.title")} />
-      <ul class="flex flex-wrap gap-3">
-        {
-          otherLocations.map(({ label, href }) => (
-            <li>
-              <a
-                href={href}
-                class={buttonVariants({
-                  variant: "outline",
-                  size: "lg",
-                  className:
-                    "h-auto min-h-11 shrink border-foreground/20 px-5 py-2 whitespace-normal",
-                })}
-              >
-                <MapPin className="size-3.5" />
-                {label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
+    {
+      otherLocations.length > 0 && (
+        <section class="reveal flex flex-col gap-8">
+          <SectionHeader title={t("city.others.title")} />
+          <ul class="flex flex-wrap gap-3">
+            {otherLocations.map(({ label, href }) => (
+              <li>
+                <a
+                  href={href}
+                  class={buttonVariants({
+                    variant: "outline",
+                    size: "lg",
+                    className:
+                      "h-auto min-h-11 shrink border-foreground/20 px-5 py-2 whitespace-normal",
+                  })}
+                >
+                  <MapPin className="size-3.5" />
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
 
-    <ContactSection
-      lang={lang}
-      title="webdesign.cta.title"
-      text="webdesign.cta.text"
-      button="webdesign.cta.button"
-      subject="webdesign.cta.subject"
-    />
+    <ContactSection lang={lang} {...cta} />
 
     <footer
       class="flex flex-col items-start justify-between gap-4 border-t border-border/50 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-2"

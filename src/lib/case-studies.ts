@@ -48,8 +48,8 @@ export interface CaseStudy {
   }
   // Shows the interactive app demo (custom/app-demo.tsx) after the work section
   demo?: boolean
-  // Optional link to the service page this case study illustrates
-  service?: { href: string; label: UiKey }
+  // Optional links to the service pages this case study illustrates
+  services?: { href: string; label: UiKey }[]
 }
 
 // Case study pages live at /proyectos/<slug>/ (English: /en/projects/<slug>/)
@@ -102,7 +102,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
       button: "case.cta.button",
       subject: "case.cta.subject",
     },
-    service: { href: "/tiendas-online/", label: "case.ecommerce.link" },
+    services: [{ href: "/tiendas-online/", label: "case.ecommerce.link" }],
   },
   jovi: {
     name: "project.jovi",
@@ -152,6 +152,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
       button: "webdesign.cta.button",
       subject: "webdesign.cta.subject",
     },
+    services: [{ href: "/diseno-web/", label: "case.webdesign.link" }],
   },
   albinana: {
     name: "project.albinana",
@@ -202,7 +203,10 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
       button: "case.cta.button",
       subject: "case.albinana.cta.subject",
     },
-    service: { href: "/automatizacion-ia/", label: "case.automation.link" },
+    services: [
+      { href: "/automatizacion-ia/", label: "case.automation.link" },
+      { href: "/diseno-web/", label: "case.webdesign.link" },
+    ],
   },
   agora: {
     name: "project.agora",
@@ -246,7 +250,10 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
       button: "case.cta.button",
       subject: "case.agora.cta.subject",
     },
-    service: { href: "/automatizacion-ia/", label: "case.automation.link" },
+    services: [
+      { href: "/automatizacion-ia/", label: "case.automation.link" },
+      { href: "/diseno-web/", label: "case.webdesign.link" },
+    ],
   },
   "app-agora": {
     name: "project.appAgora",
