@@ -4,9 +4,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 gsap.registerPlugin(ScrollTrigger)
 
 // Scroll and data animations, driven by the markup (the page entrance,
-// .stars-in / .blur-in / .hero-in, is CSS in src/styles/global.css):
-//   .reveal      sections rise into place as they scroll in (move only, never
-//                fade, so text never fails contrast mid-animation)
+// .stars-in / .header-in / .blur-in / .hero-in, is CSS in src/styles/global.css):
+//   .reveal      each block fades and rises into place as it enters, on load
+//                or scroll (hidden from first paint by the .js rule in CSS)
+//   [data-stagger]  its cards rise one by one instead of as one block
 //   [data-count-up]  "10+" counts up from 0
 //   --scroll-progress  0..1 on <html>, the header bar's scaleX (not
 //                motion-gated: it reports position, it does not animate)
@@ -15,17 +16,30 @@ export function initAnimations() {
   const mm = gsap.matchMedia()
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {
-    gsap.utils.toArray<HTMLElement>(".reveal").forEach((el) => {
-      gsap.from(el, {
-        y: 32,
-        ease: "none",
-        scrollTrigger: {
-          trigger: el,
-          start: "top bottom",
-          end: "top bottom-=240",
-          scrub: true,
-        },
-      })
+    // Every block of a .reveal section (and each card of a [data-stagger]
+    // grid) rises into place once it enters, in a stagger with whatever
+    // enters alongside it. Blocks already on screen at load play right after
+    // the hero's CSS entrance. CSS transitions (Card's transition-all) are
+    // paused meanwhile so they don't fight the tween
+    const blocks = gsap.utils.toArray<HTMLElement>(
+      ".reveal > :not([data-stagger]), [data-stagger] > *"
+    )
+    const loadedAt = performance.now()
+    gsap.set(blocks, { y: 48, scale: 0.98, transition: "none" })
+    ScrollTrigger.batch(blocks, {
+      start: "top bottom-=60",
+      once: true,
+      onEnter: (batch) =>
+        gsap.to(batch, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.09,
+          delay: performance.now() - loadedAt < 500 ? 0.5 : 0,
+          clearProps: "transition",
+        }),
     })
 
     document.querySelectorAll<HTMLElement>("[data-count-up]").forEach((el) => {

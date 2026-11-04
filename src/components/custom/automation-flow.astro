@@ -1,0 +1,476 @@
+---
+import { Badge } from "@/components/ui/badge"
+import { Card } from "@/components/ui/card"
+import { buttonVariants } from "@/components/ui/button"
+import {
+  Bot,
+  Check,
+  Eye,
+  Globe,
+  ImageIcon,
+  Lock,
+  Mail,
+  MessageCircle,
+  Pause,
+  Play,
+  Send,
+  Sun,
+  UserCheck,
+} from "lucide-react"
+import { useTranslations } from "@/i18n/utils"
+import { type Lang } from "@/i18n/ui"
+
+// The Farmacia Albiñana n8n workflow as a visual story: a row of five steps
+// with data travelling between them, and a "screen" below that shows what
+// happens at each one. Without JS, or with reduced motion, every scene is
+// listed one under another; the script plays an example run on loop.
+
+export interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+
+const steps = [
+  { label: t("automation.flow.step.1"), icon: MessageCircle },
+  { label: t("automation.flow.step.2"), icon: Bot },
+  { label: t("automation.flow.step.3"), icon: Eye },
+  { label: t("automation.flow.step.4"), icon: UserCheck },
+  { label: t("automation.flow.step.5"), icon: Globe },
+]
+
+// Scenes 3 and 5 are the same page in a browser: private preview, then live
+const [preview, live] = [
+  {
+    n: 3,
+    url: t("automation.flow.mock.private"),
+    icon: Lock,
+    text: t("automation.flow.scene.3"),
+  },
+  {
+    n: 5,
+    url: "farmaciaalbinana.es",
+    icon: Globe,
+    text: t("automation.flow.scene.5"),
+  },
+]
+
+const scene =
+  "flex flex-col items-center justify-center gap-5 border-b border-border/50 px-5 py-8 transition-all duration-300 last:border-0 data-[state=active]:delay-300 data-[state=idle]:invisible data-[state=idle]:opacity-0 group-data-live/flow:border-0 group-data-live/flow:[grid-area:1/1] sm:px-8"
+const caption = "max-w-md text-center text-sm text-balance sm:text-base"
+const packet =
+  "pointer-events-none invisible absolute size-3 -translate-1/2 rounded-full bg-primary shadow-[0_0_14px_3px] shadow-primary/40"
+---
+
+<figure
+  data-flow
+  data-round="2"
+  aria-label={t("automation.flow.label")}
+  class="group/flow mx-auto flex w-full max-w-3xl flex-col gap-6"
+>
+  <figcaption
+    class="flex min-h-8 items-center justify-between gap-4 font-mono text-xs text-muted-foreground"
+  >
+    <span class="flex items-center gap-2">
+      <span class="relative flex size-2">
+        <span
+          class="absolute inline-flex size-full rounded-full bg-primary opacity-60 motion-safe:animate-ping"
+        ></span>
+        <span class="relative inline-flex size-2 rounded-full bg-primary"
+        ></span>
+      </span>
+      {t("automation.flow.example")}
+    </span>
+    <button
+      type="button"
+      data-flow-toggle
+      aria-label={t("automation.flow.pause")}
+      data-label-pause={t("automation.flow.pause")}
+      data-label-play={t("automation.flow.play")}
+      class={buttonVariants({
+        variant: "ghost",
+        size: "icon-sm",
+        className: "hidden group-data-live/flow:inline-flex",
+      })}
+    >
+      <Pause className="size-4" data-icon="pause" />
+      <Play className="hidden size-4" data-icon="play" />
+    </button>
+  </figcaption>
+
+  <!-- Pipeline: five steps, and a loop back from approval to the agent -->
+  <div class="relative pt-9">
+    <div
+      aria-hidden="true"
+      class="absolute top-2 left-[30%] h-7 w-[40%] rounded-t-full border-2 border-b-0 border-dashed border-foreground/20"
+    >
+      <span
+        class="absolute top-0 left-1/2 -translate-1/2 bg-background px-1.5 font-mono text-[11px] whitespace-nowrap text-muted-foreground"
+      >
+        ↺ {t("automation.flow.loop")}
+      </span>
+      <span data-flow-arc class={packet}></span>
+    </div>
+    <ol class="relative grid grid-cols-5">
+      <span
+        aria-hidden="true"
+        class="absolute top-[22px] right-[10%] left-[10%] h-0.5 -translate-y-1/2 bg-border"
+      ></span>
+      <span data-flow-packet aria-hidden="true" class={`${packet} top-[22px]`}
+      ></span>
+      {
+        steps.map(({ label, icon: Icon }, i) => (
+          <li
+            data-flow-step={i + 1}
+            data-state="done"
+            class="group/step relative flex justify-center text-center"
+          >
+            {/* Enabled by the script: jumps the animation to this step */}
+            <button
+              type="button"
+              data-flow-jump={i + 1}
+              disabled
+              class="flex flex-col items-center gap-2 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background enabled:cursor-pointer"
+            >
+              <span class="flex size-11 items-center justify-center rounded-full border-2 border-foreground/30 bg-card text-foreground transition-all duration-300 group-data-live/flow:group-hover/step:scale-110 group-data-live/flow:group-hover/step:border-primary group-data-[state=active]/step:scale-110 group-data-[state=active]/step:border-primary group-data-[state=active]/step:bg-primary group-data-[state=active]/step:text-primary-foreground group-data-[state=active]/step:shadow-[0_0_0_6px] group-data-[state=active]/step:shadow-primary/15 group-data-[state=idle]/step:border-border group-data-[state=idle]/step:text-muted-foreground">
+                <Icon className="size-5" />
+              </span>
+              <span class="text-[10px] leading-tight font-medium transition-colors duration-300 group-data-[state=idle]/step:text-muted-foreground sm:text-sm">
+                {label}
+              </span>
+            </button>
+          </li>
+        ))
+      }
+    </ol>
+    <p
+      class="mt-3 hidden text-center font-mono text-[11px] text-muted-foreground group-data-live/flow:block"
+    >
+      {t("automation.flow.hint")}
+    </p>
+  </div>
+
+  <!-- The screen: one scene per step -->
+  <Card className="grid gap-0 py-0">
+    <div data-flow-scene="1" data-state="done" class={scene}>
+      <div
+        class="flex w-full max-w-xs flex-col items-end gap-2"
+        aria-hidden="true"
+      >
+        <div
+          class="rounded-2xl rounded-br-sm bg-primary px-4 py-2.5 text-sm text-primary-foreground shadow-sm"
+        >
+          {t("automation.flow.mock.message")}
+        </div>
+        <div class="flex gap-2">
+          {
+            [0, 1].map(() => (
+              <span class="flex size-16 items-center justify-center rounded-xl bg-muted text-muted-foreground">
+                <ImageIcon className="size-6" />
+              </span>
+            ))
+          }
+        </div>
+        <span
+          class="flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground"
+        >
+          <Send className="size-3" />
+          <Mail className="size-3" />
+          {t("automation.flow.mock.channels")}
+        </span>
+      </div>
+      <p class={caption}>{t("automation.flow.scene.1")}</p>
+    </div>
+
+    <div data-flow-scene="2" data-state="done" class={scene}>
+      <div class="flex flex-col items-center gap-4" aria-hidden="true">
+        <span class="relative flex size-16 items-center justify-center">
+          <span
+            class="relative flex size-16 items-center justify-center rounded-full bg-primary text-primary-foreground"
+          >
+            <Bot className="size-8" />
+          </span>
+        </span>
+        <div class="flex flex-wrap justify-center gap-2">
+          {
+            [
+              t("automation.flow.mock.tag.1"),
+              t("automation.flow.mock.tag.2"),
+              t("automation.flow.mock.tag.3"),
+            ].map((tag) => (
+              <Badge
+                variant="secondary"
+                className="h-auto gap-1 px-2.5 py-1 text-xs"
+              >
+                <Check className="size-3" />
+                {tag}
+              </Badge>
+            ))
+          }
+        </div>
+      </div>
+      <p class={caption}>{t("automation.flow.scene.2")}</p>
+    </div>
+
+    {
+      [preview, "approval", live].map((item) =>
+        typeof item === "string" ? (
+          <div data-flow-scene="4" data-state="done" class={scene}>
+            <div
+              class="flex w-full max-w-xs flex-col items-center gap-3"
+              aria-hidden="true"
+            >
+              <div class="flex gap-2">
+                <span
+                  data-tap="change"
+                  class={buttonVariants({
+                    variant: "outline",
+                    size: "lg",
+                    className:
+                      "pointer-events-none transition-opacity group-data-[round=1]/flow:ring-2 group-data-[round=1]/flow:ring-primary group-data-[round=2]/flow:opacity-40",
+                  })}
+                >
+                  {t("automation.flow.mock.change")}
+                </span>
+                <span
+                  data-tap="approve"
+                  class={buttonVariants({
+                    size: "lg",
+                    // The button the client didn't press fades back
+                    className:
+                      "pointer-events-none transition-opacity group-data-[round=1]/flow:opacity-40",
+                  })}
+                >
+                  <Check className="size-4" />
+                  {t("automation.flow.mock.approve")}
+                </span>
+              </div>
+              <div class="self-end rounded-2xl rounded-br-sm bg-primary px-4 py-2.5 text-sm text-primary-foreground shadow-sm group-data-[round=2]/flow:hidden">
+                {t("automation.flow.mock.reply")}
+              </div>
+            </div>
+            <p class={caption}>{t("automation.flow.scene.4")}</p>
+          </div>
+        ) : (
+          <div data-flow-scene={item.n} data-state="done" class={scene}>
+            <div
+              class="relative w-full max-w-xs overflow-hidden rounded-xl border border-border bg-background shadow-sm"
+              aria-hidden="true"
+            >
+              <div class="flex items-center gap-2 border-b border-border px-3 py-2">
+                <span class="flex gap-1">
+                  <span class="size-2 rounded-full bg-foreground/15" />
+                  <span class="size-2 rounded-full bg-foreground/15" />
+                  <span class="size-2 rounded-full bg-foreground/15" />
+                </span>
+                <span class="flex min-w-0 flex-1 items-center justify-center gap-1 rounded-full bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground">
+                  <item.icon className="size-3 shrink-0" />
+                  <span class="truncate">{item.url}</span>
+                </span>
+              </div>
+              <div class="flex gap-3 p-3">
+                <span class="flex size-20 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-amber-200 to-orange-300 text-orange-700 dark:from-amber-300/40 dark:to-orange-400/40 dark:text-orange-200">
+                  <Sun className="size-8" />
+                </span>
+                <div class="flex min-w-0 flex-col gap-1.5">
+                  <span class="text-sm font-semibold">
+                    {t("automation.flow.mock.product")}
+                  </span>
+                  {/* Old price on the first pass, new one after the feedback */}
+                  <span
+                    data-price
+                    class="w-fit origin-left font-mono text-lg font-bold"
+                  >
+                    <span class="group-data-[round=2]/flow:hidden">
+                      {t("automation.flow.mock.price.old")}
+                    </span>
+                    <span class="hidden group-data-[round=2]/flow:inline">
+                      {t("automation.flow.mock.price")}
+                    </span>
+                  </span>
+                  <span class="h-1.5 w-24 rounded-full bg-muted" />
+                  <span class="h-1.5 w-16 rounded-full bg-muted" />
+                </div>
+              </div>
+              {item.n === 5 && (
+                <Badge className="absolute right-2 bottom-2 h-auto gap-1 px-2 py-1">
+                  <Check className="size-3" />
+                  {t("automation.flow.mock.live")}
+                </Badge>
+              )}
+            </div>
+            <p class={caption}>{item.text}</p>
+          </div>
+        )
+      )
+    }
+  </Card>
+</figure>
+
+<script>
+  import { gsap } from "gsap"
+  import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  function initFlow(figure: HTMLElement) {
+    const $ = (selector: string) => figure.querySelector<HTMLElement>(selector)!
+    const $$ = (selector: string) =>
+      figure.querySelectorAll<HTMLElement>(selector)
+    const toggle = $("[data-flow-toggle]")
+    const mm = gsap.matchMedia()
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      figure.setAttribute("data-live", "")
+
+      const tl = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 0.5 })
+      // Slower than real time so each step can be read calmly
+      tl.timeScale(0.7)
+      const attr = (target: gsap.TweenTarget, key: string, value: string) =>
+        tl.set(target, { attr: { [key]: value } })
+      const wait = (seconds: number) => tl.to({}, { duration: seconds })
+
+      let current = 0
+      // Light up step n and show its scene
+      const show = (n: number) => {
+        if (current)
+          attr($(`[data-flow-step="${current}"]`), "data-state", "done")
+        attr($(`[data-flow-step="${n}"]`), "data-state", "active")
+        attr($$("[data-flow-scene]"), "data-state", "idle")
+        attr($(`[data-flow-scene="${n}"]`), "data-state", "active")
+        // The first time each step shows is where clicking it jumps to
+        if (!(`step-${n}` in tl.labels)) tl.addLabel(`step-${n}`)
+        // Time for the scene to fade in and be read
+        wait(1)
+        current = n
+      }
+      // Data travels along the line between two steps (centres at 10%..90%)
+      const move = (from: number, to: number) => {
+        const dot = $("[data-flow-packet]")
+        tl.fromTo(
+          dot,
+          { left: `${from * 20 - 10}%`, autoAlpha: 1 },
+          {
+            left: `${to * 20 - 10}%`,
+            duration: 0.6,
+            ease: "power1.inOut",
+            immediateRender: false,
+          }
+        ).set(dot, { autoAlpha: 0 })
+      }
+      // Back from approval to the agent, over the arc
+      const loop = () => {
+        const dot = $("[data-flow-arc]")
+        tl.set(dot, { autoAlpha: 1, left: "100%", top: "100%" })
+          .to(dot, { left: "0%", duration: 1, ease: "sine.inOut" })
+          .to(dot, { top: "0%", duration: 0.5, ease: "sine.out" }, "<")
+          .to(dot, { top: "100%", duration: 0.5, ease: "sine.in" }, ">")
+          .set(dot, { autoAlpha: 0 })
+      }
+      const tap = (id: string) =>
+        tl.to($(`[data-tap="${id}"]`), {
+          scale: 0.95,
+          duration: 0.12,
+          yoyo: true,
+          repeat: 1,
+        })
+
+      attr($$("[data-flow-step]"), "data-state", "idle")
+      attr(figure, "data-round", "1")
+      show(1)
+      wait(1.8)
+      move(1, 2)
+      show(2)
+      wait(1.6)
+      move(2, 3)
+      show(3)
+      wait(1.8)
+      move(3, 4)
+      show(4)
+      wait(0.6)
+      tap("change")
+      wait(1.4)
+      loop()
+      // Second pass: the agent applies the change and the client approves
+      attr(figure, "data-round", "2")
+      show(2)
+      wait(1)
+      move(2, 3)
+      show(3)
+      tl.fromTo(
+        $('[data-flow-scene="3"] [data-price]'),
+        { scale: 1.1 },
+        { scale: 1, duration: 0.4, ease: "power1.out", immediateRender: false },
+        "<0.5"
+      )
+      wait(1.2)
+      move(3, 4)
+      show(4)
+      wait(1.2)
+      tap("approve")
+      wait(1.6)
+      move(4, 5)
+      show(5)
+      wait(3)
+
+      // Plays while on screen, unless the visitor paused it
+      let userPaused = false
+      const trigger = ScrollTrigger.create({
+        trigger: figure,
+        start: "top 85%",
+        end: "bottom 15%",
+        onToggle: (self) =>
+          self.isActive && !userPaused ? tl.play() : tl.pause(),
+      })
+      const onToggle = () => {
+        userPaused = !userPaused
+        if (userPaused) tl.pause()
+        else if (trigger.isActive) tl.play()
+        toggle.setAttribute(
+          "aria-label",
+          toggle.dataset[userPaused ? "labelPlay" : "labelPause"]!
+        )
+        $('[data-icon="pause"]').classList.toggle("hidden", userPaused)
+        $('[data-icon="play"]').classList.toggle("hidden", !userPaused)
+      }
+      toggle.addEventListener("click", onToggle)
+
+      // Clicking a step continues the story from there (or shows it, if paused)
+      const jumps =
+        figure.querySelectorAll<HTMLButtonElement>("[data-flow-jump]")
+      const onJump = (event: Event) => {
+        const n = (event.currentTarget as HTMLElement).dataset.flowJump
+        const time = tl.labels[`step-${n}`]
+        // Paused: land once the scene has faded in
+        if (userPaused) tl.pause(time + 0.7)
+        else tl.play(time + 0.05)
+      }
+      jumps.forEach((button) => {
+        button.disabled = false
+        button.addEventListener("click", onJump)
+      })
+
+      return () => {
+        toggle.removeEventListener("click", onToggle)
+        jumps.forEach((button) => {
+          button.disabled = true
+          button.removeEventListener("click", onJump)
+        })
+        figure.removeAttribute("data-live")
+      }
+    })
+
+    return () => mm.revert()
+  }
+
+  let cleanups: (() => void)[] = []
+  document.addEventListener("astro:page-load", () => {
+    cleanups = [...document.querySelectorAll<HTMLElement>("[data-flow]")].map(
+      initFlow
+    )
+  })
+  document.addEventListener("astro:before-swap", () =>
+    cleanups.forEach((cleanup) => cleanup())
+  )
+</script>

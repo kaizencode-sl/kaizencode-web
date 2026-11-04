@@ -1,0 +1,16 @@
+---
+import Layout from "@/layouts/main.astro"
+import CaseStudyContent from "@/components/custom/case-study-content.astro"
+import { useTranslations } from "@/i18n/utils"
+
+const lang = "en"
+const t = useTranslations(lang)
+---
+
+<Layout
+  lang={lang}
+  title={t("case.appAgora.title")}
+  description={t("case.appAgora.description")}
+>
+  <CaseStudyContent lang={lang} slug="app-agora" />
+</Layout>

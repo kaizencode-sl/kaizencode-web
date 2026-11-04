@@ -47,7 +47,7 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
 ---
 
 <!doctype html>
-<html lang={lang} class="dark scroll-smooth">
+<html lang={lang} class="dark motion-safe:scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -55,16 +55,8 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
 
     <title>{resolvedTitle}</title>
     <meta name="description" content={description} />
-    <meta
-      name="theme-color"
-      content="#ffffff"
-      media="(prefers-color-scheme: light)"
-    />
-    <meta
-      name="theme-color"
-      content="#0f0f0f"
-      media="(prefers-color-scheme: dark)"
-    />
+    <!-- Follows the site theme, not the OS one: synced by the theme script -->
+    <meta name="theme-color" content="#0f0f0f" />
 
     <!-- Canonical & hreflang -->
     <link rel="canonical" href={canonicalUrl} />
@@ -128,10 +120,27 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
         const html = document.documentElement
         const setTheme = () => {
           const theme = localStorage.getItem("theme") || "dark"
-          html.className = theme + " scroll-smooth"
+          // "js": reveal blocks start hidden until GSAP fades them in
+          html.className = theme + " js motion-safe:scroll-smooth"
         }
+        // The browser bar matches the page, also when the toggle flips the class
+        const syncThemeColor = () =>
+          document
+            .querySelector('meta[name="theme-color"]')
+            ?.setAttribute(
+              "content",
+              html.classList.contains("dark") ? "#0f0f0f" : "#ffffff"
+            )
         setTheme()
-        document.addEventListener("astro:after-swap", setTheme)
+        syncThemeColor()
+        new MutationObserver(syncThemeColor).observe(html, {
+          attributes: true,
+          attributeFilter: ["class"],
+        })
+        document.addEventListener("astro:after-swap", () => {
+          setTheme()
+          syncThemeColor()
+        })
       })()
     </script>
 
@@ -171,7 +180,7 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
       {ui[lang]["a11y.skip"]}
     </a>
     <!-- The entrance fades this wrapper, not the React element -->
-    <div class="stars-in fixed inset-0">
+    <div class="stars-in fixed inset-0 opacity-50 md:opacity-100" aria-hidden="true">
       <GravityStarsBackground
         client:idle
         starsCount={60}

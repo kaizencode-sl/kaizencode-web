@@ -90,6 +90,7 @@ const projects = [
     name: t("project.agora"),
     text: t("webdesign.projects.agora"),
     href: "https://www.agoraacademy.es/",
+    caseHref: localizePath(lang, caseStudyPath("agora")),
   },
   {
     slug: "jovi",
@@ -103,6 +104,7 @@ const projects = [
     name: t("project.albinana"),
     text: t("webdesign.projects.albinana"),
     href: "https://www.farmaciaalbinana.es/",
+    caseHref: localizePath(lang, caseStudyPath("albinana")),
   },
 ]
 // Show the local project first on the Valencia page
@@ -133,7 +135,7 @@ const faqSchema = {
   set:html={JSON.stringify(faqSchema)}
 />
 
-<Header client:load lang={lang} />
+<Header client:load lang={lang} path={Astro.url.pathname} />
 
 <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
   <main
@@ -176,7 +178,7 @@ const faqSchema = {
               <CardContent className="flex items-center gap-4">
                 <img
                   src={member.avatar}
-                  alt={t(member.nameKey)}
+                  alt=""
                   width="56"
                   height="56"
                   class="size-14 shrink-0 rounded-full bg-muted object-cover"

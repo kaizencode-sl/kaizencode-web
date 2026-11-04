@@ -1,0 +1,16 @@
+---
+import Layout from "@/layouts/main.astro"
+import AutomationContent from "@/components/custom/automation-content.astro"
+import { useTranslations } from "@/i18n/utils"
+
+const lang = "es"
+const t = useTranslations(lang)
+---
+
+<Layout
+  lang={lang}
+  title={t("automation.title")}
+  description={t("automation.description")}
+>
+  <AutomationContent lang={lang} />
+</Layout>

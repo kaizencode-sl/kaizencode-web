@@ -6,6 +6,14 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* iOS system colours for the interactive app demo (custom/app-demo.tsx) */
+  --color-ios-bg: var(--ios-bg);
+  --color-ios-card: var(--ios-card);
+  --color-ios-fill: var(--ios-fill);
+  --color-ios-label: var(--ios-label);
+  --color-ios-secondary: var(--ios-secondary);
+  --color-ios-separator: var(--ios-separator);
+  --color-ios-red: var(--ios-red);
   --font-heading: "JetBrains Mono Variable", monospace;
   --font-mono: "JetBrains Mono Variable", monospace;
   --font-sans: "JetBrains Mono Variable", monospace;
@@ -50,6 +58,7 @@
 }
 
 :root {
+  color-scheme: light;
   /* Light is the "day shift": paper ground, white frosted cards lifting off
      it, graphite specks for stars. Same zero-chroma ramp as dark */
   --background: oklch(0.975 0 0);
@@ -87,6 +96,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -152,6 +162,15 @@
     animation: blur-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) backwards;
     animation-delay: calc(0.2s + var(--i, 0) * 0.08s);
   }
+  .header-in {
+    animation: header-in 0.7s cubic-bezier(0.215, 0.61, 0.355, 1) backwards;
+  }
+  /* Hidden from first paint so GSAP's reveal (src/lib/animations.ts) fades
+     them in instead of moving cards that are already showing */
+  .js .reveal > :not([data-stagger]),
+  .js [data-stagger] > * {
+    opacity: 0;
+  }
   .hero-in {
     animation: hero-in 0.9s cubic-bezier(0.215, 0.61, 0.355, 1) backwards;
     animation-delay: calc(0.1s + var(--i, 0) * 0.09s);
@@ -169,10 +188,39 @@
     filter: blur(10px);
   }
 }
+@keyframes header-in {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
 @keyframes hero-in {
   from {
     opacity: 0;
     transform: translateY(18px);
     filter: blur(6px);
   }
+}
+
+/* The demo phone uses iOS's own palette and system font, following the site's theme */
+.ios {
+  --ios-bg: #f2f2f7;
+  --ios-card: #ffffff;
+  --ios-fill: #e3e3e8;
+  --ios-label: #000000;
+  --ios-secondary: #8a8a8e;
+  --ios-separator: #e5e5ea;
+  --ios-red: #e5281d;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  letter-spacing: normal;
+}
+.dark .ios {
+  --ios-bg: #000000;
+  --ios-card: #1c1c1e;
+  --ios-fill: #2c2c2e;
+  --ios-label: #ffffff;
+  --ios-secondary: #8d8d93;
+  --ios-separator: #2c2c2e;
+  --ios-red: #ff453a;
 }

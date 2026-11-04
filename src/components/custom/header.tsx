@@ -15,9 +15,11 @@ import { ui, defaultLang, type Lang } from "@/i18n/ui"
 
 interface HeaderProps {
   lang?: Lang
+  // Current page path, so the language links can point at its translation
+  path: string
 }
 
-export function Header({ lang = defaultLang }: HeaderProps) {
+export function Header({ lang = defaultLang, path }: HeaderProps) {
   const base = import.meta.env.BASE_URL.endsWith("/")
     ? import.meta.env.BASE_URL
     : import.meta.env.BASE_URL + "/"
@@ -35,10 +37,11 @@ export function Header({ lang = defaultLang }: HeaderProps) {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" storageKey="theme">
-        <header className="sticky top-0 z-50 border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+        <header className="header-in sticky top-0 z-50 border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
           <div className="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center justify-between px-6">
             <a
               href={homeHref}
+              aria-label={t("nav.home")}
               className="inline-flex min-h-11 min-w-11 items-center text-lg font-bold tracking-tighter no-underline"
             >
               {`/{`}
@@ -57,7 +60,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
             </nav>
 
             <div className="flex items-center gap-2">
-              <LanguageSelector currentLang={lang} />
+              <LanguageSelector currentLang={lang} path={path} />
               <ThemeTogglerButton
                 variant="ghost"
                 size="sm"
@@ -87,6 +90,7 @@ export function Header({ lang = defaultLang }: HeaderProps) {
                     <div className="flex items-center justify-between">
                       <a
                         href={homeHref}
+                        aria-label={t("nav.home")}
                         className="inline-flex min-h-11 min-w-11 items-center text-lg font-bold tracking-tighter no-underline"
                       >
                         {`/{`}

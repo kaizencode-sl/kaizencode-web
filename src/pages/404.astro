@@ -10,11 +10,11 @@ import { ArrowLeft } from "lucide-react"
 const url = Astro.url
 const lang = getLangFromUrl(url)
 
-// Fallback messages for when the URL doesn't have a recognizable lang prefix
+// Fallback messages for when the URL doesn’t have a recognizable lang prefix
 const messages: Record<Lang, { title: string; description: string }> = {
   en: {
     title: "404 — Page not found",
-    description: "The page you're looking for doesn't exist or has been moved.",
+    description: "The page you’re looking for doesn’t exist or has been moved.",
   },
   es: {
     title: "404 — Página no encontrada",
@@ -26,7 +26,7 @@ const { title, description } = messages[lang] ?? messages[defaultLang]
 ---
 
 <Layout lang={lang} title={title} description={description}>
-  <Header client:load lang={lang} />
+  <Header client:load lang={lang} path={Astro.url.pathname} />
   <div
     class="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-6xl flex-col px-6"
   >

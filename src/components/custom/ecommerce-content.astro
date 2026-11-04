@@ -1,0 +1,262 @@
+---
+import { Badge } from "@/components/ui/badge"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { buttonVariants } from "@/components/ui/button"
+import ContactSection from "@/components/custom/contact-section.astro"
+import { FaqAccordion } from "@/components/custom/faq-accordion"
+import { Header } from "@/components/custom/header"
+import { SectionHeader } from "@/components/custom/section-header"
+import { BackToTop } from "@/components/custom/back-to-top"
+import { DevelopedByKaizencode } from "@/components/ui/developed-by-kaizencode"
+import {
+  ArrowLeft,
+  ArrowRight,
+  Paintbrush,
+  Plug,
+  Repeat,
+  Store,
+} from "lucide-react"
+import { localizePath, useTranslations } from "@/i18n/utils"
+import { type Lang } from "@/i18n/ui"
+import { caseStudyPath } from "@/lib/case-studies"
+
+export interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+const caseHref = localizePath(lang, caseStudyPath("centauro"))
+
+const includes = [
+  {
+    title: t("ecommerce.includes.1.title"),
+    text: t("ecommerce.includes.1.text"),
+    icon: Store,
+  },
+  {
+    title: t("ecommerce.includes.2.title"),
+    text: t("ecommerce.includes.2.text"),
+    icon: Paintbrush,
+  },
+  {
+    title: t("ecommerce.includes.3.title"),
+    text: t("ecommerce.includes.3.text"),
+    icon: Plug,
+  },
+  {
+    title: t("ecommerce.includes.4.title"),
+    text: t("ecommerce.includes.4.text"),
+    icon: Repeat,
+  },
+]
+
+const caseFacts = [
+  { label: t("case.facts.sector"), value: t("case.centauro.sector") },
+  { label: t("case.facts.platform"), value: "SAP Commerce" },
+  { label: t("case.facts.since"), value: t("case.centauro.since") },
+]
+
+const steps = [
+  t("ecommerce.process.1"),
+  t("ecommerce.process.2"),
+  t("ecommerce.process.3"),
+  t("ecommerce.process.4"),
+]
+
+const faqs = [
+  { q: t("ecommerce.faq.1.q"), a: t("ecommerce.faq.1.a") },
+  { q: t("ecommerce.faq.2.q"), a: t("ecommerce.faq.2.a") },
+  { q: t("ecommerce.faq.3.q"), a: t("ecommerce.faq.3.a") },
+  { q: t("ecommerce.faq.4.q"), a: t("ecommerce.faq.4.a") },
+]
+
+const mailto = `mailto:contact@kaizencode.es?subject=${encodeURIComponent(t("ecommerce.cta.subject"))}`
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+}
+---
+
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(faqSchema)}
+/>
+
+<Header client:load lang={lang} path={Astro.url.pathname} />
+
+<div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
+  <main
+    id="main-content"
+    class="flex flex-1 flex-col gap-24 py-16 [&_section[id]]:scroll-mt-24"
+  >
+    <section class="flex flex-col items-start">
+      <a
+        href={localizePath(lang)}
+        class="hero-in mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground pointer-coarse:mb-3 pointer-coarse:min-h-11"
+        style="--i: 0"
+      >
+        <ArrowLeft className="size-3.5" />
+        {t("webdesign.back")}
+      </a>
+      <div class="hero-in mb-6" style="--i: 1">
+        <Badge
+          variant="outline"
+          className="h-auto max-w-full px-3 font-mono text-xs tracking-widest whitespace-normal"
+        >
+          {t("ecommerce.badge")}
+        </Badge>
+      </div>
+      <h1
+        class="hero-in max-w-3xl text-[min(2.25rem,10vw)] leading-tight font-bold tracking-tighter text-balance sm:text-[min(3.75rem,9.5vw)]"
+        style="--i: 2"
+      >
+        {t("ecommerce.heading")}
+      </h1>
+      <p
+        class="hero-in mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
+        style="--i: 3"
+      >
+        {t("ecommerce.intro")}
+      </p>
+      <div class="hero-in mt-8 flex flex-wrap gap-3" style="--i: 4">
+        <a
+          href={mailto}
+          class={buttonVariants({
+            size: "lg",
+            className: "h-auto min-h-11 px-6 py-2 whitespace-normal shrink",
+          })}
+        >
+          {t("case.cta.button")}
+          <ArrowRight className="size-4" />
+        </a>
+        <a
+          href="#case"
+          class={buttonVariants({
+            variant: "outline",
+            size: "lg",
+            className:
+              "h-auto min-h-11 border-foreground/20 px-6 py-2 whitespace-normal shrink",
+          })}
+        >
+          {t("ecommerce.case.title")}
+        </a>
+      </div>
+    </section>
+
+    <section class="reveal flex flex-col gap-8">
+      <SectionHeader title={t("ecommerce.includes.title")} />
+      <div class="grid gap-6 sm:grid-cols-2">
+        {
+          includes.map(({ title, text, icon: Icon }) => (
+            <Card size="sm">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2.5">
+                  <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
+                  <h3>{title}</h3>
+                </CardTitle>
+                <CardDescription>{text}</CardDescription>
+              </CardHeader>
+            </Card>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="case" class="reveal flex flex-col gap-8">
+      <SectionHeader title={t("ecommerce.case.title")} />
+      <p class="max-w-3xl text-muted-foreground sm:text-lg">
+        {t("ecommerce.case.intro")}
+      </p>
+      <img
+        src="/projects/centauro.webp"
+        srcset="/projects/centauro-640.webp 640w, /projects/centauro-960.webp 960w, /projects/centauro.webp 1280w"
+        sizes="(min-width: 1152px) 1104px, 100vw"
+        alt={`${t("project.image.alt")} ${t("project.centauro")}`}
+        width="1280"
+        height="800"
+        loading="lazy"
+        decoding="async"
+        class="aspect-[16/10] w-full rounded-3xl border border-border/50 bg-muted object-cover object-top"
+      />
+      <dl class="grid gap-4 sm:grid-cols-3">
+        {
+          caseFacts.map(({ label, value }) => (
+            <Card size="sm" className="gap-1 px-4">
+              <dt class="font-mono text-xs tracking-widest text-muted-foreground uppercase">
+                {label}
+              </dt>
+              <dd class="text-sm font-medium">{value}</dd>
+            </Card>
+          ))
+        }
+      </dl>
+      <p class="max-w-3xl text-muted-foreground sm:text-lg">
+        {t("ecommerce.case.shopify")}
+      </p>
+      <a
+        href={caseHref}
+        class="inline-flex items-center gap-1.5 self-start text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
+      >
+        {t("automation.case.link")}
+        <ArrowRight className="size-3.5" />
+      </a>
+    </section>
+
+    <section class="reveal flex flex-col gap-8">
+      <SectionHeader title={t("webdesign.process.title")} />
+      <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          steps.map((step, i) => (
+            <li class="flex">
+              <Card size="sm" className="w-full">
+                <CardContent className="flex flex-col gap-2">
+                  <span class="font-mono text-xs text-muted-foreground">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span class="text-sm">{step}</span>
+                </CardContent>
+              </Card>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="reveal flex flex-col gap-8">
+      <SectionHeader title={t("webdesign.faq.title")} />
+      <FaqAccordion client:visible faqs={faqs} />
+    </section>
+
+    <ContactSection
+      lang={lang}
+      title="ecommerce.cta.title"
+      text="ecommerce.cta.text"
+      button="case.cta.button"
+      subject="ecommerce.cta.subject"
+    />
+
+    <footer
+      class="flex flex-col items-start justify-between gap-4 border-t border-border/50 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-2"
+    >
+      <span class="text-sm"
+        >&copy; {new Date().getFullYear()} {t("footer.copyright")}</span
+      >
+      <DevelopedByKaizencode lang={lang} />
+    </footer>
+  </main>
+</div>
+<BackToTop client:idle label={t("a11y.top")} />

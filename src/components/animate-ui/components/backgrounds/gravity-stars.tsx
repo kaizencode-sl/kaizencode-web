@@ -77,7 +77,13 @@ function GravityStarsBackground({
 
   const initStars = React.useCallback(
     (w: number, h: number) => {
-      starsRef.current = Array.from({ length: starsCount }).map(() => {
+      // starsCount is the density for a 1440×900 viewport; smaller screens get
+      // proportionally fewer stars so phones don't end up 4× as crowded
+      const count = Math.max(
+        12,
+        Math.round(starsCount * Math.min(1, (w * h) / (1440 * 900)))
+      )
+      starsRef.current = Array.from({ length: count }).map(() => {
         const angle = Math.random() * Math.PI * 2
         const speed = movementSpeed * (0.5 + Math.random() * 0.5)
         return {

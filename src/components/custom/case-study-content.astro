@@ -11,8 +11,15 @@ import ContactSection from "@/components/custom/contact-section.astro"
 import { Header } from "@/components/custom/header"
 import { SectionHeader } from "@/components/custom/section-header"
 import { BackToTop } from "@/components/custom/back-to-top"
+import { AppDemo } from "@/components/custom/app-demo"
 import { DevelopedByKaizencode } from "@/components/ui/developed-by-kaizencode"
-import { ArrowLeft, Check, ExternalLink } from "lucide-react"
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  ExternalLink,
+  MousePointerClick,
+} from "lucide-react"
 import { localizePath, useTranslations } from "@/i18n/utils"
 import { type Lang } from "@/i18n/ui"
 import { caseStudies, type CaseStudySlug } from "@/lib/case-studies"
@@ -43,9 +50,13 @@ const stats = study.stats?.map(({ value, label }) => ({
   label: t(label),
 }))
 const value = study.value.map((key) => t(key))
+const imageAlt = study.imageAlt
+  ? t(study.imageAlt)
+  : `${t("project.image.alt")} ${name}`
+const screens = study.screens
 ---
 
-<Header client:load lang={lang} />
+<Header client:load lang={lang} path={Astro.url.pathname} />
 
 <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
   <main id="main-content" class="flex flex-1 flex-col gap-24 py-16">
@@ -78,23 +89,27 @@ const value = study.value.map((key) => t(key))
       >
         {t(study.intro)}
       </p>
-      <div class="hero-in mt-8" style="--i: 4">
-        <a
-          href={study.site}
-          target="_blank"
-          rel="noopener"
-          class={buttonVariants({
-            variant: "outline",
-            size: "lg",
-            className:
-              "h-auto min-h-11 border-foreground/20 px-6 py-2 whitespace-normal shrink",
-          })}
-        >
-          {t(study.visit)}
-          <ExternalLink className="size-3.5" />
-          <span class="sr-only">{t("a11y.newTab")}</span>
-        </a>
-      </div>
+      {
+        study.site && study.visit && (
+          <div class="hero-in mt-8" style="--i: 4">
+            <a
+              href={study.site}
+              target="_blank"
+              rel="noopener"
+              class={buttonVariants({
+                variant: "outline",
+                size: "lg",
+                className:
+                  "h-auto min-h-11 shrink border-foreground/20 px-6 py-2 whitespace-normal",
+              })}
+            >
+              {t(study.visit)}
+              <ExternalLink className="size-3.5" />
+              <span class="sr-only">{t("a11y.newTab")}</span>
+            </a>
+          </div>
+        )
+      }
     </section>
 
     <section class="flex flex-col gap-6">
@@ -102,9 +117,10 @@ const value = study.value.map((key) => t(key))
         src={`/projects/${slug}.webp`}
         srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
         sizes="(min-width: 1152px) 1104px, 100vw"
-        alt={`${t("project.image.alt")} ${name}`}
+        alt={imageAlt}
         width="1280"
         height="800"
+        fetchpriority="high"
         style="--i: 5"
         class="hero-in aspect-[16/10] w-full rounded-3xl border border-border/50 bg-muted object-cover object-top"
       />
@@ -150,7 +166,97 @@ const value = study.value.map((key) => t(key))
           ))
         }
       </div>
+      {
+        study.service && (
+          <a
+            href={localizePath(lang, study.service.href)}
+            class="inline-flex items-center gap-1.5 self-start text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
+          >
+            {t(study.service.label)}
+            <ArrowRight className="size-3.5" />
+          </a>
+        )
+      }
     </section>
+
+    {
+      study.demo && (
+        <section class="reveal grid items-center gap-10 lg:grid-cols-2">
+          <div class="flex flex-col items-start gap-6">
+            <SectionHeader title={t("demo.title")} />
+            <p class="max-w-xl text-muted-foreground sm:text-lg">
+              {t("demo.text")}
+            </p>
+            <ul class="flex flex-col gap-3">
+              {(["demo.hint.1", "demo.hint.2", "demo.hint.3"] as const).map(
+                (key) => (
+                  <li class="flex items-start gap-3">
+                    <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <MousePointerClick className="size-3.5" />
+                    </span>
+                    <span>{t(key)}</span>
+                  </li>
+                )
+              )}
+            </ul>
+            <p class="mt-2 font-semibold">{t("demo.cta.text")}</p>
+            <a
+              href="#contacto"
+              class={buttonVariants({
+                size: "lg",
+                className: "h-auto min-h-11 shrink px-6 py-2 whitespace-normal",
+              })}
+            >
+              {t("demo.cta.button")}
+              <ArrowRight className="size-4" />
+            </a>
+          </div>
+          <AppDemo client:visible lang={lang} />
+        </section>
+      )
+    }
+
+    {
+      screens && (
+        <section class="reveal flex flex-col gap-8">
+          <SectionHeader title={t("case.screens.title")} />
+          <ul class="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+            {screens.video && (
+              <li>
+                <video
+                  src={screens.video.src}
+                  poster={screens.video.poster}
+                  aria-label={t(screens.video.label)}
+                  width="1206"
+                  height="2622"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  disablepictureinpicture
+                  preload="metadata"
+                  class="pointer-events-none aspect-[1206/2622] w-full rounded-[2rem] border border-border/50 bg-muted object-cover"
+                />
+              </li>
+            )}
+            {screens.images.map(({ src, alt }) => (
+              <li>
+                <img
+                  src={src}
+                  alt={t(alt)}
+                  width="1206"
+                  height="2622"
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[1206/2622] w-full rounded-[2rem] border border-border/50 bg-muted object-cover"
+                />
+              </li>
+            ))}
+          </ul>
+          <p class="text-xs text-muted-foreground">{t("case.screens.note")}</p>
+        </section>
+      )
+    }
 
     <section class="reveal flex flex-col gap-8">
       <SectionHeader title={t(study.valueTitle)} />

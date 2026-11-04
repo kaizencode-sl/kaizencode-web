@@ -1,14 +1,25 @@
 import {
+  CalendarClock,
   FileText,
+  Mail,
+  PencilLine,
   LifeBuoy,
   Palette,
   Search,
+  ShieldCheck,
   Sparkles,
+  Wallet,
+  Wand2,
   type LucideIcon,
 } from "lucide-react"
 import type { UiKey } from "@/i18n/ui"
 
-export type CaseStudySlug = "centauro" | "jovi"
+export type CaseStudySlug =
+  | "centauro"
+  | "jovi"
+  | "albinana"
+  | "agora"
+  | "app-agora"
 
 export interface CaseStudy {
   name: UiKey
@@ -16,8 +27,10 @@ export interface CaseStudy {
   description: UiKey
   heading: UiKey
   intro: UiKey
-  site: string
-  visit: UiKey
+  // Optional: projects without a public website (e.g. a private app) skip the visit button
+  site?: string
+  visit?: UiKey
+  imageAlt?: UiKey
   // Values are translation keys, or plain text when the value isn't translated
   facts: { label: UiKey; value: UiKey | { text: string } }[]
   challenge: UiKey[]
@@ -28,6 +41,15 @@ export interface CaseStudy {
   valueTitle: UiKey
   value: UiKey[]
   cta: { title: UiKey; text: UiKey; button: UiKey; subject: UiKey }
+  // Optional gallery of phone screens: a looping video and screenshots under /projects/<slug>/
+  screens?: {
+    video?: { src: string; poster: string; label: UiKey }
+    images: { src: string; alt: UiKey }[]
+  }
+  // Shows the interactive app demo (custom/app-demo.tsx) after the work section
+  demo?: boolean
+  // Optional link to the service page this case study illustrates
+  service?: { href: string; label: UiKey }
 }
 
 // Case study pages live at /proyectos/<slug>/ (English: /en/projects/<slug>/)
@@ -45,6 +67,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
     facts: [
       { label: "case.facts.client", value: "project.centauro" },
       { label: "case.facts.sector", value: "case.centauro.sector" },
+      { label: "case.facts.location", value: { text: "Barcelona" } },
       { label: "case.facts.platform", value: { text: "SAP Commerce" } },
       { label: "case.facts.services", value: "case.centauro.services" },
       { label: "case.facts.since", value: "case.centauro.since" },
@@ -79,6 +102,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
       button: "case.cta.button",
       subject: "case.cta.subject",
     },
+    service: { href: "/tiendas-online/", label: "case.ecommerce.link" },
   },
   jovi: {
     name: "project.jovi",
@@ -92,6 +116,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
       { label: "case.facts.client", value: "project.jovi" },
       { label: "case.facts.sector", value: "case.jovi.sector" },
       { label: "case.facts.location", value: { text: "Cuenca" } },
+      { label: "case.facts.platform", value: { text: "Astro" } },
       { label: "case.facts.services", value: "case.jovi.services" },
       { label: "case.facts.since", value: "case.jovi.since" },
     ],
@@ -126,6 +151,172 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
       text: "webdesign.cta.text",
       button: "webdesign.cta.button",
       subject: "webdesign.cta.subject",
+    },
+  },
+  albinana: {
+    name: "project.albinana",
+    title: "case.albinana.title",
+    description: "case.albinana.description",
+    heading: "case.albinana.heading",
+    intro: "case.albinana.intro",
+    site: "https://www.farmaciaalbinana.es/",
+    visit: "case.visit.web",
+    facts: [
+      { label: "case.facts.client", value: "project.albinana" },
+      { label: "case.facts.sector", value: "case.albinana.sector" },
+      { label: "case.facts.location", value: { text: "Bétera (Valencia)" } },
+      {
+        label: "case.facts.platform",
+        value: { text: "Astro · n8n · Telegram · email" },
+      },
+      { label: "case.facts.services", value: "case.albinana.services" },
+      { label: "case.facts.since", value: "case.albinana.since" },
+    ],
+    challenge: ["case.albinana.challenge.1", "case.albinana.challenge.2"],
+    work: [
+      {
+        title: "case.albinana.work.messages.title",
+        text: "case.albinana.work.messages.text",
+        icon: Mail,
+      },
+      {
+        title: "case.albinana.work.layout.title",
+        text: "case.albinana.work.layout.text",
+        icon: Wand2,
+      },
+      {
+        title: "case.albinana.work.edit.title",
+        text: "case.albinana.work.edit.text",
+        icon: PencilLine,
+      },
+    ],
+    valueTitle: "case.value.title",
+    value: [
+      "case.albinana.value.1",
+      "case.albinana.value.2",
+      "case.albinana.value.3",
+    ],
+    cta: {
+      title: "case.albinana.cta.title",
+      text: "case.albinana.cta.text",
+      button: "case.cta.button",
+      subject: "case.albinana.cta.subject",
+    },
+    service: { href: "/automatizacion-ia/", label: "case.automation.link" },
+  },
+  agora: {
+    name: "project.agora",
+    title: "case.agora.title",
+    description: "case.agora.description",
+    heading: "case.agora.heading",
+    intro: "case.agora.intro",
+    site: "https://www.agoraacademy.es/",
+    visit: "case.visit.web",
+    facts: [
+      { label: "case.facts.client", value: "project.agora" },
+      { label: "case.facts.sector", value: "case.agora.sector" },
+      { label: "case.facts.location", value: { text: "Cuenca" } },
+      { label: "case.facts.platform", value: { text: "Web · IA · PDF" } },
+      { label: "case.facts.services", value: "case.agora.services" },
+      { label: "case.facts.since", value: "case.agora.since" },
+    ],
+    challenge: ["case.agora.challenge.1", "case.agora.challenge.2"],
+    work: [
+      {
+        title: "case.agora.work.describe.title",
+        text: "case.agora.work.describe.text",
+        icon: Sparkles,
+      },
+      {
+        title: "case.agora.work.publish.title",
+        text: "case.agora.work.publish.text",
+        icon: FileText,
+      },
+      {
+        title: "case.agora.work.seo.title",
+        text: "case.agora.work.seo.text",
+        icon: Search,
+      },
+    ],
+    valueTitle: "case.value.title",
+    value: ["case.agora.value.1", "case.agora.value.2", "case.agora.value.3"],
+    cta: {
+      title: "case.agora.cta.title",
+      text: "case.agora.cta.text",
+      button: "case.cta.button",
+      subject: "case.agora.cta.subject",
+    },
+    service: { href: "/automatizacion-ia/", label: "case.automation.link" },
+  },
+  "app-agora": {
+    name: "project.appAgora",
+    title: "case.appAgora.title",
+    description: "case.appAgora.description",
+    heading: "case.appAgora.heading",
+    intro: "case.appAgora.intro",
+    imageAlt: "project.appAgora.image.alt",
+    facts: [
+      { label: "case.facts.client", value: "project.agora" },
+      { label: "case.facts.sector", value: "case.appAgora.sector" },
+      { label: "case.facts.location", value: { text: "Cuenca" } },
+      {
+        label: "case.facts.platform",
+        value: { text: "iOS · SwiftUI · Supabase" },
+      },
+      { label: "case.facts.services", value: "case.appAgora.services" },
+      { label: "case.facts.since", value: "case.appAgora.since" },
+    ],
+    challenge: ["case.appAgora.challenge.1", "case.appAgora.challenge.2"],
+    work: [
+      {
+        title: "case.appAgora.work.today.title",
+        text: "case.appAgora.work.today.text",
+        icon: CalendarClock,
+      },
+      {
+        title: "case.appAgora.work.money.title",
+        text: "case.appAgora.work.money.text",
+        icon: Wallet,
+      },
+      {
+        title: "case.appAgora.work.native.title",
+        text: "case.appAgora.work.native.text",
+        icon: ShieldCheck,
+      },
+    ],
+    demo: true,
+    screens: {
+      video: {
+        src: "/projects/app-agora/demo.mp4",
+        poster: "/projects/app-agora/demo-poster.webp",
+        label: "case.appAgora.screens.video",
+      },
+      images: [
+        {
+          src: "/projects/app-agora/students.webp",
+          alt: "case.appAgora.screens.students",
+        },
+        {
+          src: "/projects/app-agora/student.webp",
+          alt: "case.appAgora.screens.student",
+        },
+        {
+          src: "/projects/app-agora/accounting.webp",
+          alt: "case.appAgora.screens.accounting",
+        },
+      ],
+    },
+    valueTitle: "case.value.title",
+    value: [
+      "case.appAgora.value.1",
+      "case.appAgora.value.2",
+      "case.appAgora.value.3",
+    ],
+    cta: {
+      title: "case.appAgora.cta.title",
+      text: "case.appAgora.cta.text",
+      button: "case.cta.button",
+      subject: "case.appAgora.cta.subject",
     },
   },
 }

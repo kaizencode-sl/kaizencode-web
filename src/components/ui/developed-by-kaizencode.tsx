@@ -27,6 +27,7 @@ function DevelopedByKaizencode({
         }
         target="_blank"
         rel="noopener noreferrer"
+        translate="no"
         className="inline-flex items-center gap-0.5 font-medium whitespace-nowrap text-foreground transition-colors hover:text-primary pointer-coarse:-my-3 pointer-coarse:py-3"
       >
         Kaizencode

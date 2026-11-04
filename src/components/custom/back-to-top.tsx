@@ -30,7 +30,14 @@ export function BackToTop({ label }: { label: string }) {
         variant="outline"
         size="icon"
         className="rounded-full bg-background/80 backdrop-blur-sm pointer-coarse:size-11"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        onClick={() =>
+          window.scrollTo({
+            top: 0,
+            behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+              ? "auto"
+              : "smooth",
+          })
+        }
         aria-label={label}
       >
         <ArrowUp className="size-4" />
