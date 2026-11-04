@@ -1,30 +1,19 @@
 ---
 import Layout from "@/layouts/main.astro"
-import { defaultLang, type Lang } from "@/i18n/ui"
-import { getLangFromUrl, localizePath } from "@/i18n/utils"
+import { getLangFromUrl, localizePath, useTranslations } from "@/i18n/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 
 // Determine the language from the URL path
-const url = Astro.url
-const lang = getLangFromUrl(url)
-
-// Fallback messages for when the URL doesn’t have a recognizable lang prefix
-const messages: Record<Lang, { title: string; description: string }> = {
-  en: {
-    title: "404 — Page not found",
-    description: "The page you’re looking for doesn’t exist or has been moved.",
-  },
-  es: {
-    title: "404 — Página no encontrada",
-    description: "La página que buscas no existe o ha sido movida.",
-  },
-}
-
-const { title, description } = messages[lang] ?? messages[defaultLang]
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
 ---
 
-<Layout lang={lang} title={title} description={description}>
+<Layout
+  lang={lang}
+  title={t("notfound.title")}
+  description={t("notfound.description")}
+>
   <div class="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-6xl flex-col px-6">
     <main
       id="main-content"
@@ -34,13 +23,13 @@ const { title, description } = messages[lang] ?? messages[defaultLang]
         class="hero-in text-[min(3rem,12vw)] leading-tight font-bold tracking-tighter text-balance sm:text-[min(4.5rem,11vw)]"
         style="--i: 0"
       >
-        {title.replace("404 — ", "")}
+        {t("notfound.heading")}
       </h1>
       <p
         class="hero-in max-w-2xl text-base text-muted-foreground sm:text-lg"
         style="--i: 1"
       >
-        {description}
+        {t("notfound.description")}
       </p>
       <div class="hero-in mt-2" style="--i: 2">
         <a
@@ -51,7 +40,7 @@ const { title, description } = messages[lang] ?? messages[defaultLang]
           })}
         >
           <ArrowLeft className="size-4" />
-          {lang === "en" ? "Go home" : "Volver al inicio"}
+          {t("notfound.home")}
         </a>
       </div>
     </main>

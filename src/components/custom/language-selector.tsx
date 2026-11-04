@@ -22,7 +22,7 @@ export function LanguageSelector({ currentLang, path }: LanguageSelectorProps) {
           }
           hrefLang={code}
           lang={code}
-          aria-label={label}
+          aria-label={`${code.toUpperCase()} – ${label}`}
           aria-current={code === currentLang ? "page" : undefined}
           className={cn(
             toggleVariants({ variant: "outline", size: "sm" }),

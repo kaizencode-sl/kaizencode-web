@@ -326,8 +326,10 @@ function GravityStarsBackground({
       if (!canvas) return
       const ctx = canvas.getContext("2d")
       if (!ctx) return
-      // Reduced motion: the stars stay put and ignore the cursor
-      if (!reducedMotion.matches) updateStars()
+      animRef.current = null
+      // Reduced motion: draw one still frame and stop (a resize redraws it)
+      if (reducedMotion.matches) return drawStars(ctx)
+      updateStars()
       drawStars(ctx)
       animRef.current = requestAnimationFrame(tick)
     },
@@ -382,11 +384,30 @@ function GravityStarsBackground({
   }, [starsCount, starsOpacity, movementSpeed, initStars])
 
   React.useEffect(() => {
-    if (animRef.current) cancelAnimationFrame(animRef.current)
-    animRef.current = requestAnimationFrame(animate)
-    return () => {
+    const stop = () => {
       if (animRef.current) cancelAnimationFrame(animRef.current)
       animRef.current = null
+    }
+    const start = () => {
+      stop()
+      if (!document.hidden) animRef.current = requestAnimationFrame(animate)
+    }
+    // No frames while the tab is hidden
+    const onVisibility = () => (document.hidden ? stop() : start())
+    start()
+    document.addEventListener("visibilitychange", onVisibility)
+    window.addEventListener("resize", start)
+    // A theme switch recolours the still frame under reduced motion
+    const themeWatch = new MutationObserver(start)
+    themeWatch.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    })
+    return () => {
+      themeWatch.disconnect()
+      document.removeEventListener("visibilitychange", onVisibility)
+      window.removeEventListener("resize", start)
+      stop()
     }
   }, [animate])
 

@@ -246,6 +246,9 @@ A 4-up grid of small `Card`s, each with a zero-padded mono index (`01`) in fog a
 ### Projects grid
 A 2×2 grid of project cards (one column on mobile), all visible without interaction. Projects with a case study come first, so they fill the top row. No carousel: with a handful of projects, hiding any of them behind a scroll costs proof.
 
+### Demo phone (the one hue and type exception)
+The interactive app demo (`app-demo.tsx`) is a device, not site chrome: it keeps iOS's own palette (`.ios` in `global.css`, light and dark following the site theme), the system font and its own size steps (13px, 15px, 17px, 20–28px), and a near-black bezel with a black Dynamic Island. Nothing from it leaks out: the "live" badge and tap hint around it stay on site tokens, the 11px tag size is still the floor, and the hint settles in once instead of bouncing.
+
 ### Contact panel
 Every page closes with the same block, `ContactSection` (`src/components/custom/contact-section.astro`, anchored at `#contacto`): the standard `SectionHeader` (page-specific headline) above one shadcn `Card` (glass, 24px corners) holding the intro, the primary email button, and the address spelled out underneath in fog with a paper link. Pages vary only the copy and the email subject, never the layout. Email is the only channel.
 

@@ -1,1 +1,19 @@
-{ "buildPath": "code" }
+{
+  "buildPath": "code",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          "src/components/custom/app-demo-parts.tsx",
+          "src/components/custom/app-demo.tsx"
+        ],
+        "createdAt": "2026-11-04T14:38:03.255Z",
+        "reason": "iOS demo phone keeps iOS's own type sizes (DESIGN.md, Demo phone)"
+      }
+    ]
+  }
+}

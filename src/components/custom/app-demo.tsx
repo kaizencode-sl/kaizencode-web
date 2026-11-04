@@ -44,11 +44,24 @@ const tabs: { id: Tab; icon: LucideIcon }[] = [
 export function AppDemo({ lang = defaultLang }: { lang?: Lang }) {
   const t = (key: UiKey) => ui[lang]?.[key] ?? ui[defaultLang][key]
   const list = (key: UiKey) => t(key).split(",")
-  const euros = (n: number) =>
-    new Intl.NumberFormat(lang === "es" ? "es-ES" : "en-IE", {
+  const locale = lang === "es" ? "es-ES" : "en-IE"
+  // Whole amounts drop the cents ("€1,200"), the rest keep them
+  const euros = (n: number, compact = false) =>
+    new Intl.NumberFormat(locale, {
       style: "currency",
       currency: "EUR",
+      ...(compact && Number.isInteger(n) && { maximumFractionDigits: 0 }),
     }).format(n)
+  // Short names from Intl, capitalised like the full ones. 2024-01-01 is a
+  // Monday; the demo's four months are Sep–Dec
+  const short = (options: Intl.DateTimeFormatOptions, date: Date) => {
+    const s = new Intl.DateTimeFormat(locale, options).format(date)
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }
+  const dayShort = (i: number) =>
+    short({ weekday: "short" }, new Date(2024, 0, i + 1))
+  const monthShort = (i: number) =>
+    short({ month: "short" }, new Date(2024, 8 + i, 1))
 
   const [tab, setTab] = useState<Tab>("home")
   const [paid, setPaid] = useState(() => new Set([1, 3, 5, 7])) // this month
@@ -207,7 +220,7 @@ export function AppDemo({ lang = defaultLang }: { lang?: Lang }) {
           <Segmented
             value={String(day)}
             onChange={(v) => setDay(Number(v))}
-            items={days.map((d, i) => [String(i + 1), d.slice(0, 3)])}
+            items={days.map((_, i) => [String(i + 1), dayShort(i)])}
           />
         </div>
         <div className="flex items-baseline justify-between px-4 pt-4 text-[20px] font-semibold">
@@ -308,14 +321,14 @@ export function AppDemo({ lang = defaultLang }: { lang?: Lang }) {
                 value={String(i)}
                 className="h-auto flex-1 flex-col gap-0 rounded-full bg-ios-fill py-1.5 text-[13px] data-[state=on]:bg-foreground data-[state=on]:text-background"
               >
-                {m.slice(0, 3)}
+                {monthShort(i)}
                 <span
                   className={cn(
                     "text-[11px] font-normal tabular-nums opacity-70",
                     balance(i) < 0 && "text-ios-red opacity-100"
                   )}
                 >
-                  {euros(balance(i)).replace(/[.,]00/, "")}
+                  {euros(balance(i), true)}
                 </span>
               </ToggleGroupItem>
             ))}
@@ -410,8 +423,8 @@ export function AppDemo({ lang = defaultLang }: { lang?: Lang }) {
         className="h-auto gap-2 bg-background px-3 py-1 font-mono text-xs tracking-widest uppercase"
       >
         <span className="relative flex size-2">
-          <span className="absolute inline-flex size-full rounded-full bg-emerald-500 opacity-75 motion-safe:animate-ping" />
-          <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+          <span className="absolute inline-flex size-full rounded-full bg-primary opacity-75 motion-safe:animate-ping" />
+          <span className="relative inline-flex size-2 rounded-full bg-primary" />
         </span>
         {t("demo.live")}
       </Badge>
@@ -439,13 +452,18 @@ export function AppDemo({ lang = defaultLang }: { lang?: Lang }) {
 
           <div
             key={tab}
+            role="region"
+            aria-label={t(`demo.app.tab.${tab}` as UiKey)}
             className="flex-1 animate-in [scrollbar-width:none] overflow-y-auto pb-24 fade-in"
           >
             {screens[tab]}
           </div>
 
           {/* Floating tab bar */}
-          <nav className="absolute inset-x-3 bottom-3 flex rounded-full border border-black/5 bg-ios-card/80 p-1 shadow-lg backdrop-blur-xl dark:border-white/10">
+          <nav
+            aria-label={t("demo.app.label")}
+            className="absolute inset-x-3 bottom-3 flex rounded-full border border-black/5 bg-ios-card/80 p-1 shadow-lg backdrop-blur-xl dark:border-white/10"
+          >
             {tabs.map(({ id, icon: Icon }) => (
               <button
                 key={id}
@@ -453,7 +471,7 @@ export function AppDemo({ lang = defaultLang }: { lang?: Lang }) {
                 onClick={() => goTo(id)}
                 aria-current={tab === id ? "page" : undefined}
                 className={cn(
-                  "relative flex flex-1 flex-col items-center gap-0.5 rounded-full py-1.5 text-[10px] font-medium transition-colors hover:bg-ios-fill/60",
+                  "relative flex flex-1 flex-col items-center gap-0.5 rounded-full py-1.5 text-[11px] font-medium transition-colors hover:bg-ios-fill/60",
                   tab === id
                     ? "bg-ios-fill text-ios-label"
                     : "text-ios-label/80"
@@ -468,7 +486,7 @@ export function AppDemo({ lang = defaultLang }: { lang?: Lang }) {
                     <span className="rounded-full bg-foreground px-3 py-1.5 text-[13px] font-semibold whitespace-nowrap text-background shadow-lg">
                       {t("demo.tap")}
                     </span>
-                    <Pointer className="size-7 rotate-180 fill-ios-card text-ios-label motion-safe:animate-bounce" />
+                    <Pointer className="size-7 rotate-180 fill-ios-card text-ios-label" />
                   </span>
                 )}
                 {!touched && id === "schedule" && (

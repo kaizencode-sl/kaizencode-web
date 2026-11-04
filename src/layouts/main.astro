@@ -57,7 +57,7 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
     <title>{resolvedTitle}</title>
     <meta name="description" content={description} />
     <!-- Follows the site theme, not the OS one: synced by the theme script -->
-    <meta name="theme-color" content="#0f0f0f" />
+    <meta name="theme-color" content="#0a0a0a" />
 
     <!-- Canonical & hreflang -->
     <link rel="canonical" href={canonicalUrl} />
@@ -114,18 +114,28 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
       ;(function () {
         const html = document.documentElement
         const setTheme = () => {
-          const theme = localStorage.getItem("theme") || "dark"
+          let theme = "dark"
+          try {
+            // Throws when site data is blocked
+            theme = localStorage.getItem("theme") || theme
+          } catch {
+            // keep the default
+          }
           // "js": reveal blocks start hidden until GSAP fades them in
           html.className = theme + " js motion-safe:scroll-smooth"
+          // Failsafe: if the animations never start (script blocked or
+          // failed), show the hidden blocks instead of a blank page
+          setTimeout(() => {
+            if (!html.dataset.reveal) html.classList.remove("js")
+          }, 4000)
         }
         // The browser bar matches the page, also when the toggle flips the class
         const syncThemeColor = () =>
-          document
-            .querySelector('meta[name="theme-color"]')
-            ?.setAttribute(
-              "content",
-              html.classList.contains("dark") ? "#0f0f0f" : "#ffffff"
-            )
+          document.querySelector('meta[name="theme-color"]')?.setAttribute(
+            "content",
+            // sRGB of --background (oklch 0.145 / 0.975)
+            html.classList.contains("dark") ? "#0a0a0a" : "#f7f7f7"
+          )
         setTheme()
         syncThemeColor()
         new MutationObserver(syncThemeColor).observe(html, {
@@ -176,6 +186,7 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
     </a>
     <!-- The entrance fades this wrapper, not the React element -->
     <div
+      transition:persist="stars"
       class="stars-in fixed inset-0 opacity-50 md:opacity-100"
       aria-hidden="true"
     >
@@ -189,7 +200,12 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
         className="text-foreground/50 [--stars-glow:0] dark:text-foreground dark:[--stars-glow:1]"
       />
     </div>
-    <Header client:load lang={lang} path={Astro.url.pathname} />
+    <Header
+      client:load
+      transition:persist="header"
+      lang={lang}
+      path={Astro.url.pathname}
+    />
     <slot />
     <script>
       import { initAnimations } from "@/lib/animations"

@@ -13,6 +13,8 @@ gsap.registerPlugin(ScrollTrigger)
 //                motion-gated: it reports position, it does not animate)
 // Everything is visible without JS; with reduced motion nothing animates.
 export function initAnimations() {
+  // Tells the failsafe in layouts/main.astro that the reveals are running
+  document.documentElement.dataset.reveal = "on"
   const mm = gsap.matchMedia()
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {

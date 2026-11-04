@@ -8,7 +8,7 @@ This is an Astro.js project with React, TypeScript, Tailwind CSS v4, and shadcn/
 - Tailwind CSS is configured through `@tailwindcss/vite`
 - Uses strict TypeScript config from `astro/tsconfigs/strict`
 - shadcn/ui components can be added with `pnpm dlx shadcn@latest add <component>`
-- Node.js >=22.12.0 required
+- Node.js >=22.23.4 required
 - Use pnpm (not npm) for all package management commands
 
 ## Key Commands

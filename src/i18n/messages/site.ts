@@ -59,6 +59,11 @@ export const site = {
     "a11y.skip": "Skip to content",
     "a11y.top": "Back to top",
     "a11y.newTab": "(opens in a new tab)",
+    "notfound.title": "404 — Page not found",
+    "notfound.heading": "Page not found",
+    "notfound.description":
+      "The page you’re looking for doesn’t exist or has been moved.",
+    "notfound.home": "Go home",
     "hero.support":
       "We build every project from scratch, with no templates, and you talk directly to the people who build it. No salespeople, no middlemen.",
     "hero.cta.primary": "Ask for a quote",
@@ -179,6 +184,10 @@ export const site = {
     "a11y.skip": "Saltar al contenido",
     "a11y.top": "Volver arriba",
     "a11y.newTab": "(se abre en una pestaña nueva)",
+    "notfound.title": "404 — Página no encontrada",
+    "notfound.heading": "Página no encontrada",
+    "notfound.description": "La página que buscas no existe o ha sido movida.",
+    "notfound.home": "Volver al inicio",
     "hero.support":
       "Programamos cada proyecto desde cero, sin plantillas, y hablas directamente con quien lo construye. Sin comerciales ni intermediarios.",
     "hero.cta.primary": "Pide presupuesto",

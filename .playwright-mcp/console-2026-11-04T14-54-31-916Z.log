@@ -1,0 +1,7 @@
+[   33374ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:4400/nope/:0
+[   33380ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:4400/favicon.ico:0
+[   68363ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:4400/nope/:0
+[  101605ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:4400/nope/:0
+[  134884ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:4400/nope/:0
+[  167560ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:4400/nope/:0
+[  200146ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:4400/nope/:0

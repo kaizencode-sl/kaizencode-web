@@ -57,7 +57,7 @@ const [preview, live] = [
 ]
 
 const scene =
-  "flex flex-col items-center justify-center gap-5 border-b border-border/50 px-5 py-8 transition-all duration-300 last:border-0 data-[state=active]:delay-300 data-[state=idle]:invisible data-[state=idle]:opacity-0 group-data-live/flow:border-0 group-data-live/flow:[grid-area:1/1] sm:px-8"
+  "flex flex-col items-center justify-center gap-5 border-b border-border/50 px-5 py-8 transition-[opacity,visibility] duration-300 last:border-0 data-[state=active]:delay-300 data-[state=idle]:invisible data-[state=idle]:opacity-0 group-data-live/flow:border-0 group-data-live/flow:[grid-area:1/1] sm:px-8"
 const caption = "max-w-md text-center text-sm text-balance sm:text-base"
 const packet =
   "pointer-events-none invisible absolute size-3 -translate-1/2 rounded-full bg-primary shadow-[0_0_14px_3px] shadow-primary/40"
@@ -128,10 +128,10 @@ const packet =
             disabled
             class="flex flex-col items-center gap-2 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background enabled:cursor-pointer"
           >
-            <span class="flex size-11 items-center justify-center rounded-full border-2 border-foreground/30 bg-card text-foreground transition-all duration-300 group-data-live/flow:group-hover/step:scale-110 group-data-live/flow:group-hover/step:border-primary group-data-[state=active]/step:scale-110 group-data-[state=active]/step:border-primary group-data-[state=active]/step:bg-primary group-data-[state=active]/step:text-primary-foreground group-data-[state=active]/step:shadow-[0_0_0_6px] group-data-[state=active]/step:shadow-primary/15 group-data-[state=idle]/step:border-border group-data-[state=idle]/step:text-muted-foreground">
+            <span class="flex size-11 items-center justify-center rounded-full border-2 border-foreground/30 bg-card text-foreground transition-[transform,border-color,background-color,color,box-shadow] duration-300 group-data-live/flow:group-hover/step:scale-110 group-data-live/flow:group-hover/step:border-primary group-data-[state=active]/step:scale-110 group-data-[state=active]/step:border-primary group-data-[state=active]/step:bg-primary group-data-[state=active]/step:text-primary-foreground group-data-[state=active]/step:shadow-[0_0_0_6px] group-data-[state=active]/step:shadow-primary/15 group-data-[state=idle]/step:border-border group-data-[state=idle]/step:text-muted-foreground">
               <Icon className="size-5" />
             </span>
-            <span class="text-[10px] leading-tight font-medium transition-colors duration-300 group-data-[state=idle]/step:text-muted-foreground sm:text-sm">
+            <span class="text-[11px] leading-tight font-medium transition-colors duration-300 group-data-[state=idle]/step:text-muted-foreground sm:text-sm">
               {label}
             </span>
           </button>
@@ -245,7 +245,7 @@ const packet =
                 <span class="size-2 rounded-full bg-foreground/15" />
                 <span class="size-2 rounded-full bg-foreground/15" />
               </span>
-              <span class="flex min-w-0 flex-1 items-center justify-center gap-1 rounded-full bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground">
+              <span class="flex min-w-0 flex-1 items-center justify-center gap-1 rounded-full bg-muted px-2 py-0.5 font-mono text-[11px] text-muted-foreground">
                 <item.icon className="size-3 shrink-0" />
                 <span class="truncate">{item.url}</span>
               </span>

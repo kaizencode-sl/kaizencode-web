@@ -289,3 +289,12 @@ const screens = study.screens
   </main>
 </div>
 <BackToTop client:idle label={t("a11y.top")} />
+<script>
+  // The gallery video has no controls: don't autoplay it for reduced motion
+  document.addEventListener("astro:page-load", () => {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches)
+      document
+        .querySelectorAll("video[autoplay]")
+        .forEach((v) => (v as HTMLVideoElement).pause())
+  })
+</script>
