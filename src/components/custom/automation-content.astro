@@ -10,11 +10,10 @@ import {
 import { buttonVariants } from "@/components/ui/button"
 import ContactSection from "@/components/custom/contact-section.astro"
 import { FaqAccordion } from "@/components/custom/faq-accordion"
-import { Header } from "@/components/custom/header"
 import { SectionHeader } from "@/components/custom/section-header"
 import { BackToTop } from "@/components/custom/back-to-top"
 import AutomationFlow from "@/components/custom/automation-flow.astro"
-import { DevelopedByKaizencode } from "@/components/ui/developed-by-kaizencode"
+import SiteFooter from "@/components/custom/site-footer.astro"
 import {
   ArrowLeft,
   ArrowRight,
@@ -89,9 +88,6 @@ const faqSchema = {
   type="application/ld+json"
   set:html={JSON.stringify(faqSchema)}
 />
-
-<Header client:load lang={lang} path={Astro.url.pathname} />
-
 <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
   <main
     id="main-content"
@@ -154,19 +150,17 @@ const faqSchema = {
     <section class="reveal flex flex-col gap-8">
       <SectionHeader title={t("automation.includes.title")} />
       <div class="grid gap-6 sm:grid-cols-2">
-        {
-          includes.map(({ title, text, icon: Icon }) => (
-            <Card size="sm">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2.5">
-                  <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
-                  <h3>{title}</h3>
-                </CardTitle>
-                <CardDescription>{text}</CardDescription>
-              </CardHeader>
-            </Card>
-          ))
-        }
+        {includes.map(({ title, text, icon: Icon }) => (
+          <Card size="sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2.5">
+                <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
+                <h3>{title}</h3>
+              </CardTitle>
+              <CardDescription>{text}</CardDescription>
+            </CardHeader>
+          </Card>
+        ))}
       </div>
     </section>
 
@@ -190,20 +184,18 @@ const faqSchema = {
     <section class="reveal flex flex-col gap-8">
       <SectionHeader title={t("webdesign.process.title")} />
       <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {
-          steps.map((step, i) => (
-            <li class="flex">
-              <Card size="sm" className="w-full">
-                <CardContent className="flex flex-col gap-2">
-                  <span class="font-mono text-xs text-muted-foreground">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span class="text-sm">{step}</span>
-                </CardContent>
-              </Card>
-            </li>
-          ))
-        }
+        {steps.map((step, i) => (
+          <li class="flex">
+            <Card size="sm" className="w-full">
+              <CardContent className="flex flex-col gap-2">
+                <span class="font-mono text-xs text-muted-foreground">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span class="text-sm">{step}</span>
+              </CardContent>
+            </Card>
+          </li>
+        ))}
       </ol>
     </section>
 
@@ -220,14 +212,7 @@ const faqSchema = {
       subject="automation.cta.subject"
     />
 
-    <footer
-      class="flex flex-col items-start justify-between gap-4 border-t border-border/50 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-2"
-    >
-      <span class="text-sm"
-        >&copy; {new Date().getFullYear()} {t("footer.copyright")}</span
-      >
-      <DevelopedByKaizencode lang={lang} />
-    </footer>
+    <SiteFooter lang={lang} />
   </main>
 </div>
 <BackToTop client:idle label={t("a11y.top")} />

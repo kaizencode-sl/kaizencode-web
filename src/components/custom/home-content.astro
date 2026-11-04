@@ -10,11 +10,10 @@ import {
 import { buttonVariants } from "@/components/ui/button"
 import ContactSection from "@/components/custom/contact-section.astro"
 import { FaqAccordion } from "@/components/custom/faq-accordion"
-import { Header } from "@/components/custom/header"
 import { SectionHeader } from "@/components/custom/section-header"
 import { BackToTop } from "@/components/custom/back-to-top"
 import { HeroTitle } from "@/components/custom/hero-title"
-import { DevelopedByKaizencode } from "@/components/ui/developed-by-kaizencode"
+import SiteFooter from "@/components/custom/site-footer.astro"
 import {
   ShoppingCart,
   Code,
@@ -176,9 +175,6 @@ const faqSchema = {
   type="application/ld+json"
   set:html={JSON.stringify(faqSchema)}
 />
-
-<Header client:load lang={lang} path={Astro.url.pathname} />
-
 <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
   <main
     id="main-content"
@@ -235,22 +231,18 @@ const faqSchema = {
           {t("hero.cta.secondary")}
         </a>
       </div>
-      <ul
-        class="mt-10 flex flex-wrap gap-x-8 gap-y-3 font-mono text-sm text-muted-foreground"
-      >
-        {
-          stats.map(({ value, label }, i) => (
-            <li class="hero-in" style={`--i: ${6 + i}`}>
-              <span
-                class="font-semibold text-foreground tabular-nums"
-                data-count-up
-              >
-                {value}
-              </span>{" "}
-              {label}
-            </li>
-          ))
-        }
+      <ul class="mt-10 flex flex-wrap gap-x-8 gap-y-3 font-mono text-sm text-muted-foreground">
+        {stats.map(({ value, label }, i) => (
+          <li class="hero-in" style={`--i: ${6 + i}`}>
+            <span
+              class="font-semibold text-foreground tabular-nums"
+              data-count-up
+            >
+              {value}
+            </span>{" "}
+            {label}
+          </li>
+        ))}
       </ul>
     </section>
 
@@ -258,159 +250,151 @@ const faqSchema = {
       <SectionHeader title={t("section.projects.title")} />
       <!-- Every project visible at once: case studies fill the top row -->
       <ul class="grid gap-6 md:grid-cols-2" data-stagger>
-        {
-          projects.map(
-            ({ slug, name, type, description, tags, href, caseHref, alt }) => (
-              <li class="flex">
-                {/* With a case study, its link stretches over the whole card; the visit link sits above it */}
-                <Card className="relative pt-0">
-                  <img
-                    src={`/projects/${slug}.webp`}
-                    srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
-                    sizes="(min-width: 1152px) 552px, (min-width: 768px) 50vw, 100vw"
-                    alt={alt ?? `${t("project.image.alt")} ${name}`}
-                    width="1280"
-                    height="800"
-                    loading="lazy"
-                    decoding="async"
-                    draggable="false"
-                    class="aspect-[16/10] w-full border-b border-border/50 bg-muted object-cover object-top"
-                  />
-                  <CardHeader>
-                    <span class="font-mono text-xs tracking-widest text-muted-foreground uppercase">
-                      {type}
-                    </span>
-                    <CardTitle>
-                      <h3>{name}</h3>
-                    </CardTitle>
-                    <CardDescription>{description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="mt-auto flex flex-col items-start gap-4">
-                    <div class="flex flex-wrap gap-2">
-                      {tags.map((tag) => (
-                        <Badge
-                          variant="secondary"
-                          className="font-mono text-[11px] tracking-wider uppercase"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <div class="flex flex-wrap gap-x-5 gap-y-2 pointer-coarse:gap-y-0">
-                      {caseHref && (
-                        <a
-                          href={caseHref}
-                          class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
-                        >
-                          {t("project.case")}
-                          <ArrowRight className="size-3.5" />
-                        </a>
-                      )}
-                      {href && (
-                        <a
-                          href={href}
-                          target="_blank"
-                          rel="noopener"
-                          class="relative z-10 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
-                        >
-                          {t("project.visit")}
-                          <ExternalLink className="size-3.5" />
-                          <span class="sr-only">{t("a11y.newTab")}</span>
-                        </a>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              </li>
-            )
+        {projects.map(
+          ({ slug, name, type, description, tags, href, caseHref, alt }) => (
+            <li class="flex">
+              {/* With a case study, its link stretches over the whole card; the visit link sits above it */}
+              <Card className="relative pt-0">
+                <img
+                  src={`/projects/${slug}.webp`}
+                  srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
+                  sizes="(min-width: 1152px) 552px, (min-width: 768px) 50vw, 100vw"
+                  alt={alt ?? `${t("project.image.alt")} ${name}`}
+                  width="1280"
+                  height="800"
+                  loading="lazy"
+                  decoding="async"
+                  draggable="false"
+                  class="aspect-[16/10] w-full border-b border-border/50 bg-muted object-cover object-top"
+                />
+                <CardHeader>
+                  <span class="font-mono text-xs tracking-widest text-muted-foreground uppercase">
+                    {type}
+                  </span>
+                  <CardTitle>
+                    <h3>{name}</h3>
+                  </CardTitle>
+                  <CardDescription>{description}</CardDescription>
+                </CardHeader>
+                <CardContent className="mt-auto flex flex-col items-start gap-4">
+                  <div class="flex flex-wrap gap-2">
+                    {tags.map((tag) => (
+                      <Badge
+                        variant="secondary"
+                        className="font-mono text-[11px] tracking-wider uppercase"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                  <div class="flex flex-wrap gap-x-5 gap-y-2 pointer-coarse:gap-y-0">
+                    {caseHref && (
+                      <a
+                        href={caseHref}
+                        class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
+                      >
+                        {t("project.case")}
+                        <ArrowRight className="size-3.5" />
+                      </a>
+                    )}
+                    {href && (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener"
+                        class="relative z-10 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
+                      >
+                        {t("project.visit")}
+                        <ExternalLink className="size-3.5" />
+                        <span class="sr-only">{t("a11y.newTab")}</span>
+                      </a>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </li>
           )
-        }
+        )}
       </ul>
     </section>
 
     <section id="services" class="reveal flex flex-col gap-8">
       <SectionHeader title={t("section.services.title")} />
       <div class="grid gap-6 sm:grid-cols-2" data-stagger>
-        {
-          services.map(
-            ({ title, description, icon: Icon, badge, href, link }) => (
-              <div class="flex">
-                <Card size="sm" className="relative w-full">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2.5">
-                      <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
-                      <h3>{title}</h3>
-                    </CardTitle>
-                    <CardDescription>{description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="mt-auto flex flex-col items-start gap-4">
-                    <Badge
-                      variant="secondary"
-                      className="font-mono text-[11px] tracking-wider uppercase"
+        {services.map(
+          ({ title, description, icon: Icon, badge, href, link }) => (
+            <div class="flex">
+              <Card size="sm" className="relative w-full">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2.5">
+                    <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
+                    <h3>{title}</h3>
+                  </CardTitle>
+                  <CardDescription>{description}</CardDescription>
+                </CardHeader>
+                <CardContent className="mt-auto flex flex-col items-start gap-4">
+                  <Badge
+                    variant="secondary"
+                    className="font-mono text-[11px] tracking-wider uppercase"
+                  >
+                    {badge}
+                  </Badge>
+                  {href && (
+                    <a
+                      href={href}
+                      class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
                     >
-                      {badge}
-                    </Badge>
-                    {href && (
-                      <a
-                        href={href}
-                        class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
-                      >
-                        {link}
-                        <ArrowRight className="size-3.5" />
-                      </a>
-                    )}
-                  </CardContent>
-                </Card>
-              </div>
-            )
+                      {link}
+                      <ArrowRight className="size-3.5" />
+                    </a>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
           )
-        }
+        )}
       </div>
     </section>
 
     <section class="reveal flex flex-col gap-8">
       <SectionHeader title={t("webdesign.process.title")} />
       <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
-        {
-          steps.map((step, i) => (
-            <li class="flex">
-              <Card size="sm" className="w-full">
-                <CardContent className="flex flex-col gap-2">
-                  <span class="font-mono text-xs text-muted-foreground">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span class="text-sm">{step}</span>
-                </CardContent>
-              </Card>
-            </li>
-          ))
-        }
+        {steps.map((step, i) => (
+          <li class="flex">
+            <Card size="sm" className="w-full">
+              <CardContent className="flex flex-col gap-2">
+                <span class="font-mono text-xs text-muted-foreground">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span class="text-sm">{step}</span>
+              </CardContent>
+            </Card>
+          </li>
+        ))}
       </ol>
     </section>
 
-    {
-      testimonials.length > 0 && (
-        <section class="reveal flex flex-col gap-8">
-          <SectionHeader title={t("section.testimonials.title")} />
-          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:[&>:last-child:nth-child(odd)]:col-span-2 lg:[&>:last-child:nth-child(odd)]:col-span-1">
-            {testimonials.map(({ client, name, role, quote }) => (
-              <Card size="sm">
-                <CardHeader>
-                  <Quote className="size-5 text-muted-foreground" />
-                  <blockquote class="text-base">{quote[lang]}</blockquote>
-                </CardHeader>
-                <CardContent className="mt-auto text-sm text-muted-foreground">
-                  <p class="font-medium text-foreground">{name}</p>
-                  <p>
-                    {role[lang]} · {client}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-      )
-    }
+    {testimonials.length > 0 && (
+      <section class="reveal flex flex-col gap-8">
+        <SectionHeader title={t("section.testimonials.title")} />
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:[&>:last-child:nth-child(odd)]:col-span-2 lg:[&>:last-child:nth-child(odd)]:col-span-1">
+          {testimonials.map(({ client, name, role, quote }) => (
+            <Card size="sm">
+              <CardHeader>
+                <Quote className="size-5 text-muted-foreground" />
+                <blockquote class="text-base">{quote[lang]}</blockquote>
+              </CardHeader>
+              <CardContent className="mt-auto text-sm text-muted-foreground">
+                <p class="font-medium text-foreground">{name}</p>
+                <p>
+                  {role[lang]} · {client}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+    )}
 
     <section id="about" class="reveal flex flex-col gap-8">
       <SectionHeader title={t("about.title")} />
@@ -423,50 +407,48 @@ const faqSchema = {
         </p>
       </div>
       <div class="grid gap-6 sm:grid-cols-3" data-stagger>
-        {
-          members.map(({ name, role, linkedin, src, city, cityHref }) => (
-            // The city link stretches over the whole card; LinkedIn sits above it
-            <div class="flex">
-              <Card size="sm" className="relative w-full">
-                <CardHeader className="flex items-center gap-4 sm:flex-col sm:items-start lg:flex-row lg:items-center">
-                  <img
-                    src={src}
-                    alt=""
-                    width="56"
-                    height="56"
-                    loading="lazy"
-                    class="size-14 rounded-full bg-muted object-cover"
-                  />
-                  <div class="flex min-w-0 flex-col gap-1">
-                    <CardTitle>
-                      <h3>{name}</h3>
-                    </CardTitle>
-                    <CardDescription>{role}</CardDescription>
-                    <div class="flex flex-wrap gap-x-4">
-                      <a
-                        href={cityHref}
-                        class="inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 after:absolute after:inset-0 hover:text-foreground hover:underline pointer-coarse:min-h-11"
-                      >
-                        <MapPin className="size-3" />
-                        {city}
-                      </a>
-                      <a
-                        href={linkedin}
-                        target="_blank"
-                        rel="noopener"
-                        aria-label={`${t("about.linkedin.label")} ${name} ${t("a11y.newTab")}`}
-                        class="relative z-10 inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline pointer-coarse:min-h-11"
-                      >
-                        {t("about.linkedin")}
-                        <ExternalLink className="size-3" />
-                      </a>
-                    </div>
+        {members.map(({ name, role, linkedin, src, city, cityHref }) => (
+          // The city link stretches over the whole card; LinkedIn sits above it
+          <div class="flex">
+            <Card size="sm" className="relative w-full">
+              <CardHeader className="flex items-center gap-4 sm:flex-col sm:items-start lg:flex-row lg:items-center">
+                <img
+                  src={src}
+                  alt=""
+                  width="56"
+                  height="56"
+                  loading="lazy"
+                  class="size-14 rounded-full bg-muted object-cover"
+                />
+                <div class="flex min-w-0 flex-col gap-1">
+                  <CardTitle>
+                    <h3>{name}</h3>
+                  </CardTitle>
+                  <CardDescription>{role}</CardDescription>
+                  <div class="flex flex-wrap gap-x-4">
+                    <a
+                      href={cityHref}
+                      class="inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 after:absolute after:inset-0 hover:text-foreground hover:underline pointer-coarse:min-h-11"
+                    >
+                      <MapPin className="size-3" />
+                      {city}
+                    </a>
+                    <a
+                      href={linkedin}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={`${t("about.linkedin.label")} ${name} ${t("a11y.newTab")}`}
+                      class="relative z-10 inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline pointer-coarse:min-h-11"
+                    >
+                      {t("about.linkedin")}
+                      <ExternalLink className="size-3" />
+                    </a>
                   </div>
-                </CardHeader>
-              </Card>
-            </div>
-          ))
-        }
+                </div>
+              </CardHeader>
+            </Card>
+          </div>
+        ))}
       </div>
     </section>
 
@@ -483,14 +465,7 @@ const faqSchema = {
       subject="contact.email.subject"
     />
 
-    <footer
-      class="flex flex-col items-start justify-between gap-4 border-t border-border/50 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-2"
-    >
-      <span class="text-sm"
-        >&copy; {new Date().getFullYear()} {t("footer.copyright")}</span
-      >
-      <DevelopedByKaizencode lang={lang} />
-    </footer>
+    <SiteFooter lang={lang} />
   </main>
 </div>
 <BackToTop client:idle label={t("a11y.top")} />

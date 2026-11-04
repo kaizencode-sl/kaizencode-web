@@ -37,100 +37,100 @@ export function Header({ lang = defaultLang, path }: HeaderProps) {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" storageKey="theme">
-        <header className="header-in sticky top-0 z-50 border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
-          <div className="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center justify-between px-6">
-            <a
-              href={homeHref}
-              aria-label={t("nav.home")}
-              className="inline-flex min-h-11 min-w-11 items-center text-lg font-bold tracking-tighter no-underline"
-            >
-              {`/{`}
-            </a>
+      <header className="header-in sticky top-0 z-50 border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+        <div className="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center justify-between px-6">
+          <a
+            href={homeHref}
+            aria-label={t("nav.home")}
+            className="inline-flex min-h-11 min-w-11 items-center text-lg font-bold tracking-tighter no-underline"
+          >
+            {`/{`}
+          </a>
 
-            <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="py-3 transition-colors hover:text-foreground"
+          <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="py-3 transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <LanguageSelector currentLang={lang} path={path} />
+            <ThemeTogglerButton
+              variant="ghost"
+              size="sm"
+              direction="ltr"
+              modes={["light", "dark"]}
+              className="pointer-coarse:size-11"
+              aria-label={t("nav.theme")}
+            />
+
+            <Sheet>
+              <SheetTrigger asChild className="md:hidden">
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className="pointer-coarse:size-11"
+                  aria-label={t("nav.menu")}
                 >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-
-            <div className="flex items-center gap-2">
-              <LanguageSelector currentLang={lang} path={path} />
-              <ThemeTogglerButton
-                variant="ghost"
-                size="sm"
-                direction="ltr"
-                modes={["light", "dark"]}
-                className="pointer-coarse:size-11"
-                aria-label={t("nav.theme")}
-              />
-
-              <Sheet>
-                <SheetTrigger asChild className="md:hidden">
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    className="pointer-coarse:size-11"
-                    aria-label={t("nav.menu")}
-                  >
-                    <Menu className="size-5" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent
-                  side="right"
-                  showCloseButton={false}
-                  className="!w-full border-none sm:max-w-sm"
-                >
-                  <div className="flex h-full flex-col gap-14 px-6 pt-4 pb-8">
-                    <div className="flex items-center justify-between">
-                      <a
-                        href={homeHref}
-                        aria-label={t("nav.home")}
-                        className="inline-flex min-h-11 min-w-11 items-center text-lg font-bold tracking-tighter no-underline"
+                  <Menu className="size-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                showCloseButton={false}
+                className="!w-full border-none sm:max-w-sm"
+              >
+                <div className="flex h-full flex-col gap-14 px-6 pt-4 pb-8">
+                  <div className="flex items-center justify-between">
+                    <a
+                      href={homeHref}
+                      aria-label={t("nav.home")}
+                      className="inline-flex min-h-11 min-w-11 items-center text-lg font-bold tracking-tighter no-underline"
+                    >
+                      {`/{`}
+                    </a>
+                    <SheetClose asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        className="pointer-coarse:size-11"
+                        aria-label={t("nav.menu.close")}
                       >
-                        {`/{`}
-                      </a>
-                      <SheetClose asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon-sm"
-                          className="pointer-coarse:size-11"
-                          aria-label={t("nav.menu.close")}
-                        >
-                          <X className="size-5" />
-                        </Button>
-                      </SheetClose>
-                    </div>
-                    <nav className="flex flex-col gap-8">
-                      {navLinks.map((link, i) => (
-                        <SheetClose asChild key={link.label}>
-                          <a
-                            href={link.href}
-                            className="block animate-in text-3xl font-semibold tracking-tight text-muted-foreground transition-colors duration-400 ease-out fade-in slide-in-from-left-4 fill-mode-backwards hover:text-foreground motion-reduce:animate-none"
-                            style={{ animationDelay: `${300 + i * 100}ms` }}
-                          >
-                            {link.label}
-                          </a>
-                        </SheetClose>
-                      ))}
-                    </nav>
+                        <X className="size-5" />
+                      </Button>
+                    </SheetClose>
                   </div>
-                </SheetContent>
-              </Sheet>
-            </div>
+                  <nav className="flex flex-col gap-8">
+                    {navLinks.map((link, i) => (
+                      <SheetClose asChild key={link.label}>
+                        <a
+                          href={link.href}
+                          className="block animate-in text-3xl font-semibold tracking-tight text-muted-foreground transition-colors duration-400 ease-out fill-mode-backwards fade-in slide-in-from-left-4 hover:text-foreground motion-reduce:animate-none"
+                          style={{ animationDelay: `${300 + i * 100}ms` }}
+                        >
+                          {link.label}
+                        </a>
+                      </SheetClose>
+                    ))}
+                  </nav>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
-          {/* --scroll-progress is set on <html> by GSAP (src/lib/animations.ts),
+        </div>
+        {/* --scroll-progress is set on <html> by GSAP (src/lib/animations.ts),
               so this hydrated element's own style is never touched */}
-          <div
-            aria-hidden
-            className="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-(--scroll-progress,0) bg-primary"
-          />
-        </header>
+        <div
+          aria-hidden
+          className="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-(--scroll-progress,0) bg-primary"
+        />
+      </header>
     </ThemeProvider>
   )
 }

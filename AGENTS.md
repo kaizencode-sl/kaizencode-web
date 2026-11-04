@@ -1,4 +1,4 @@
-# OpenCode Agent Instructions
+# Agent Instructions
 
 ## Project Overview
 This is an Astro.js project with React, TypeScript, Tailwind CSS v4, and shadcn/ui components for Kaizencode, a software company.
@@ -18,10 +18,12 @@ This is an Astro.js project with React, TypeScript, Tailwind CSS v4, and shadcn/
 - `pnpm lint` - Run ESLint
 - `pnpm format` - Format code with Prettier
 - `pnpm typecheck` - Run TypeScript checks
+- `pnpm test` - Build and smoke-test `dist/`
+- Keep TypeScript on 6.x until typescript-eslint and `@astrojs/check` support 7
 
 ## Project Structure
 - Components: `src/components/`
-- Pages: `src/pages/`
+- Pages: `src/pages/[...path].astro` renders every page in both languages from the table in `src/lib/pages.ts`; add a page by adding an entry there (no per-language files)
 - Layouts: `src/layouts/`
 - Utilities: `src/lib/`, `src/hooks/`
 
@@ -40,7 +42,7 @@ This is an Astro.js project with React, TypeScript, Tailwind CSS v4, and shadcn/
 ## Internationalization (i18n)
 - The project uses Astro's built-in i18n with `en` and `es` locales, configured in `astro.config.mjs`
 - All text content must be provided in **both English (`en`) and Spanish (`es`)** — never add text in only one language
-- Translations live in `src/i18n/ui.ts` as a single dictionary with flat, dot-separated keys (e.g., `'hero.tagline'`)
+- Translations live in `src/i18n/messages/*.ts` (one file per area, each with `en` and `es`), merged by `src/i18n/ui.ts`, with flat, dot-separated keys (e.g., `'hero.tagline'`); English must define every Spanish key (enforced by `satisfies`)
 - The `Lang` type (`'en' | 'es'`) flows from Astro route params → layout → components via props
 - Use `useTranslations(lang)` from `@/i18n/utils` in Astro components to look up translated strings
 - In React client components (`'use client'`), receive translated strings as props or re-implement the inline lookup pattern from `header.tsx`

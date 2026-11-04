@@ -11,7 +11,7 @@ Source of [www.kaizencode.es](https://www.kaizencode.es), the Kaizencode company
 | Language | [TypeScript](https://www.typescriptlang.org) 6 |
 | Styling | [Tailwind CSS](https://tailwindcss.com) v4 (via `@tailwindcss/vite`) |
 | Components | [shadcn/ui](https://ui.shadcn.com), [animate-ui](https://www.animate-ui.com) |
-| Animations | [motion](https://motion.dev), [GSAP](https://gsap.com) |
+| Animations | [GSAP](https://gsap.com) |
 | Icons | [Lucide](https://lucide.dev) |
 | SEO | [@astrojs/sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/) |
 
@@ -37,6 +37,7 @@ Open [http://localhost:4321](http://localhost:4321). The English version is at [
 | `pnpm format` | Format with Prettier |
 | `pnpm format:check` | Check formatting without writing |
 | `pnpm typecheck` | Run `astro check` |
+| `pnpm test` | Build, then smoke-test `dist/` (titles, canonicals, hreflang pairs, sitemap) |
 
 ## Project structure
 
@@ -46,11 +47,11 @@ src/
 │   ├── ui/          # shadcn/ui primitives
 │   ├── custom/      # Composed components using shadcn/animate-ui
 │   └── animate-ui/  # animate-ui component library
-├── pages/           # Routes: Spanish at the root, English under en/
+├── pages/           # One dynamic route ([...path].astro) for every page, both languages; 404
 ├── layouts/         # Layout components
-├── i18n/            # Translations (ui.ts) and helpers (utils.ts)
+├── i18n/            # ui.ts (merges messages/*), helpers (utils.ts)
 ├── styles/          # Global CSS
-├── lib/             # Utilities
+├── lib/             # Utilities; pages.ts is the table of every page
 └── hooks/           # React hooks
 public/              # Static assets, CNAME, robots.txt, OG images
 ```
@@ -66,11 +67,11 @@ Spanish (`es`) is the default locale and is served without a prefix. English (`e
 | `/automatizacion-ia/` | `/en/automatizacion-ia/` |
 | `/proyectos/<slug>/` (`centauro`, `jovi`, `albinana`, `app-agora`) | `/en/projects/<slug>/` |
 
-All UI text lives in `src/i18n/ui.ts` as flat, dot-separated keys and must be provided in both languages. Old `/es/...` URLs redirect to the root (see `redirects` in `astro.config.mjs`).
+All UI text lives in `src/i18n/messages/*.ts` (merged by `ui.ts`) as flat, dot-separated keys and must be provided in both languages. Old `/es/...` URLs redirect to the root (see `redirects` in `astro.config.mjs`).
 
 ## Deployment
 
-Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the site with `withastro/action` and deploys it to GitHub Pages. The custom domain comes from `public/CNAME`.
+Pull requests and pushes to `main` run lint, format check, typecheck and the smoke test. Pushing to `main` then triggers `.github/workflows/deploy.yml`, which builds the site with `withastro/action` and deploys it to GitHub Pages. The custom domain comes from `public/CNAME`.
 
 ## Adding shadcn/ui components
 

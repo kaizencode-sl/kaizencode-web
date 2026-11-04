@@ -51,8 +51,9 @@ const mailto = `mailto:${email}?subject=${encodeURIComponent(t(subject))}`
         <a
           href={mailto}
           class="font-medium break-all text-foreground underline-offset-4 hover:underline"
-          >{email}</a
         >
+          {email}
+        </a>
       </p>
     </CardContent>
   </Card>

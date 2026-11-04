@@ -111,15 +111,18 @@ function GravityStarsBackground({
     const nextDpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2))
     const newW = Math.max(1, Math.floor(rect.width * nextDpr))
     const newH = Math.max(1, Math.floor(rect.height * nextDpr))
-    
+
     // On touch devices, ignore small height changes (like iOS Safari address bar) to prevent flickering and logic resets
-    const isMobileResize = isTouchDevice.current && canvas.width === newW && Math.abs(canvas.height - newH) < 300 * nextDpr
-    
+    const isMobileResize =
+      isTouchDevice.current &&
+      canvas.width === newW &&
+      Math.abs(canvas.height - newH) < 300 * nextDpr
+
     if (
       !isMobileResize &&
       (canvas.width !== newW ||
-      canvas.height !== newH ||
-      dprRef.current !== nextDpr)
+        canvas.height !== newH ||
+        dprRef.current !== nextDpr)
     ) {
       dprRef.current = nextDpr
       canvas.width = newW
@@ -376,12 +379,7 @@ function GravityStarsBackground({
         }
       })
     }
-  }, [
-    starsCount,
-    starsOpacity,
-    movementSpeed,
-    initStars,
-  ])
+  }, [starsCount, starsOpacity, movementSpeed, initStars])
 
   React.useEffect(() => {
     if (animRef.current) cancelAnimationFrame(animRef.current)

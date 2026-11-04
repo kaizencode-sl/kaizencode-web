@@ -2,7 +2,6 @@
 import Layout from "@/layouts/main.astro"
 import { defaultLang, type Lang } from "@/i18n/ui"
 import { getLangFromUrl, localizePath } from "@/i18n/utils"
-import { Header } from "@/components/custom/header"
 import { buttonVariants } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 
@@ -26,10 +25,7 @@ const { title, description } = messages[lang] ?? messages[defaultLang]
 ---
 
 <Layout lang={lang} title={title} description={description}>
-  <Header client:load lang={lang} path={Astro.url.pathname} />
-  <div
-    class="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-6xl flex-col px-6"
-  >
+  <div class="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-6xl flex-col px-6">
     <main
       id="main-content"
       class="flex flex-1 flex-col items-start justify-center gap-6 py-16"

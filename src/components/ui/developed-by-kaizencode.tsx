@@ -11,8 +11,7 @@ function DevelopedByKaizencode({
 }: React.ComponentProps<"p"> & { lang?: Lang }) {
   const t = (
     key: "footer.developed.with" | "footer.developed.by" | "a11y.newTab"
-  ) =>
-    ui[lang]?.[key] ?? ui[defaultLang][key]
+  ) => ui[lang]?.[key] ?? ui[defaultLang][key]
 
   return (
     <p className={cn("text-sm text-muted-foreground", className)} {...props}>

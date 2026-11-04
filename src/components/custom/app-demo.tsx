@@ -3,7 +3,6 @@
 import { useState, type ReactNode } from "react"
 import {
   CalendarDays,
-  Check,
   Pointer,
   House,
   Plus,
@@ -20,130 +19,19 @@ import { ui, defaultLang, type Lang, type UiKey } from "@/i18n/ui"
 // A playable copy of the Ágora iPhone app with its demo fixtures
 // (agora-dashboard/ios/Agora/Data/Fixtures.swift). Nothing leaves the browser.
 
-const HOURS = [17, 18, 19]
-const TODAY = 3 // Wednesday (1 = Monday … 4 = Thursday, the academy's open days)
-const CURRENT = 2 // November, in the four months the demo shows (Sep–Dec)
-const FEES: Record<number, number> = { 2: 50, 3: 65, 4: 75 } // by weekly hours
-
-type Slot = [day: number, hour: number]
-interface Student {
-  id: number
-  course: string
-  school: string
-  slots: Slot[]
-  active: boolean
-}
-
-const students: Student[] = [
-  {
-    id: 1,
-    course: "1 ESO",
-    school: "Grisolía",
-    slots: [
-      [1, 18],
-      [3, 18],
-    ],
-    active: true,
-  },
-  {
-    id: 2,
-    course: "1 ESO",
-    school: "Hervás",
-    slots: [
-      [1, 18],
-      [2, 18],
-      [3, 18],
-    ],
-    active: true,
-  },
-  {
-    id: 3,
-    course: "2 ESO",
-    school: "San José",
-    slots: [
-      [1, 19],
-      [2, 19],
-      [3, 19],
-      [4, 19],
-    ],
-    active: true,
-  },
-  {
-    id: 4,
-    course: "2 ESO",
-    school: "San José",
-    slots: [
-      [2, 18],
-      [4, 18],
-    ],
-    active: true,
-  },
-  {
-    id: 5,
-    course: "3 ESO",
-    school: "Pedro Mercedes",
-    slots: [
-      [1, 18],
-      [1, 19],
-      [3, 19],
-    ],
-    active: true,
-  },
-  {
-    id: 6,
-    course: "4 ESO",
-    school: "Sagrada Familia",
-    slots: [
-      [2, 19],
-      [4, 19],
-    ],
-    active: true,
-  },
-  {
-    id: 7,
-    course: "1 BACH",
-    school: "Grisolía",
-    slots: [
-      [1, 19],
-      [3, 18],
-      [4, 18],
-    ],
-    active: true,
-  },
-  {
-    id: 8,
-    course: "2 BACH",
-    school: "Hervás",
-    slots: [
-      [2, 18],
-      [2, 19],
-      [4, 18],
-      [4, 19],
-    ],
-    active: true,
-  },
-  {
-    id: 9,
-    course: "3 ESO",
-    school: "Grisolía",
-    slots: [
-      [1, 18],
-      [3, 18],
-    ],
-    active: false,
-  },
-]
-const active = students.filter((s) => s.active)
-const fee = (s: Student) => FEES[s.slots.length] ?? 0
-const expectedIncome = active.reduce((sum, s) => sum + fee(s), 0)
-// Rent and electricity every month, supplies only in the current one
-const expenses = [
-  { key: 0, amount: 380, monthly: true },
-  { key: 1, amount: 60, monthly: true },
-  { key: 2, amount: 35, monthly: false },
-]
-const expensesFor = (month: number) =>
-  expenses.filter((e) => e.monthly || month === CURRENT)
+import {
+  HOURS,
+  TODAY,
+  CURRENT,
+  students,
+  active,
+  fee,
+  expectedIncome,
+  expensesFor,
+  type Slot,
+  type Student,
+} from "./app-demo-data"
+import { Title, Group, Row, Stat, PaidBadge, Segmented } from "./app-demo-parts"
 
 type Tab = "home" | "schedule" | "students" | "accounting"
 const tabs: { id: Tab; icon: LucideIcon }[] = [
@@ -603,117 +491,5 @@ export function AppDemo({ lang = defaultLang }: { lang?: Lang }) {
         {t("demo.caption")}
       </p>
     </div>
-  )
-}
-
-function Title({ children }: { children: ReactNode }) {
-  return (
-    <h3 className="px-4 pt-3 text-[30px] leading-tight font-bold tracking-tight">
-      {children}
-    </h3>
-  )
-}
-
-function Group({
-  header,
-  detail,
-  muted,
-  children,
-}: {
-  header?: string
-  detail?: string
-  muted?: boolean
-  children: ReactNode
-}) {
-  return (
-    <section className="px-4 pt-4">
-      {header && (
-        <div
-          className={cn(
-            "flex items-baseline justify-between px-4 pb-1.5 text-[13px] font-semibold text-ios-secondary",
-            muted && "font-normal"
-          )}
-        >
-          <span>{header}</span>
-          {detail && <span className="font-normal tabular-nums">{detail}</span>}
-        </div>
-      )}
-      <div className="divide-y divide-ios-separator overflow-hidden rounded-2xl bg-ios-card">
-        {children}
-      </div>
-    </section>
-  )
-}
-
-function Row({
-  className,
-  children,
-}: {
-  className?: string
-  children: ReactNode
-}) {
-  return (
-    <div
-      className={cn(
-        "flex min-h-11 items-center justify-between gap-3 px-4 py-2.5",
-        className
-      )}
-    >
-      {children}
-    </div>
-  )
-}
-
-function Stat({ label, value }: { label: string; value: number }) {
-  return (
-    <div>
-      <p className="text-[13px] text-ios-secondary">{label}</p>
-      <p
-        key={value}
-        className="animate-in text-[28px] font-bold tabular-nums fade-in"
-      >
-        {value}
-      </p>
-    </div>
-  )
-}
-
-function PaidBadge({ label }: { label: string }) {
-  return (
-    <Badge className="animate-in zoom-in-75 fade-in">
-      <Check data-icon="inline-start" />
-      {label}
-    </Badge>
-  )
-}
-
-function Segmented({
-  value,
-  onChange,
-  items,
-}: {
-  value: string
-  onChange: (v: string) => void
-  items: [string, string][]
-}) {
-  return (
-    <ToggleGroup
-      type="single"
-      value={value}
-      onValueChange={(v) => v && onChange(v)}
-      spacing={0}
-      className="w-full rounded-full bg-ios-fill p-0.5"
-    >
-      {items.map(([v, label]) => (
-        <ToggleGroupItem
-          key={v}
-          value={v}
-          size="sm"
-          className="flex-1 rounded-full! text-[13px] data-[state=on]:bg-ios-card data-[state=on]:shadow-sm"
-        >
-          {label}
-        </ToggleGroupItem>
-      ))}
-    </ToggleGroup>
   )
 }

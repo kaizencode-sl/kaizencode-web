@@ -62,19 +62,22 @@ export function initAnimations() {
     })
   })
 
-  gsap.fromTo(document.documentElement, { "--scroll-progress": 0 }, {
-    "--scroll-progress": 1,
-    ease: "none",
-    scrollTrigger: { start: 0, end: "max", scrub: true },
-  })
+  gsap.fromTo(
+    document.documentElement,
+    { "--scroll-progress": 0 },
+    {
+      "--scroll-progress": 1,
+      ease: "none",
+      scrollTrigger: { start: 0, end: "max", scrub: true },
+    }
+  )
 
   // Webfonts change heights after first layout
   document.fonts.ready.then(() => {
     ScrollTrigger.refresh()
     // After a ClientRouter swap the browser's own hash scroll runs before
     // reveal/layout settles, so land on the target once it's stable
-    if (location.hash)
-      document.querySelector(location.hash)?.scrollIntoView()
+    if (location.hash) document.querySelector(location.hash)?.scrollIntoView()
   })
 
   return () => {

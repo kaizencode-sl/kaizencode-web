@@ -17,14 +17,16 @@ export function LanguageSelector({ currentLang, path }: LanguageSelectorProps) {
         <a
           key={code}
           // Spanish-only city landings fall back to the generic web design page
-          href={getAlternatePath(path, code) ?? localizePath(code, "/diseno-web/")}
+          href={
+            getAlternatePath(path, code) ?? localizePath(code, "/diseno-web/")
+          }
           hrefLang={code}
           lang={code}
           aria-label={label}
           aria-current={code === currentLang ? "page" : undefined}
           className={cn(
             toggleVariants({ variant: "outline", size: "sm" }),
-            "relative rounded-none px-2 font-mono text-xs no-underline first:rounded-l-2xl last:rounded-r-2xl not-first:border-l-0 focus-visible:z-10 aria-[current=page]:bg-muted after:absolute after:-inset-y-2 after:inset-x-0"
+            "relative rounded-none px-2 font-mono text-xs no-underline not-first:border-l-0 after:absolute after:inset-x-0 after:-inset-y-2 first:rounded-l-2xl last:rounded-r-2xl focus-visible:z-10 aria-[current=page]:bg-muted"
           )}
         >
           {code.toUpperCase()}

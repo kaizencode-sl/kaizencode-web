@@ -15,11 +15,7 @@ import {
 import type { UiKey } from "@/i18n/ui"
 
 export type CaseStudySlug =
-  | "centauro"
-  | "jovi"
-  | "albinana"
-  | "agora"
-  | "app-agora"
+  "centauro" | "jovi" | "albinana" | "agora" | "app-agora"
 
 export interface CaseStudy {
   name: UiKey

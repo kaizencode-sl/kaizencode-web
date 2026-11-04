@@ -1,9 +1,11 @@
 "use client"
 
 import { useSyncExternalStore } from "react"
-import { ThemeTogglerButton as AnimateThemeTogglerButton } from "@/components/animate-ui/components/buttons/theme-toggler"
-import { buttonVariants } from "@/components/animate-ui/components/buttons/icon"
-import type { ThemeTogglerButtonProps } from "@/components/animate-ui/components/buttons/theme-toggler"
+import {
+  ThemeTogglerButton as AnimateThemeTogglerButton,
+  buttonVariants,
+  type ThemeTogglerButtonProps,
+} from "@/components/animate-ui/components/buttons/theme-toggler"
 
 const noop = () => () => {}
 

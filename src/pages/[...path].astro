@@ -1,0 +1,36 @@
+---
+import type { GetStaticPaths } from "astro"
+import Layout from "@/layouts/main.astro"
+import HomeContent from "@/components/custom/home-content.astro"
+import WebDesignContent from "@/components/custom/web-design-content.astro"
+import AutomationContent from "@/components/custom/automation-content.astro"
+import EcommerceContent from "@/components/custom/ecommerce-content.astro"
+import CaseStudyContent from "@/components/custom/case-study-content.astro"
+import { languages, type Lang } from "@/i18n/ui"
+import { localizePath, useTranslations } from "@/i18n/utils"
+import { pages } from "@/lib/pages"
+
+export const getStaticPaths = (() =>
+  Object.entries(pages).flatMap(([path, page]) =>
+    (Object.keys(languages) as Lang[])
+      .filter((lang) => lang === "es" || !page.city)
+      .map((lang) => ({
+        params: {
+          path: localizePath(lang, path).replace(/^\/|\/$/g, "") || undefined,
+        },
+        props: { lang, path, page },
+      }))
+  )) satisfies GetStaticPaths
+
+const { lang, path, page } = Astro.props
+const t = useTranslations(lang)
+---
+
+<Layout lang={lang} title={t(page.title)} description={t(page.description)}>
+  {page.slug && <CaseStudyContent lang={lang} slug={page.slug} />}
+  {page.city && <WebDesignContent lang={lang} city={page.city} />}
+  {path === "/" && <HomeContent lang={lang} />}
+  {path === "/diseno-web/" && <WebDesignContent lang={lang} />}
+  {path === "/automatizacion-ia/" && <AutomationContent lang={lang} />}
+  {path === "/tiendas-online/" && <EcommerceContent lang={lang} />}
+</Layout>

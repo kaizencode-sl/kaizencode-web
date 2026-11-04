@@ -4,6 +4,7 @@ import { ClientRouter } from "astro:transitions"
 import { ui, languages, defaultLang, type Lang } from "@/i18n/ui"
 import { getAlternatePath } from "@/i18n/utils"
 import { team } from "@/lib/team"
+import { Header } from "@/components/custom/header"
 import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars"
 
 export interface Props {
@@ -60,16 +61,12 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
 
     <!-- Canonical & hreflang -->
     <link rel="canonical" href={canonicalUrl} />
-    {
-      alternates.map(({ code, href }) => (
-        <link rel="alternate" hreflang={code} href={href} />
-      ))
-    }
-    {
-      defaultUrl && (
-        <link rel="alternate" hreflang="x-default" href={defaultUrl} />
-      )
-    }
+    {alternates.map(({ code, href }) => (
+      <link rel="alternate" hreflang={code} href={href} />
+    ))}
+    {defaultUrl && (
+      <link rel="alternate" hreflang="x-default" href={defaultUrl} />
+    )}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -81,11 +78,9 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content={ogLocale} />
-    {
-      alternates.length > 1 && (
-        <meta property="og:locale:alternate" content={ogLocaleAlt} />
-      )
-    }
+    {alternates.length > 1 && (
+      <meta property="og:locale:alternate" content={ogLocaleAlt} />
+    )}
 
     <!-- Twitter / X Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -180,7 +175,10 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
       {ui[lang]["a11y.skip"]}
     </a>
     <!-- The entrance fades this wrapper, not the React element -->
-    <div class="stars-in fixed inset-0 opacity-50 md:opacity-100" aria-hidden="true">
+    <div
+      class="stars-in fixed inset-0 opacity-50 md:opacity-100"
+      aria-hidden="true"
+    >
       <GravityStarsBackground
         client:idle
         starsCount={60}
@@ -191,6 +189,7 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
         className="text-foreground/50 [--stars-glow:0] dark:text-foreground dark:[--stars-glow:1]"
       />
     </div>
+    <Header client:load lang={lang} path={Astro.url.pathname} />
     <slot />
     <script>
       import { initAnimations } from "@/lib/animations"

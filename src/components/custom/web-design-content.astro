@@ -11,10 +11,9 @@ import {
 import { buttonVariants } from "@/components/ui/button"
 import ContactSection from "@/components/custom/contact-section.astro"
 import { FaqAccordion } from "@/components/custom/faq-accordion"
-import { Header } from "@/components/custom/header"
 import { SectionHeader } from "@/components/custom/section-header"
 import { BackToTop } from "@/components/custom/back-to-top"
-import { DevelopedByKaizencode } from "@/components/ui/developed-by-kaizencode"
+import SiteFooter from "@/components/custom/site-footer.astro"
 import {
   Palette,
   Search,
@@ -217,9 +216,6 @@ const faqSchema = {
   type="application/ld+json"
   set:html={JSON.stringify(faqSchema)}
 />
-
-<Header client:load lang={lang} path={Astro.url.pathname} />
-
 <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
   <main
     id="main-content"
@@ -254,44 +250,42 @@ const faqSchema = {
       >
         {intro}
       </p>
-      {
-        member && cityName && (
-          <div class="hero-in mt-8" style="--i: 4">
-            <Card size="sm">
-              <CardContent className="flex items-center gap-4">
-                <img
-                  src={member.avatar}
-                  alt=""
-                  width="56"
-                  height="56"
-                  class="size-14 shrink-0 rounded-full bg-muted object-cover"
-                />
-                <div class="flex min-w-0 flex-col gap-1">
-                  <span class="inline-flex items-center gap-1.5 font-semibold">
-                    <MapPin className="size-4" />
-                    {t("city.contact.title").replace("{city}", cityName)}
-                  </span>
-                  <span class="max-w-xl text-sm text-muted-foreground">
-                    {t("city.contact.text")
-                      .replace("{name}", t(member.nameKey))
-                      .replace("{city}", cityName)}
-                  </span>
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener"
-                    aria-label={`${t("about.linkedin.label")} ${t(member.nameKey)} ${t("a11y.newTab")}`}
-                    class="inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline pointer-coarse:min-h-11"
-                  >
-                    {t("about.linkedin")}
-                    <ExternalLink className="size-3" />
-                  </a>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )
-      }
+      {member && cityName && (
+        <div class="hero-in mt-8" style="--i: 4">
+          <Card size="sm">
+            <CardContent className="flex items-center gap-4">
+              <img
+                src={member.avatar}
+                alt=""
+                width="56"
+                height="56"
+                class="size-14 shrink-0 rounded-full bg-muted object-cover"
+              />
+              <div class="flex min-w-0 flex-col gap-1">
+                <span class="inline-flex items-center gap-1.5 font-semibold">
+                  <MapPin className="size-4" />
+                  {t("city.contact.title").replace("{city}", cityName)}
+                </span>
+                <span class="max-w-xl text-sm text-muted-foreground">
+                  {t("city.contact.text")
+                    .replace("{name}", t(member.nameKey))
+                    .replace("{city}", cityName)}
+                </span>
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`${t("about.linkedin.label")} ${t(member.nameKey)} ${t("a11y.newTab")}`}
+                  class="inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline pointer-coarse:min-h-11"
+                >
+                  {t("about.linkedin")}
+                  <ExternalLink className="size-3" />
+                </a>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
       <div class="hero-in mt-8 flex flex-wrap gap-3" style="--i: 5">
         <a
           href={mailto}
@@ -322,106 +316,100 @@ const faqSchema = {
         title={t(city ? "city.services.title" : "webdesign.includes.title")}
       />
       <div class="grid gap-6 sm:grid-cols-2">
-        {
-          includes.map(({ title, text, icon: Icon, href, link }) => (
-            <Card size="sm" className="relative">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2.5">
-                  <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
-                  <h3>{title}</h3>
-                </CardTitle>
-                <CardDescription>{text}</CardDescription>
-              </CardHeader>
-              {href && (
-                <CardFooter className="mt-auto">
-                  <a
-                    href={href}
-                    class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
-                  >
-                    {link}
-                    <ArrowRight className="size-3.5" />
-                  </a>
-                </CardFooter>
-              )}
-            </Card>
-          ))
-        }
+        {includes.map(({ title, text, icon: Icon, href, link }) => (
+          <Card size="sm" className="relative">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2.5">
+                <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
+                <h3>{title}</h3>
+              </CardTitle>
+              <CardDescription>{text}</CardDescription>
+            </CardHeader>
+            {href && (
+              <CardFooter className="mt-auto">
+                <a
+                  href={href}
+                  class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
+                >
+                  {link}
+                  <ArrowRight className="size-3.5" />
+                </a>
+              </CardFooter>
+            )}
+          </Card>
+        ))}
       </div>
     </section>
 
     <section class="reveal flex flex-col gap-8">
       <SectionHeader title={t("webdesign.process.title")} />
       <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {
-          steps.map((step, i) => (
-            <li class="flex">
-              <Card size="sm" className="w-full">
-                <CardContent className="flex flex-col gap-2">
-                  <span class="font-mono text-xs text-muted-foreground">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span class="text-sm">{step}</span>
-                </CardContent>
-              </Card>
-            </li>
-          ))
-        }
+        {steps.map((step, i) => (
+          <li class="flex">
+            <Card size="sm" className="w-full">
+              <CardContent className="flex flex-col gap-2">
+                <span class="font-mono text-xs text-muted-foreground">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span class="text-sm">{step}</span>
+              </CardContent>
+            </Card>
+          </li>
+        ))}
       </ol>
     </section>
 
     <section id="projects" class="reveal flex flex-col gap-8">
       <SectionHeader title={t("webdesign.projects.title")} />
       <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          projects.map(({ slug, name, text, href, caseHref, alt }) => (
-            <li class="flex">
-              {/* As on the home page, the case study link stretches over the whole card; the visit link sits above it */}
-              <Card className="relative w-full pt-0">
-                <img
-                  src={`/projects/${slug}.webp`}
-                  srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
-                  sizes="(min-width: 1152px) 360px, (min-width: 640px) 50vw, 100vw"
-                  alt={alt ?? `${t("project.image.alt")} ${name}`}
-                  width="1280"
-                  height="800"
-                  loading="lazy"
-                  decoding="async"
-                  draggable="false"
-                  class="aspect-[16/10] w-full border-b border-border/50 bg-muted object-cover object-top"
-                />
-                <CardHeader>
-                  <CardTitle>
-                    <h3>{name}</h3>
-                  </CardTitle>
-                  <CardDescription>{text}</CardDescription>
-                </CardHeader>
-                <div class="mt-auto flex flex-wrap gap-x-5 gap-y-2 px-5 pointer-coarse:gap-y-0">
-                  {caseHref && (
-                    <a
-                      href={caseHref}
-                      class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
-                    >
-                      {t("project.case")}
-                      <ArrowRight className="size-3.5" />
-                    </a>
-                  )}
-                  {href && (
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener"
-                      class="relative z-10 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
-                    >
-                      {t("project.visit")}
-                      <ExternalLink className="size-3.5" />
-                      <span class="sr-only">{t("a11y.newTab")}</span>
-                    </a>
-                  )}
-                </div>
-              </Card>
-            </li>
-          ))
-        }
+        {projects.map(({ slug, name, text, href, caseHref, alt }) => (
+          <li class="flex">
+            {/* As on the home page, the case study link stretches over the whole card; the visit link sits above it */}
+            <Card className="relative w-full pt-0">
+              <img
+                src={`/projects/${slug}.webp`}
+                srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
+                sizes="(min-width: 1152px) 360px, (min-width: 640px) 50vw, 100vw"
+                alt={alt ?? `${t("project.image.alt")} ${name}`}
+                width="1280"
+                height="800"
+                loading="lazy"
+                decoding="async"
+                draggable="false"
+                class="aspect-[16/10] w-full border-b border-border/50 bg-muted object-cover object-top"
+              />
+              <CardHeader>
+                <CardTitle>
+                  <h3>{name}</h3>
+                </CardTitle>
+                <CardDescription>{text}</CardDescription>
+              </CardHeader>
+              <div class="mt-auto flex flex-wrap gap-x-5 gap-y-2 px-5 pointer-coarse:gap-y-0">
+                {caseHref && (
+                  <a
+                    href={caseHref}
+                    class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
+                  >
+                    {t("project.case")}
+                    <ArrowRight className="size-3.5" />
+                  </a>
+                )}
+                {href && (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener"
+                    class="relative z-10 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
+                  >
+                    {t("project.visit")}
+                    <ExternalLink className="size-3.5" />
+                    <span class="sr-only">{t("a11y.newTab")}</span>
+                  </a>
+                )}
+              </div>
+            </Card>
+          </li>
+        ))}
       </ul>
     </section>
 
@@ -430,42 +418,33 @@ const faqSchema = {
       <FaqAccordion client:visible faqs={faqs} />
     </section>
 
-    {
-      otherLocations.length > 0 && (
-        <section class="reveal flex flex-col gap-8">
-          <SectionHeader title={t("city.others.title")} />
-          <ul class="flex flex-wrap gap-3">
-            {otherLocations.map(({ label, href }) => (
-              <li>
-                <a
-                  href={href}
-                  class={buttonVariants({
-                    variant: "outline",
-                    size: "lg",
-                    className:
-                      "h-auto min-h-11 shrink border-foreground/20 px-5 py-2 whitespace-normal",
-                  })}
-                >
-                  <MapPin className="size-3.5" />
-                  {label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
+    {otherLocations.length > 0 && (
+      <section class="reveal flex flex-col gap-8">
+        <SectionHeader title={t("city.others.title")} />
+        <ul class="flex flex-wrap gap-3">
+          {otherLocations.map(({ label, href }) => (
+            <li>
+              <a
+                href={href}
+                class={buttonVariants({
+                  variant: "outline",
+                  size: "lg",
+                  className:
+                    "h-auto min-h-11 shrink border-foreground/20 px-5 py-2 whitespace-normal",
+                })}
+              >
+                <MapPin className="size-3.5" />
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     <ContactSection lang={lang} {...cta} />
 
-    <footer
-      class="flex flex-col items-start justify-between gap-4 border-t border-border/50 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-2"
-    >
-      <span class="text-sm"
-        >&copy; {new Date().getFullYear()} {t("footer.copyright")}</span
-      >
-      <DevelopedByKaizencode lang={lang} />
-    </footer>
+    <SiteFooter lang={lang} />
   </main>
 </div>
 <BackToTop client:idle label={t("a11y.top")} />
