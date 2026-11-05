@@ -45,6 +45,9 @@ const defaultUrl = alternates.find(({ code }) => code === defaultLang)?.href
 const ogLocaleMap: Record<Lang, string> = { en: "en_US", es: "es_ES" }
 const ogLocale = ogLocaleMap[lang]
 const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
+
+// Google reads the site name from the WebSite data on the home page
+const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/en/"
 ---
 
 <!doctype html>
@@ -156,6 +159,7 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
       set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
+        "@id": `${siteOrigin}/#organization`,
         name: "Kaizencode",
         url: siteOrigin,
         logo: `${siteOrigin}${basePath}favicon/favicon.svg`,
@@ -179,6 +183,24 @@ const ogLocaleAlt = lang === "en" ? ogLocaleMap["es"] : ogLocaleMap["en"]
         })),
       })}
     />
+    {
+      isHome && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "@id": `${siteOrigin}/#website`,
+            name: siteName,
+            alternateName: "kaizencode.es",
+            url: `${siteOrigin}/`,
+            inLanguage: ["es", "en"],
+            publisher: { "@id": `${siteOrigin}/#organization` },
+          })}
+        />
+      )
+    }
   </head>
   <body>
     <a
