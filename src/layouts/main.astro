@@ -183,24 +183,22 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/en/"
         })),
       })}
     />
-    {
-      isHome && (
-        <script
-          is:inline
-          type="application/ld+json"
-          set:html={JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "@id": `${siteOrigin}/#website`,
-            name: siteName,
-            alternateName: "kaizencode.es",
-            url: `${siteOrigin}/`,
-            inLanguage: ["es", "en"],
-            publisher: { "@id": `${siteOrigin}/#organization` },
-          })}
-        />
-      )
-    }
+    {isHome && (
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": `${siteOrigin}/#website`,
+          name: siteName,
+          alternateName: "kaizencode.es",
+          url: `${siteOrigin}/`,
+          inLanguage: ["es", "en"],
+          publisher: { "@id": `${siteOrigin}/#organization` },
+        })}
+      />
+    )}
   </head>
   <body>
     <a
