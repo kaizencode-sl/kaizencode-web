@@ -8,6 +8,11 @@ import sitemap from "@astrojs/sitemap"
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.kaizencode.es",
+  // Every page ships its CSS in the HTML: no render-blocking request. GitHub
+  // Pages caches files for 10 minutes only, so a shared file gains little
+  build: {
+    inlineStylesheets: "always",
+  },
   vite: {
     plugins: [tailwindcss()],
   },

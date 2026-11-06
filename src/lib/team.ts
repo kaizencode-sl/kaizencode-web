@@ -10,14 +10,14 @@ export const team = [
     roleKey: "about.role.omar",
     city: "cuenca",
     linkedin: "https://www.linkedin.com/in/omar-caja-garcia/",
-    avatar: "https://avatars.githubusercontent.com/kaizen-omarcaja?size=160",
+    avatar: "https://avatars.githubusercontent.com/kaizen-omarcaja?size=112",
   },
   {
     nameKey: "about.member.misha",
     roleKey: "about.role.misha",
     city: "malaga",
     linkedin: "https://www.linkedin.com/in/mikhail-albershtein/",
-    avatar: "https://avatars.githubusercontent.com/kaizen-misha?size=160",
+    avatar: "https://avatars.githubusercontent.com/kaizen-misha?size=112",
   },
   {
     nameKey: "about.member.jose",
@@ -25,7 +25,7 @@ export const team = [
     city: "valencia",
     linkedin:
       "https://www.linkedin.com/in/jose-mar%C3%ADa-mart%C3%ADnez-840165172/",
-    avatar: "https://avatars.githubusercontent.com/kaizen-josemaria?size=160",
+    avatar: "https://avatars.githubusercontent.com/kaizen-josemaria?size=112",
   },
 ] as const satisfies readonly {
   nameKey: UiKey

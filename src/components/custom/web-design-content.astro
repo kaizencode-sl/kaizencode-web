@@ -369,7 +369,7 @@ const faqSchema = {
               <img
                 src={`/projects/${slug}.webp`}
                 srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
-                sizes="(min-width: 1152px) 360px, (min-width: 640px) 50vw, 100vw"
+                sizes="(min-width: 1152px) 360px, (min-width: 640px) 50vw, calc(100vw - 3rem)"
                 alt={alt ?? `${t("project.image.alt")} ${name}`}
                 width="1280"
                 height="800"

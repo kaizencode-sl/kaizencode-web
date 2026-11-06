@@ -68,11 +68,18 @@ function GravityStarsBackground({
   )
   const canvasSizeRef = React.useRef({ width: 800, height: 600 })
 
-  const readColor = React.useCallback(() => {
+  // Theme styles, read once per theme: getComputedStyle on every frame forces
+  // a style recalculation for nothing
+  const themeRef = React.useRef({ color: "#ffffff", glow: 1 })
+  const readTheme = React.useCallback(() => {
     const el = containerRef.current
-    if (!el) return "#ffffff"
+    if (!el) return
     const cs = getComputedStyle(el)
-    return cs.color || "#ffffff"
+    const glow = parseFloat(cs.getPropertyValue("--stars-glow"))
+    themeRef.current = {
+      color: cs.color || "#ffffff",
+      glow: Number.isNaN(glow) ? 1 : glow,
+    }
   }, [])
 
   const initStars = React.useCallback(
@@ -292,12 +299,7 @@ function GravityStarsBackground({
   const drawStars = React.useCallback(
     (ctx: CanvasRenderingContext2D) => {
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-      const color = readColor()
-      const el = containerRef.current
-      const glowVar = el
-        ? parseFloat(getComputedStyle(el).getPropertyValue("--stars-glow"))
-        : NaN
-      const glow = Number.isNaN(glowVar) ? 1 : glowVar
+      const { color, glow } = themeRef.current
       const currentDpr = dprRef.current
       for (const p of starsRef.current) {
         ctx.save()
@@ -317,7 +319,7 @@ function GravityStarsBackground({
         ctx.restore()
       }
     },
-    [glowIntensity, readColor]
+    [glowIntensity]
   )
 
   const animate = React.useCallback(
@@ -390,6 +392,7 @@ function GravityStarsBackground({
     }
     const start = () => {
       stop()
+      readTheme()
       if (!document.hidden) animRef.current = requestAnimationFrame(animate)
     }
     // No frames while the tab is hidden
@@ -409,7 +412,7 @@ function GravityStarsBackground({
       window.removeEventListener("resize", start)
       stop()
     }
-  }, [animate])
+  }, [animate, readTheme])
 
   return (
     <div
