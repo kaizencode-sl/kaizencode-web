@@ -1,26 +1,14 @@
 ---
-import { Badge } from "@/components/ui/badge"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { buttonVariants } from "@/components/ui/button"
 import ContactSection from "@/components/custom/contact-section.astro"
-import { FaqAccordion } from "@/components/custom/faq-accordion"
-import { SectionHeader } from "@/components/custom/section-header"
+import PageHero from "@/components/custom/page-hero.astro"
+import WideSection from "@/components/custom/wide-section.astro"
+import FeatureRows from "@/components/custom/feature-rows.astro"
+import ProcessSteps from "@/components/custom/process-steps.astro"
+import FaqSection from "@/components/custom/faq-section.astro"
 import { BackToTop } from "@/components/custom/back-to-top"
 import SiteFooter from "@/components/custom/site-footer.astro"
-import {
-  ArrowLeft,
-  ArrowRight,
-  Paintbrush,
-  Plug,
-  Repeat,
-  Store,
-} from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { localizePath, useTranslations } from "@/i18n/utils"
 import { type Lang } from "@/i18n/ui"
 import { caseStudyPath } from "@/lib/case-studies"
@@ -37,22 +25,18 @@ const includes = [
   {
     title: t("ecommerce.includes.1.title"),
     text: t("ecommerce.includes.1.text"),
-    icon: Store,
   },
   {
     title: t("ecommerce.includes.2.title"),
     text: t("ecommerce.includes.2.text"),
-    icon: Paintbrush,
   },
   {
     title: t("ecommerce.includes.3.title"),
     text: t("ecommerce.includes.3.text"),
-    icon: Plug,
   },
   {
     title: t("ecommerce.includes.4.title"),
     text: t("ecommerce.includes.4.text"),
-    icon: Repeat,
   },
 ]
 
@@ -97,38 +81,15 @@ const faqSchema = {
 <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
   <main
     id="main-content"
-    class="flex flex-1 flex-col gap-24 py-16 [&_section[id]]:scroll-mt-24"
+    class="flex flex-1 flex-col gap-16 py-10 md:gap-24 md:py-16 [&_section[id]]:scroll-mt-24"
   >
-    <section class="flex flex-col items-start">
-      <a
-        href={localizePath(lang)}
-        class="hero-in mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground pointer-coarse:mb-3 pointer-coarse:min-h-11"
-        style="--i: 0"
-      >
-        <ArrowLeft className="size-3.5" />
-        {t("webdesign.back")}
-      </a>
-      <div class="hero-in mb-6" style="--i: 1">
-        <Badge
-          variant="outline"
-          className="h-auto max-w-full px-3 font-mono text-xs tracking-widest whitespace-normal"
-        >
-          {t("ecommerce.badge")}
-        </Badge>
-      </div>
-      <h1
-        class="hero-in max-w-3xl text-[min(2.25rem,10vw)] leading-tight font-bold tracking-tighter text-balance sm:text-[min(3.75rem,9.5vw)]"
-        style="--i: 2"
-      >
-        {t("ecommerce.heading")}
-      </h1>
-      <p
-        class="hero-in mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
-        style="--i: 3"
-      >
-        {t("ecommerce.intro")}
-      </p>
-      <div class="hero-in mt-8 flex flex-wrap gap-3" style="--i: 4">
+    <PageHero
+      back={{ href: localizePath(lang), label: t("webdesign.back") }}
+      badge={t("ecommerce.badge")}
+      heading={t("ecommerce.heading")}
+      intro={t("ecommerce.intro")}
+    >
+      <div class="flex flex-wrap gap-3">
         <a
           href={mailto}
           class={buttonVariants({
@@ -151,85 +112,58 @@ const faqSchema = {
           {t("ecommerce.case.title")}
         </a>
       </div>
-    </section>
+    </PageHero>
 
-    <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("ecommerce.includes.title")} />
-      <div class="grid gap-6 sm:grid-cols-2">
-        {includes.map(({ title, text, icon: Icon }) => (
-          <Card size="sm">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2.5">
-                <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
-                <h3>{title}</h3>
-              </CardTitle>
-              <CardDescription>{text}</CardDescription>
-            </CardHeader>
-          </Card>
-        ))}
+    <FeatureRows title={t("ecommerce.includes.title")} items={includes} />
+
+    <WideSection id="case" title={t("ecommerce.case.title")}>
+      <div class="grid gap-10 lg:grid-cols-12 lg:gap-8">
+        <img
+          src="/projects/centauro.webp"
+          srcset="/projects/centauro-640.webp 640w, /projects/centauro-960.webp 960w, /projects/centauro.webp 1280w, /projects/centauro-1920.webp 1920w"
+          sizes="(min-width: 1024px) 60vw, 100vw"
+          alt={`${t("project.image.alt")} ${t("project.centauro")}`}
+          width="1280"
+          height="800"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[16/10] w-full bg-muted object-cover object-top grayscale transition-[filter] duration-500 hover:grayscale-0 lg:col-span-7"
+        />
+        <div class="flex flex-col items-start gap-6 lg:col-span-5">
+          <p class="text-muted-foreground sm:text-lg">
+            {t("ecommerce.case.intro")}
+          </p>
+          <dl class="w-full border-b border-border">
+            {caseFacts.map(({ label, value }) => (
+              <div class="flex items-baseline justify-between gap-6 border-t border-border py-3">
+                <dt class="font-mono text-xs tracking-widest text-muted-foreground uppercase">
+                  {label}
+                </dt>
+                <dd class="text-right text-sm font-medium">{value}</dd>
+              </div>
+            ))}
+          </dl>
+          <p class="text-muted-foreground sm:text-lg">
+            {t("ecommerce.case.shopify")}
+          </p>
+          <a
+            href={caseHref}
+            class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
+          >
+            {t("automation.case.link")}
+            <ArrowRight className="size-3.5" />
+          </a>
+        </div>
       </div>
-    </section>
+    </WideSection>
 
-    <section id="case" class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("ecommerce.case.title")} />
-      <p class="max-w-3xl text-muted-foreground sm:text-lg">
-        {t("ecommerce.case.intro")}
-      </p>
-      <img
-        src="/projects/centauro.webp"
-        srcset="/projects/centauro-640.webp 640w, /projects/centauro-960.webp 960w, /projects/centauro.webp 1280w"
-        sizes="(min-width: 1152px) 1104px, calc(100vw - 3rem)"
-        alt={`${t("project.image.alt")} ${t("project.centauro")}`}
-        width="1280"
-        height="800"
-        loading="lazy"
-        decoding="async"
-        class="aspect-[16/10] w-full rounded-3xl border border-border/50 bg-muted object-cover object-top"
-      />
-      <dl class="grid gap-4 sm:grid-cols-3">
-        {caseFacts.map(({ label, value }) => (
-          <Card size="sm" className="gap-1 px-4">
-            <dt class="font-mono text-xs tracking-widest text-muted-foreground uppercase">
-              {label}
-            </dt>
-            <dd class="text-sm font-medium">{value}</dd>
-          </Card>
-        ))}
-      </dl>
-      <p class="max-w-3xl text-muted-foreground sm:text-lg">
-        {t("ecommerce.case.shopify")}
-      </p>
-      <a
-        href={caseHref}
-        class="inline-flex items-center gap-1.5 self-start text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
-      >
-        {t("automation.case.link")}
-        <ArrowRight className="size-3.5" />
-      </a>
-    </section>
+    <ProcessSteps
+      lang={lang}
+      title={t("webdesign.process.title")}
+      steps={steps}
+    />
 
-    <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("webdesign.process.title")} />
-      <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {steps.map((step, i) => (
-          <li class="flex">
-            <Card size="sm" className="w-full">
-              <CardContent className="flex flex-col gap-2">
-                <span class="font-mono text-xs text-muted-foreground">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span class="text-sm">{step}</span>
-              </CardContent>
-            </Card>
-          </li>
-        ))}
-      </ol>
-    </section>
-
-    <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("webdesign.faq.title")} />
-      <FaqAccordion client:visible faqs={faqs} />
-    </section>
+    <FaqSection title={t("webdesign.faq.title")} faqs={faqs} />
 
     <ContactSection
       lang={lang}

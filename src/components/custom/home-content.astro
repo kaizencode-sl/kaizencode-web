@@ -1,29 +1,16 @@
 ---
 import { Badge } from "@/components/ui/badge"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { buttonVariants } from "@/components/ui/button"
 import ContactSection from "@/components/custom/contact-section.astro"
-import { FaqAccordion } from "@/components/custom/faq-accordion"
+import ProcessSteps from "@/components/custom/process-steps.astro"
+import ProjectIndex from "@/components/custom/project-index.astro"
+import FaqSection from "@/components/custom/faq-section.astro"
 import { SectionHeader } from "@/components/custom/section-header"
 import { BackToTop } from "@/components/custom/back-to-top"
 import { HeroTitle } from "@/components/custom/hero-title"
 import SiteFooter from "@/components/custom/site-footer.astro"
-import {
-  ShoppingCart,
-  Code,
-  Smartphone,
-  Palette,
-  ExternalLink,
-  ArrowRight,
-  Quote,
-  MapPin,
-} from "lucide-react"
+import { ExternalLink, ArrowRight, Quote, MapPin } from "lucide-react"
 import { localizePath, useTranslations } from "@/i18n/utils"
 import { team, cityPath } from "@/lib/team"
 import { caseStudyPath } from "@/lib/case-studies"
@@ -55,10 +42,19 @@ const stats = [
 
 const projects = [
   {
+    slug: "agora",
+    name: t("project.agora"),
+    type: t("project.agora.type"),
+    result: t("project.agora.result"),
+    tags: t("project.agora.tags").split(","),
+    href: "https://www.agoraacademy.es/",
+    caseHref: localizePath(lang, caseStudyPath("agora")),
+  },
+  {
     slug: "centauro",
     name: t("project.centauro"),
     type: t("project.centauro.type"),
-    description: t("project.centauro.description"),
+    result: t("project.centauro.result"),
     tags: t("project.centauro.tags").split(","),
     href: "https://shop.centauro.es/",
     caseHref: localizePath(lang, caseStudyPath("centauro")),
@@ -67,7 +63,7 @@ const projects = [
     slug: "jovi",
     name: t("project.jovi"),
     type: t("project.jovi.type"),
-    description: t("project.jovi.description"),
+    result: t("project.jovi.result"),
     tags: t("project.jovi.tags").split(","),
     href: "https://www.tabernajovi.es/",
     caseHref: localizePath(lang, caseStudyPath("jovi")),
@@ -76,7 +72,7 @@ const projects = [
     slug: "albinana",
     name: t("project.albinana"),
     type: t("project.albinana.type"),
-    description: t("project.albinana.description"),
+    result: t("project.albinana.result"),
     tags: t("project.albinana.tags").split(","),
     href: "https://www.farmaciaalbinana.es/",
     caseHref: localizePath(lang, caseStudyPath("albinana")),
@@ -85,19 +81,10 @@ const projects = [
     slug: "app-agora",
     name: t("project.appAgora"),
     type: t("project.appAgora.type"),
-    description: t("project.appAgora.description"),
+    result: t("project.appAgora.result"),
     tags: t("project.appAgora.tags").split(","),
     alt: t("project.appAgora.image.alt"),
     caseHref: localizePath(lang, caseStudyPath("app-agora")),
-  },
-  {
-    slug: "agora",
-    name: t("project.agora"),
-    type: t("project.agora.type"),
-    description: t("project.agora.description"),
-    tags: t("project.agora.tags").split(","),
-    href: "https://www.agoraacademy.es/",
-    caseHref: localizePath(lang, caseStudyPath("agora")),
   },
 ]
 
@@ -105,34 +92,54 @@ const services = [
   {
     title: t("service.ecommerce.title"),
     description: t("service.ecommerce.description"),
-    icon: ShoppingCart,
     badge: t("service.ecommerce.badge"),
     href: localizePath(lang, "/tiendas-online/"),
     link: t("service.ecommerce.link"),
+    includes: [
+      t("service.ecommerce.include.1"),
+      t("service.ecommerce.include.2"),
+      t("service.ecommerce.include.3"),
+    ],
+    photo: "/services/ecommerce.webp",
   },
   {
     title: t("service.custom.title"),
     description: t("service.custom.description"),
-    icon: Code,
     badge: t("service.custom.badge"),
     href: localizePath(lang, "/automatizacion-ia/"),
     link: t("service.custom.link"),
+    includes: [
+      t("service.custom.include.1"),
+      t("service.custom.include.2"),
+      t("service.custom.include.3"),
+    ],
+    photo: "/services/custom.webp",
   },
   {
     title: t("service.web.title"),
     description: t("service.web.description"),
-    icon: Palette,
     badge: t("service.web.badge"),
     href: localizePath(lang, "/diseno-web/"),
     link: t("service.web.link"),
+    includes: [
+      t("service.web.include.1"),
+      t("service.web.include.2"),
+      t("service.web.include.3"),
+    ],
+    photo: "/services/web.webp",
   },
   {
     title: t("service.mobile.title"),
     description: t("service.mobile.description"),
-    icon: Smartphone,
     badge: t("service.mobile.badge"),
     href: localizePath(lang, caseStudyPath("app-agora")),
     link: t("service.mobile.link"),
+    includes: [
+      t("service.mobile.include.1"),
+      t("service.mobile.include.2"),
+      t("service.mobile.include.3"),
+    ],
+    photo: "/services/mobile.webp",
   },
 ]
 
@@ -178,9 +185,9 @@ const faqSchema = {
 <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
   <main
     id="main-content"
-    class="flex flex-1 flex-col justify-center gap-24 py-16 [&_section[id]]:scroll-mt-24"
+    class="flex flex-1 flex-col justify-center gap-16 py-10 md:gap-24 md:py-16 [&_section[id]]:scroll-mt-24"
   >
-    <section class="flex flex-col items-start">
+    <section class="flex min-h-[calc(100svh-8rem)] flex-col items-start justify-center">
       <div class="hero-in mb-6" style="--i: 0">
         <Badge
           variant="outline"
@@ -189,11 +196,11 @@ const faqSchema = {
           {t("hero.badge")}
         </Badge>
       </div>
-      <h1>
+      <h1 class="w-full">
         <HeroTitle
           text="Kaizencode"
           translate="no"
-          className="text-[min(3rem,14vw)] leading-tight font-bold tracking-tighter sm:text-[min(4.5rem,12vw)]"
+          className="text-[min(15vw,12.5rem)] leading-none font-bold tracking-tighter"
         />
         <span
           class="hero-in mt-2 block max-w-2xl text-xl font-semibold tracking-tight text-foreground/90 sm:text-2xl"
@@ -246,133 +253,142 @@ const faqSchema = {
       </ul>
     </section>
 
-    <section id="projects" class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("section.projects.title")} />
-      <!-- Every project visible at once: case studies fill the top row -->
-      <ul class="grid gap-6 md:grid-cols-2" data-stagger>
-        {projects.map(
-          ({ slug, name, type, description, tags, href, caseHref, alt }) => (
-            <li class="flex">
-              {/* With a case study, its link stretches over the whole card; the visit link sits above it */}
-              <Card className="relative pt-0">
-                <img
-                  src={`/projects/${slug}.webp`}
-                  srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
-                  sizes="(min-width: 1152px) 552px, (min-width: 768px) 50vw, calc(100vw - 3rem)"
-                  alt={alt ?? `${t("project.image.alt")} ${name}`}
-                  width="1280"
-                  height="800"
-                  loading="lazy"
-                  decoding="async"
-                  draggable="false"
-                  class="aspect-[16/10] w-full border-b border-border/50 bg-muted object-cover object-top"
-                />
-                <CardHeader>
-                  <span class="font-mono text-xs tracking-widest text-muted-foreground uppercase">
-                    {type}
-                  </span>
-                  <CardTitle>
-                    <h3>{name}</h3>
-                  </CardTitle>
-                  <CardDescription>{description}</CardDescription>
-                </CardHeader>
-                <CardContent className="mt-auto flex flex-col items-start gap-4">
-                  <div class="flex flex-wrap gap-2">
-                    {tags.map((tag) => (
-                      <Badge
-                        variant="secondary"
-                        className="font-mono text-[11px] tracking-wider uppercase"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
+    <section class="ml-[calc(50%-50vw)] w-screen" data-scramble-track>
+      <div class="flex items-center px-6 sm:px-10 md:min-h-[80svh] lg:px-16">
+        <p class="text-[min(9vw,14svh,8rem)] leading-[1.1] font-bold tracking-tighter">
+          <span class="sr-only">{t("statement.text")}</span>
+          <span aria-hidden="true" data-scramble>
+            {t("statement.text")}
+          </span>
+        </p>
+      </div>
+    </section>
+
+    <section id="projects">
+      <ProjectIndex
+        lang={lang}
+        title={t("section.projects.title")}
+        projects={projects}
+      />
+    </section>
+
+    <section id="services" class="flex flex-col gap-8">
+      <div class="reveal">
+        <SectionHeader title={t("section.services.title")} />
+      </div>
+      <!-- Edge-to-edge panels: each sticks under the header and the next slides
+           over it. Sticky only with room for a whole panel. The scroll-linked
+           motion lives in src/lib/animations.ts -->
+      <ul class="ml-[calc(50%-50vw)] w-screen">
+        {services.map(
+          ({ title, description, badge, href, link, includes, photo }, i) => {
+            const surface = [
+              "bg-foreground text-background",
+              "bg-secondary text-foreground",
+              "bg-card text-foreground",
+              "bg-background text-foreground",
+            ][i]
+            const muted =
+              i === 0 ? "text-background/75" : "text-muted-foreground"
+            return (
+              <li
+                data-stack-panel
+                class="top-16 min-h-[calc(100svh-4rem)] motion-safe:[@media(min-height:700px)]:sticky motion-safe:[@media(min-height:700px)]:h-[calc(100svh-4rem)]"
+              >
+                <div
+                  data-stack-inner
+                  class={`relative flex h-full min-h-[calc(100svh-4rem)] origin-top flex-col justify-between gap-8 overflow-hidden p-6 sm:p-10 lg:px-16 ${surface}`}
+                >
+                  <div class="flex items-start justify-between gap-6">
+                    <h3
+                      data-stack-title
+                      class="min-w-0 text-[min(13vw,15svh,11rem)] leading-[1.1] font-bold tracking-tighter text-balance lg:text-[min(10vw,16svh,10rem)]"
+                    >
+                      {title}
+                    </h3>
+                    <span
+                      data-stack-number
+                      aria-hidden="true"
+                      class={`shrink-0 text-[clamp(3rem,8vw,7rem)] leading-none font-bold tracking-tighter tabular-nums ${muted}`}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
                   </div>
-                  <div class="flex flex-wrap gap-x-5 gap-y-2 pointer-coarse:gap-y-0">
-                    {caseHref && (
-                      <a
-                        href={caseHref}
-                        class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
+                  <div
+                    data-stack-rest
+                    class="grid flex-1 grid-rows-[auto_auto_minmax(10rem,1fr)] gap-6 border-t border-current/20 pt-6 md:grid-cols-2 lg:grid-cols-12 lg:grid-rows-[minmax(0,1fr)] lg:gap-8"
+                  >
+                    <div class="md:col-span-2 lg:col-span-2">
+                      <Badge
+                        variant="outline"
+                        className="h-auto max-w-full border-current font-mono text-[11px] tracking-wider whitespace-normal text-current uppercase"
                       >
-                        {t("project.case")}
-                        <ArrowRight className="size-3.5" />
-                      </a>
-                    )}
-                    {href && (
+                        {badge}
+                      </Badge>
+                    </div>
+                    <div class="flex flex-col items-start gap-4 lg:col-span-3">
+                      <p class={`text-base ${muted}`}>{description}</p>
                       <a
                         href={href}
-                        target="_blank"
-                        rel="noopener"
-                        class="relative z-10 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
+                        class="inline-flex min-h-11 items-center gap-2 border-b border-current text-base font-medium"
                       >
-                        {t("project.visit")}
-                        <ExternalLink className="size-3.5" />
-                        <span class="sr-only">{t("a11y.newTab")}</span>
+                        {link}
+                        <ArrowRight className="size-4 shrink-0" />
                       </a>
-                    )}
+                    </div>
+                    <div class="hidden md:block lg:col-span-3">
+                      <p class="font-mono text-sm font-medium">
+                        {t("service.includes")}
+                      </p>
+                      <ul class={`mt-2 text-base ${muted}`}>
+                        {includes.map((item) => (
+                          <li class="border-b border-current/20 py-2">
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="relative md:col-span-2 lg:col-span-4">
+                      <img
+                        src={photo}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                        class="absolute inset-0 size-full object-cover"
+                      />
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
-            </li>
-          )
+                  <div
+                    data-stack-shade
+                    aria-hidden="true"
+                    class="pointer-events-none absolute inset-0 bg-black opacity-0"
+                  />
+                </div>
+              </li>
+            )
+          }
         )}
       </ul>
     </section>
 
-    <section id="services" class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("section.services.title")} />
-      <div class="grid gap-6 sm:grid-cols-2" data-stagger>
-        {services.map(
-          ({ title, description, icon: Icon, badge, href, link }) => (
-            <div class="flex">
-              <Card size="sm" className="relative w-full">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2.5">
-                    <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
-                    <h3>{title}</h3>
-                  </CardTitle>
-                  <CardDescription>{description}</CardDescription>
-                </CardHeader>
-                <CardContent className="mt-auto flex flex-col items-start gap-4">
-                  <Badge
-                    variant="secondary"
-                    className="font-mono text-[11px] tracking-wider uppercase"
-                  >
-                    {badge}
-                  </Badge>
-                  {href && (
-                    <a
-                      href={href}
-                      class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
-                    >
-                      {link}
-                      <ArrowRight className="size-3.5" />
-                    </a>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
-          )
-        )}
-      </div>
-    </section>
+    <div
+      aria-hidden="true"
+      data-marquee-track
+      class="ml-[calc(50%-50vw)] w-screen overflow-clip"
+    >
+      <p
+        data-marquee
+        class="text-[min(16vw,22svh,14rem)] leading-tight font-bold tracking-tighter whitespace-nowrap text-foreground/40"
+      >
+        {[...services, ...services].map(({ title }) => `${title} · `).join("")}
+      </p>
+    </div>
 
-    <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("webdesign.process.title")} />
-      <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
-        {steps.map((step, i) => (
-          <li class="flex">
-            <Card size="sm" className="w-full">
-              <CardContent className="flex flex-col gap-2">
-                <span class="font-mono text-xs text-muted-foreground">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span class="text-sm">{step}</span>
-              </CardContent>
-            </Card>
-          </li>
-        ))}
-      </ol>
-    </section>
+    <ProcessSteps
+      lang={lang}
+      title={t("webdesign.process.title")}
+      steps={steps}
+    />
 
     {testimonials.length > 0 && (
       <section class="reveal flex flex-col gap-8">
@@ -406,56 +422,53 @@ const faqSchema = {
           {t("about.description")}
         </p>
       </div>
-      <div class="grid gap-6 sm:grid-cols-3" data-stagger>
-        {members.map(({ name, role, linkedin, src, city, cityHref }) => (
-          // The city link stretches over the whole card; LinkedIn sits above it
-          <div class="flex">
-            <Card size="sm" className="relative w-full">
-              <CardHeader className="flex items-center gap-4 sm:flex-col sm:items-start lg:flex-row lg:items-center">
-                <img
-                  src={src}
-                  alt=""
-                  width="56"
-                  height="56"
-                  loading="lazy"
-                  class="size-14 rounded-full bg-muted object-cover"
-                />
-                <div class="flex min-w-0 flex-col gap-1">
-                  <CardTitle>
-                    <h3>{name}</h3>
-                  </CardTitle>
-                  <CardDescription>{role}</CardDescription>
-                  <div class="flex flex-wrap gap-x-4">
-                    <a
-                      href={cityHref}
-                      class="inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 after:absolute after:inset-0 hover:text-foreground hover:underline pointer-coarse:min-h-11"
-                    >
-                      <MapPin className="size-3" />
-                      {city}
-                    </a>
-                    <a
-                      href={linkedin}
-                      target="_blank"
-                      rel="noopener"
-                      aria-label={`${t("about.linkedin.label")} ${name} ${t("a11y.newTab")}`}
-                      class="relative z-10 inline-flex min-h-6 items-center gap-1 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline pointer-coarse:min-h-11"
-                    >
-                      {t("about.linkedin")}
-                      <ExternalLink className="size-3" />
-                    </a>
-                  </div>
-                </div>
-              </CardHeader>
-            </Card>
-          </div>
+      <ul class="ml-[calc(50%-50vw)] w-screen overflow-clip border-b border-border/50">
+        {members.map(({ name, role, linkedin, src, city, cityHref }, i) => (
+          <li class="relative grid grid-cols-[5rem_minmax(0,1fr)] items-center gap-x-4 gap-y-2 border-t border-border/50 px-6 py-6 sm:flex sm:items-center sm:gap-10 sm:px-10 sm:py-10 lg:px-16">
+            <img
+              src={src.replace("size=112", "size=480")}
+              alt=""
+              width="240"
+              height="240"
+              loading="lazy"
+              class="size-20 shrink-0 rounded-full bg-muted object-cover sm:size-44 lg:size-60"
+            />
+            <div class="contents sm:flex sm:min-w-0 sm:flex-col sm:gap-3">
+              <h3
+                data-team-name={i % 2 ? "left" : "right"}
+                class="text-[min(10vw,20svh,10rem)] leading-none font-bold tracking-tighter sm:text-[min(13vw,20svh,10rem)]"
+              >
+                {name}
+              </h3>
+              <p class="col-span-2 text-base text-muted-foreground sm:text-lg">
+                {role}
+              </p>
+              <div class="col-span-2 flex flex-wrap gap-x-6">
+                <a
+                  href={cityHref}
+                  class="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline sm:text-base"
+                >
+                  <MapPin className="size-4" />
+                  {city}
+                </a>
+                <a
+                  href={linkedin}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`${t("about.linkedin.label")} ${name} ${t("a11y.newTab")}`}
+                  class="relative z-10 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline sm:text-base"
+                >
+                  {t("about.linkedin")}
+                  <ExternalLink className="size-4" />
+                </a>
+              </div>
+            </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
 
-    <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("webdesign.faq.title")} />
-      <FaqAccordion client:visible faqs={faqs} />
-    </section>
+    <FaqSection title={t("webdesign.faq.title")} faqs={faqs} />
 
     <ContactSection
       lang={lang}

@@ -1,19 +1,14 @@
 ---
-import { Badge } from "@/components/ui/badge"
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { buttonVariants } from "@/components/ui/button"
 import ContactSection from "@/components/custom/contact-section.astro"
-import { SectionHeader } from "@/components/custom/section-header"
+import PageHero from "@/components/custom/page-hero.astro"
+import WideSection from "@/components/custom/wide-section.astro"
+import SplitSection from "@/components/custom/split-section.astro"
+import FeatureRows from "@/components/custom/feature-rows.astro"
 import { BackToTop } from "@/components/custom/back-to-top"
 import { AppDemo } from "@/components/custom/app-demo"
 import SiteFooter from "@/components/custom/site-footer.astro"
 import {
-  ArrowLeft,
   ArrowRight,
   Check,
   ExternalLink,
@@ -39,10 +34,9 @@ const facts = study.facts.map(({ label, value }) => ({
   value: typeof value === "string" ? t(value) : value.text,
 }))
 const challenge = study.challenge.map((key) => t(key))
-const work = study.work.map(({ title, text, icon }) => ({
+const work = study.work.map(({ title, text }) => ({
   title: t(title),
   text: t(text),
-  icon,
 }))
 const stats = study.stats?.map(({ value, label }) => ({
   value,
@@ -56,107 +50,70 @@ const screens = study.screens
 ---
 
 <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
-  <main id="main-content" class="flex flex-1 flex-col gap-24 py-16">
-    <section class="flex flex-col items-start">
-      <a
-        href={projectsHref}
-        class="hero-in mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground pointer-coarse:mb-3 pointer-coarse:min-h-11"
-        style="--i: 0"
-      >
-        <ArrowLeft className="size-3.5" />
-        {t("case.back")}
-      </a>
-      <div class="hero-in mb-6" style="--i: 1">
-        <Badge
-          variant="outline"
-          className="h-auto max-w-full px-3 font-mono text-xs tracking-widest whitespace-normal"
-        >
-          {t("case.badge")} · {name}
-        </Badge>
-      </div>
-      <h1
-        class="hero-in max-w-3xl text-[min(2.25rem,10vw)] leading-tight font-bold tracking-tighter text-balance sm:text-[min(3.75rem,9.5vw)]"
-        style="--i: 2"
-      >
-        {t(study.heading)}
-      </h1>
-      <p
-        class="hero-in mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
-        style="--i: 3"
-      >
-        {t(study.intro)}
-      </p>
+  <main
+    id="main-content"
+    class="flex flex-1 flex-col gap-16 py-10 md:gap-24 md:py-16"
+  >
+    <PageHero
+      back={{ href: projectsHref, label: t("case.back") }}
+      badge={`${t("case.badge")} · ${name}`}
+      heading={t(study.heading)}
+      intro={t(study.intro)}
+    >
       {study.site && study.visit && (
-        <div class="hero-in mt-8" style="--i: 4">
-          <a
-            href={study.site}
-            target="_blank"
-            rel="noopener"
-            class={buttonVariants({
-              variant: "outline",
-              size: "lg",
-              className:
-                "h-auto min-h-11 shrink border-foreground/20 px-6 py-2 whitespace-normal",
-            })}
-          >
-            {t(study.visit)}
-            <ExternalLink className="size-3.5" />
-            <span class="sr-only">{t("a11y.newTab")}</span>
-          </a>
-        </div>
+        <a
+          href={study.site}
+          target="_blank"
+          rel="noopener"
+          class={buttonVariants({
+            variant: "outline",
+            size: "lg",
+            className:
+              "h-auto min-h-11 shrink border-foreground/20 px-6 py-2 whitespace-normal",
+          })}
+        >
+          {t(study.visit)}
+          <ExternalLink className="size-3.5" />
+          <span class="sr-only">{t("a11y.newTab")}</span>
+        </a>
       )}
-    </section>
+    </PageHero>
 
     <section class="flex flex-col gap-6">
       <img
         src={`/projects/${slug}.webp`}
-        srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`}
-        sizes="(min-width: 1152px) 1104px, calc(100vw - 3rem)"
+        srcset={`/projects/${slug}-640.webp 640w, /projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w${slug === "app-agora" ? "" : `, /projects/${slug}-1920.webp 1920w`}`}
+        sizes="100vw"
         alt={imageAlt}
         width="1280"
         height="800"
         fetchpriority="high"
-        style="--i: 5"
-        class="hero-in aspect-[16/10] w-full rounded-3xl border border-border/50 bg-muted object-cover object-top"
+        style="--i: 3"
+        class="hero-in ml-[calc(50%-50vw)] aspect-[16/10] max-h-[calc(100svh-4rem)] w-screen max-w-none bg-muted object-cover object-top"
       />
-      <dl class="grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      <dl class="ml-[calc(50%-50vw)] w-screen px-6 sm:px-10 lg:px-16 grid gap-x-8 sm:grid-cols-3 lg:grid-cols-5">
         {facts.map(({ label, value }) => (
-          <Card size="sm" className="gap-1 px-4">
+          <div class="flex flex-col gap-1 border-t border-border py-4">
             <dt class="font-mono text-xs tracking-widest text-muted-foreground uppercase">
               {label}
             </dt>
             <dd class="text-sm font-medium">{value}</dd>
-          </Card>
+          </div>
         ))}
       </dl>
     </section>
 
-    <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("case.challenge.title")} />
-      <div class="flex max-w-3xl flex-col gap-4 text-muted-foreground sm:text-lg">
+    <SplitSection title={t("case.challenge.title")}>
+      <div class="flex flex-col gap-4 text-muted-foreground sm:text-lg">
         {challenge.map((paragraph) => (
           <p>{paragraph}</p>
         ))}
       </div>
-    </section>
+    </SplitSection>
 
-    <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("case.work.title")} />
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:[&>:last-child:nth-child(odd)]:col-span-2 lg:[&>:last-child:nth-child(odd)]:col-span-1">
-        {work.map(({ title, text, icon: Icon }) => (
-          <Card size="sm">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2.5">
-                <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
-                <h3>{title}</h3>
-              </CardTitle>
-              <CardDescription>{text}</CardDescription>
-            </CardHeader>
-          </Card>
-        ))}
-      </div>
+    <FeatureRows title={t("case.work.title")} items={work}>
       {study.services && (
-        <div class="flex flex-col items-start gap-2">
+        <div class="mt-8 flex flex-col items-start gap-2">
           {study.services.map(({ href, label }) => (
             <a
               href={localizePath(lang, href)}
@@ -168,46 +125,44 @@ const screens = study.screens
           ))}
         </div>
       )}
-    </section>
+    </FeatureRows>
 
     {study.demo && (
-      <section class="reveal grid items-center gap-10 lg:grid-cols-2">
-        <div class="flex flex-col items-start gap-6">
-          <SectionHeader title={t("demo.title")} />
-          <p class="max-w-xl text-muted-foreground sm:text-lg">
-            {t("demo.text")}
-          </p>
-          <ul class="flex flex-col gap-3">
-            {(["demo.hint.1", "demo.hint.2", "demo.hint.3"] as const).map(
-              (key) => (
-                <li class="flex items-start gap-3">
-                  <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <MousePointerClick className="size-3.5" />
-                  </span>
-                  <span>{t(key)}</span>
-                </li>
-              )
-            )}
-          </ul>
-          <p class="mt-2 font-semibold">{t("demo.cta.text")}</p>
-          <a
-            href="#contacto"
-            class={buttonVariants({
-              size: "lg",
-              className: "h-auto min-h-11 shrink px-6 py-2 whitespace-normal",
-            })}
-          >
-            {t("demo.cta.button")}
-            <ArrowRight className="size-4" />
-          </a>
+      <WideSection title={t("demo.title")}>
+        <div class="grid items-center gap-10 lg:grid-cols-2">
+          <div class="flex flex-col items-start gap-6">
+            <p class="max-w-xl text-muted-foreground sm:text-lg">
+              {t("demo.text")}
+            </p>
+            <ul class="w-full border-b border-border">
+              {(["demo.hint.1", "demo.hint.2", "demo.hint.3"] as const).map(
+                (key) => (
+                  <li class="flex items-start gap-3 border-t border-border py-3">
+                    <MousePointerClick className="mt-1 size-4 shrink-0 text-muted-foreground" />
+                    <span>{t(key)}</span>
+                  </li>
+                )
+              )}
+            </ul>
+            <p class="mt-2 font-semibold">{t("demo.cta.text")}</p>
+            <a
+              href="#contacto"
+              class={buttonVariants({
+                size: "lg",
+                className: "h-auto min-h-11 shrink px-6 py-2 whitespace-normal",
+              })}
+            >
+              {t("demo.cta.button")}
+              <ArrowRight className="size-4" />
+            </a>
+          </div>
+          <AppDemo client:visible lang={lang} />
         </div>
-        <AppDemo client:visible lang={lang} />
-      </section>
+      </WideSection>
     )}
 
     {screens && (
-      <section class="reveal flex flex-col gap-8">
-        <SectionHeader title={t("case.screens.title")} />
+      <WideSection title={t("case.screens.title")}>
         <ul class="-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 lg:grid-cols-4">
           {screens.video && (
             <li class="w-[68%] shrink-0 snap-center sm:w-auto">
@@ -241,41 +196,42 @@ const screens = study.screens
             </li>
           ))}
         </ul>
-        <p class="text-xs text-muted-foreground">{t("case.screens.note")}</p>
-      </section>
+        <p class="mt-4 text-xs text-muted-foreground">
+          {t("case.screens.note")}
+        </p>
+      </WideSection>
     )}
 
-    <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t(study.valueTitle)} />
-      {stats && (
-        <div class="flex flex-col gap-3">
-          <dl class="grid gap-4 sm:grid-cols-3">
-            {stats.map(({ value, label }) => (
-              <Card className="flex-col-reverse gap-1 p-6">
-                <dt class="text-sm text-muted-foreground">{label}</dt>
-                <dd class="font-mono text-4xl font-bold tracking-tighter">
-                  {value}
-                  <span class="text-lg text-muted-foreground">/100</span>
-                </dd>
-              </Card>
-            ))}
-          </dl>
-          {study.statsNote && (
-            <p class="text-xs text-muted-foreground">{t(study.statsNote)}</p>
-          )}
-        </div>
-      )}
-      <ul class="flex max-w-3xl flex-col gap-4">
-        {value.map((item) => (
-          <li class="flex items-start gap-3">
-            <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Check className="size-3.5" />
-            </span>
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <SplitSection title={t(study.valueTitle)}>
+      <div class="flex flex-col gap-10">
+        {stats && (
+          <div class="flex flex-col gap-3">
+            <dl class="grid gap-x-8 sm:grid-cols-3">
+              {stats.map(({ value, label }) => (
+                <div class="flex flex-col-reverse gap-1 border-t border-border py-4">
+                  <dt class="text-sm text-muted-foreground">{label}</dt>
+                  <dd class="font-mono text-5xl font-bold tracking-tighter">
+                    {value}
+                    <span class="text-lg text-muted-foreground">/100</span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            {study.statsNote && (
+              <p class="text-xs text-muted-foreground">{t(study.statsNote)}</p>
+            )}
+          </div>
+        )}
+        <ul class="border-b border-border">
+          {value.map((item) => (
+            <li class="flex items-start gap-3 border-t border-border py-4 sm:text-lg">
+              <Check className="mt-1 size-4 shrink-0 text-muted-foreground" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </SplitSection>
 
     <ContactSection
       lang={lang}

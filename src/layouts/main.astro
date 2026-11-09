@@ -51,7 +51,11 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/en/"
 ---
 
 <!doctype html>
-<html lang={lang} class="dark motion-safe:scroll-smooth">
+<html
+  lang={lang}
+  class="dark motion-safe:scroll-smooth"
+  data-home={isHome ? "" : undefined}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -141,6 +145,27 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/en/"
           )
         setTheme()
         syncThemeColor()
+        // A reload starts at the top: the router would restore the saved
+        // offset, which lands elsewhere once the animated page has settled.
+        // Runs before the router reads the state; back/forward keep theirs
+        if (performance.getEntriesByType("navigation")[0]?.type === "reload") {
+          history.scrollRestoration = "manual"
+          if (history.state) {
+            history.replaceState(
+              { ...history.state, scrollX: 0, scrollY: 0 },
+              ""
+            )
+          }
+        }
+        // The home page's intro plays once per visit (.site-intro in global.css)
+        try {
+          if (html.dataset.home !== undefined && !sessionStorage.intro) {
+            sessionStorage.intro = "1"
+            html.classList.add("intro")
+          }
+        } catch {
+          // no storage, no intro
+        }
         new MutationObserver(syncThemeColor).observe(html, {
           attributes: true,
           attributeFilter: ["class"],
@@ -207,6 +232,20 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/en/"
     >
       {ui[lang]["a11y.skip"]}
     </a>
+    {isHome && (
+      <div class="site-intro" aria-hidden="true" translate="no">
+        <span class="site-intro-label">./kaizencode.sh</span>
+        <span class="site-intro-word">
+          {[..."Kaizencode"].map((letter, i) => (
+            <span style={`--i: ${i}`} data-letter={letter} />
+          ))}
+        </span>
+        <span class="site-intro-foot">
+          <span class="site-intro-line" />
+          <span class="site-intro-label">{ui[lang]["intro.status"]}</span>
+        </span>
+      </div>
+    )}
     <!-- The entrance fades this wrapper, not the React element -->
     <div
       transition:persist="stars"
@@ -214,7 +253,7 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/en/"
       aria-hidden="true"
     >
       <GravityStarsBackground
-        client:idle
+        client:idle={{ timeout: 800 }}
         starsCount={60}
         starsOpacity={0.6}
         glowIntensity={12}

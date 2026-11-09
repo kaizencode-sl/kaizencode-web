@@ -331,8 +331,12 @@ function GravityStarsBackground({
       animRef.current = null
       // Reduced motion: draw one still frame and stop (a resize redraws it)
       if (reducedMotion.matches) return drawStars(ctx)
-      updateStars()
-      drawStars(ctx)
+      // The glow is costly: hold still while the page really moves, so the
+      // frame budget goes to the scroll (set in src/lib/animations.ts)
+      if (!("pageMoving" in document.documentElement.dataset)) {
+        updateStars()
+        drawStars(ctx)
+      }
       animRef.current = requestAnimationFrame(tick)
     },
     [updateStars, drawStars, reducedMotion]

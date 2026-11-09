@@ -1,17 +1,3 @@
-import {
-  CalendarClock,
-  FileText,
-  Mail,
-  PencilLine,
-  LifeBuoy,
-  Palette,
-  Search,
-  ShieldCheck,
-  Sparkles,
-  Wallet,
-  Wand2,
-  type LucideIcon,
-} from "lucide-react"
 import type { UiKey } from "@/i18n/ui"
 
 export type CaseStudySlug =
@@ -30,7 +16,7 @@ export interface CaseStudy {
   // Values are translation keys, or plain text when the value isn't translated
   facts: { label: UiKey; value: UiKey | { text: string } }[]
   challenge: UiKey[]
-  work: { title: UiKey; text: UiKey; icon: LucideIcon }[]
+  work: { title: UiKey; text: UiKey }[]
   // Optional headline figures, shown above the value list
   stats?: { value: string; label: UiKey }[]
   statsNote?: UiKey
@@ -73,17 +59,14 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
       {
         title: "case.centauro.work.support.title",
         text: "case.centauro.work.support.text",
-        icon: LifeBuoy,
       },
       {
         title: "case.centauro.work.features.title",
         text: "case.centauro.work.features.text",
-        icon: Sparkles,
       },
       {
         title: "case.centauro.work.design.title",
         text: "case.centauro.work.design.text",
-        icon: Palette,
       },
     ],
     valueTitle: "case.value.title",
@@ -121,17 +104,14 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
       {
         title: "case.jovi.work.design.title",
         text: "case.jovi.work.design.text",
-        icon: Palette,
       },
       {
         title: "case.jovi.work.menu.title",
         text: "case.jovi.work.menu.text",
-        icon: FileText,
       },
       {
         title: "case.jovi.work.seo.title",
         text: "case.jovi.work.seo.text",
-        icon: Search,
       },
     ],
     stats: [
@@ -174,17 +154,14 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
       {
         title: "case.albinana.work.messages.title",
         text: "case.albinana.work.messages.text",
-        icon: Mail,
       },
       {
         title: "case.albinana.work.layout.title",
         text: "case.albinana.work.layout.text",
-        icon: Wand2,
       },
       {
         title: "case.albinana.work.edit.title",
         text: "case.albinana.work.edit.text",
-        icon: PencilLine,
       },
     ],
     valueTitle: "case.value.title",
@@ -225,17 +202,14 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
       {
         title: "case.agora.work.describe.title",
         text: "case.agora.work.describe.text",
-        icon: Sparkles,
       },
       {
         title: "case.agora.work.publish.title",
         text: "case.agora.work.publish.text",
-        icon: FileText,
       },
       {
         title: "case.agora.work.seo.title",
         text: "case.agora.work.seo.text",
-        icon: Search,
       },
     ],
     valueTitle: "case.value.title",
@@ -274,17 +248,14 @@ export const caseStudies: Record<CaseStudySlug, CaseStudy> = {
       {
         title: "case.appAgora.work.today.title",
         text: "case.appAgora.work.today.text",
-        icon: CalendarClock,
       },
       {
         title: "case.appAgora.work.money.title",
         text: "case.appAgora.work.money.text",
-        icon: Wallet,
       },
       {
         title: "case.appAgora.work.native.title",
         text: "case.appAgora.work.native.text",
-        icon: ShieldCheck,
       },
     ],
     demo: true,

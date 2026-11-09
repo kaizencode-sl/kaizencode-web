@@ -1,0 +1,91 @@
+---
+import { type Lang } from "@/i18n/ui"
+import { useTranslations } from "@/i18n/utils"
+
+// The numbered steps every service page shares: a side column with the mark
+// and who we are, then one row per step. The motion, which plays once per row
+// so nothing ever rests half revealed, is in src/lib/animations.ts
+export interface Props {
+  lang: Lang
+  title: string
+  steps: string[]
+}
+
+const { lang, title, steps } = Astro.props
+const t = useTranslations(lang)
+
+const names = [
+  t("process.step.1"),
+  t("process.step.2"),
+  t("process.step.3"),
+  t("process.step.4"),
+]
+const facts = [
+  t("process.fact.1"),
+  t("process.fact.2"),
+  t("process.fact.3"),
+  t("process.fact.4"),
+  t("process.fact.5"),
+]
+---
+
+<section
+  data-process
+  class="ml-[calc(50%-50vw)] grid w-screen gap-12 px-6 sm:px-10 md:py-16 lg:grid-cols-12 lg:gap-8 lg:px-16 lg:py-24"
+>
+  <div data-process-aside class="hidden flex-col gap-10 lg:col-span-3 lg:flex">
+    <span
+      data-process-mark
+      aria-hidden="true"
+      class="self-start text-[min(13vw,11rem)] leading-none font-bold tracking-tighter"
+    >
+      {`/{`}
+    </span>
+    <ul class="text-base">
+      {facts.map((fact) => (
+        <li>{fact}</li>
+      ))}
+    </ul>
+  </div>
+  <div class="lg:col-span-9">
+    <h2
+      data-title-chars
+      class="text-[min(13vw,7rem)] leading-[1.05] font-bold tracking-tighter text-balance"
+    >
+      {title}
+    </h2>
+    <ol class="mt-8 border-b border-border lg:mt-16">
+      {steps.map((step, i) => (
+        <li
+          data-process-step
+          class="group relative grid gap-2 border-t border-border py-6 md:grid-cols-9 md:gap-6 lg:py-8"
+        >
+          <div
+            data-process-line
+            aria-hidden="true"
+            class="absolute inset-x-0 -top-px h-px origin-left bg-foreground"
+          ></div>
+          <span
+            data-process-cell
+            aria-hidden="true"
+            class="font-mono text-base text-muted-foreground tabular-nums md:col-span-1"
+          >
+            {String(i + 1).padStart(3, "0")}
+          </span>
+          <h3
+            data-process-cell
+            class="text-xl font-semibold tracking-tight transition-[translate] duration-500 ease-out group-hover:translate-x-2 md:col-span-3 lg:text-2xl"
+          >
+            {names[i]}
+          </h3>
+          <p
+            data-process-cell
+            class="text-base text-muted-foreground transition-colors duration-300 group-hover:text-foreground md:col-span-5 lg:text-lg"
+          >
+            {step}
+          </p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

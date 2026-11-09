@@ -1,18 +1,11 @@
 ---
 import { buttonVariants } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from "@/components/ui/card"
-import { SectionHeader } from "@/components/custom/section-header"
 import { Mail } from "lucide-react"
 import { useTranslations } from "@/i18n/utils"
 import { type Lang, type UiKey } from "@/i18n/ui"
 
-// The closing contact panel shared by every page, composed from shadcn's Card
-// and button; each page brings its own pitch and email subject
+// The closing contact panel shared by every page, full-screen and inverted;
+// each page brings its own pitch and email subject
 export interface Props {
   lang: Lang
   title: UiKey
@@ -27,34 +20,39 @@ const email = "contact@kaizencode.es"
 const mailto = `mailto:${email}?subject=${encodeURIComponent(t(subject))}`
 ---
 
-<section id="contacto" class="reveal flex scroll-mt-24 flex-col gap-8">
-  <SectionHeader title={t(title)} />
-  <Card className="gap-6 py-6 hover:translate-y-0 hover:shadow-sm sm:py-10">
-    <CardHeader className="px-6 sm:px-10">
-      <CardDescription className="max-w-2xl text-base">
-        {t(text)}
-      </CardDescription>
-    </CardHeader>
-    <CardContent className="flex flex-col items-start gap-3 px-6 sm:px-10">
+<section
+  id="contacto"
+  class="ml-[calc(50%-50vw)] w-screen scroll-mt-16 overflow-clip"
+>
+  <div
+    data-close
+    class="flex origin-bottom md:min-h-[calc(100svh-4rem)] flex-col justify-between gap-10 bg-foreground p-6 text-background sm:p-10 lg:px-16"
+  >
+    <h2 class="text-[min(10.5vw,14svh,6.5rem)] leading-[1.05] font-bold tracking-tighter text-balance">
+      {t(title)}
+    </h2>
+    <div class="flex flex-col items-start gap-6">
+      <p class="max-w-2xl text-base text-background/75 sm:text-lg">{t(text)}</p>
       <a
         href={mailto}
         class={buttonVariants({
           size: "lg",
-          className: "h-auto min-h-11 px-6 py-2 whitespace-normal shrink",
+          className:
+            "h-auto min-h-11 shrink bg-background px-6 py-2 whitespace-normal text-foreground hover:bg-background/80",
         })}
       >
         <Mail className="size-4" />
         {t(button)}
       </a>
-      <p class="text-sm text-muted-foreground">
-        {t("contact.description")}{" "}
-        <a
-          href={mailto}
-          class="font-medium break-all text-foreground underline-offset-4 hover:underline"
-        >
-          {email}
-        </a>
-      </p>
-    </CardContent>
-  </Card>
+    </div>
+    <div class="flex flex-col gap-2">
+      <p class="text-sm text-background/75">{t("contact.description")}</p>
+      <a
+        href={mailto}
+        class="text-[min(7.5vw,3.5rem)] leading-tight font-bold tracking-tighter underline-offset-8 hover:underline"
+      >
+        {email}
+      </a>
+    </div>
+  </div>
 </section>

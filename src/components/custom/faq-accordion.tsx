@@ -80,7 +80,7 @@ export function FaqAccordion({ faqs }: FaqAccordionProps) {
       type="multiple"
       value={open}
       onValueChange={setOpen}
-      className="border-border/50 bg-card/70 backdrop-blur-sm dark:bg-secondary/30"
+      className="rounded-none border-x-0 border-y border-border"
     >
       {faqs.map(({ q, a }, i) => {
         const value = `faq-${i}`
@@ -88,9 +88,9 @@ export function FaqAccordion({ faqs }: FaqAccordionProps) {
           <AccordionItem
             key={value}
             value={value}
-            className="border-border/50 transition-colors duration-300 hover:bg-muted/30"
+            className="border-border data-open:bg-transparent"
           >
-            <AccordionTrigger className="px-5 py-4 text-base font-semibold hover:no-underline">
+            <AccordionTrigger className="px-0 py-6 text-xl font-semibold tracking-tight transition-[padding] duration-500 ease-out hover:pl-3 hover:no-underline **:data-[slot=accordion-trigger-icon]:size-6 **:data-[slot=accordion-trigger-icon]:text-foreground lg:text-2xl">
               {q}
             </AccordionTrigger>
             <AccordionContent
@@ -98,7 +98,7 @@ export function FaqAccordion({ faqs }: FaqAccordionProps) {
               ref={(el) => {
                 if (el) panels.current.set(value, el)
               }}
-              className="max-w-3xl px-1 text-base text-muted-foreground"
+              className="max-w-3xl px-0 text-base text-muted-foreground lg:text-lg"
             >
               {a}
             </AccordionContent>

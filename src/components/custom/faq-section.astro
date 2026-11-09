@@ -1,0 +1,16 @@
+---
+import { FaqAccordion } from "@/components/custom/faq-accordion"
+import SplitSection from "@/components/custom/split-section.astro"
+
+// The frequently asked questions every service page closes with
+export interface Props {
+  title: string
+  faqs: { q: string; a: string }[]
+}
+
+const { title, faqs } = Astro.props
+---
+
+<SplitSection title={title}>
+  <FaqAccordion client:visible faqs={faqs} />
+</SplitSection>

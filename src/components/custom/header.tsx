@@ -37,7 +37,7 @@ export function Header({ lang = defaultLang, path }: HeaderProps) {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" storageKey="theme">
-      <header className="header-in sticky top-0 z-50 border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+      <header className="header-in sticky top-0 z-50 border-b border-border/50 bg-background/90 backdrop-blur-sm">
         <div className="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center justify-between px-6">
           <a
             href={homeHref}

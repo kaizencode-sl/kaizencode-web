@@ -1,0 +1,61 @@
+---
+import { ArrowRight } from "lucide-react"
+import WideSection from "@/components/custom/wide-section.astro"
+
+// What a page offers, as numbered hairline rows; the motion is shared with
+// the process and the project index (animateRows in src/lib/animations.ts)
+export interface Props {
+  title: string
+  items: { title: string; text: string; href?: string; link?: string }[]
+}
+
+const { title, items } = Astro.props
+---
+
+<WideSection title={title}>
+  <ol data-rows class="border-b border-border">
+    {items.map(({ title, text, href, link }, i) => (
+      <li
+        data-process-step
+        class="group relative grid gap-2 border-t border-border py-6 md:grid-cols-12 md:gap-6 lg:py-8"
+      >
+        <div
+          data-process-line
+          aria-hidden="true"
+          class="absolute inset-x-0 -top-px h-px origin-left bg-foreground"
+        />
+        <span
+          data-process-cell
+          aria-hidden="true"
+          class="font-mono text-base text-muted-foreground tabular-nums md:col-span-1"
+        >
+          {String(i + 1).padStart(3, "0")}
+        </span>
+        <h3
+          data-process-cell
+          class="text-xl font-semibold tracking-tight transition-[translate] duration-500 ease-out group-hover:translate-x-2 md:col-span-4 lg:text-2xl"
+        >
+          {title}
+        </h3>
+        <div
+          data-process-cell
+          class="flex flex-col items-start gap-3 md:col-span-7"
+        >
+          <p class="text-base text-muted-foreground transition-colors duration-300 group-hover:text-foreground lg:text-lg">
+            {text}
+          </p>
+          {href && (
+            <a
+              href={href}
+              class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 after:absolute after:inset-0 hover:underline pointer-coarse:min-h-11"
+            >
+              {link}
+              <ArrowRight className="size-3.5" />
+            </a>
+          )}
+        </div>
+      </li>
+    ))}
+  </ol>
+  <slot />
+</WideSection>

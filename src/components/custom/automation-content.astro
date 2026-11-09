@@ -1,27 +1,15 @@
 ---
-import { Badge } from "@/components/ui/badge"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { buttonVariants } from "@/components/ui/button"
 import ContactSection from "@/components/custom/contact-section.astro"
-import { FaqAccordion } from "@/components/custom/faq-accordion"
-import { SectionHeader } from "@/components/custom/section-header"
+import PageHero from "@/components/custom/page-hero.astro"
+import WideSection from "@/components/custom/wide-section.astro"
+import FeatureRows from "@/components/custom/feature-rows.astro"
+import ProcessSteps from "@/components/custom/process-steps.astro"
+import FaqSection from "@/components/custom/faq-section.astro"
 import { BackToTop } from "@/components/custom/back-to-top"
 import AutomationFlow from "@/components/custom/automation-flow.astro"
 import SiteFooter from "@/components/custom/site-footer.astro"
-import {
-  ArrowLeft,
-  ArrowRight,
-  Plug,
-  Search,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { localizePath, useTranslations } from "@/i18n/utils"
 import { type Lang } from "@/i18n/ui"
 import { caseStudyPath } from "@/lib/case-studies"
@@ -38,22 +26,18 @@ const includes = [
   {
     title: t("automation.includes.1.title"),
     text: t("automation.includes.1.text"),
-    icon: Search,
   },
   {
     title: t("automation.includes.2.title"),
     text: t("automation.includes.2.text"),
-    icon: Plug,
   },
   {
     title: t("automation.includes.3.title"),
     text: t("automation.includes.3.text"),
-    icon: Sparkles,
   },
   {
     title: t("automation.includes.4.title"),
     text: t("automation.includes.4.text"),
-    icon: ShieldCheck,
   },
 ]
 
@@ -91,38 +75,15 @@ const faqSchema = {
 <div class="relative mx-auto flex min-h-svh max-w-6xl flex-col px-6">
   <main
     id="main-content"
-    class="flex flex-1 flex-col gap-24 py-16 [&_section[id]]:scroll-mt-24"
+    class="flex flex-1 flex-col gap-16 py-10 md:gap-24 md:py-16 [&_section[id]]:scroll-mt-24"
   >
-    <section class="flex flex-col items-start">
-      <a
-        href={localizePath(lang)}
-        class="hero-in mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground pointer-coarse:mb-3 pointer-coarse:min-h-11"
-        style="--i: 0"
-      >
-        <ArrowLeft className="size-3.5" />
-        {t("webdesign.back")}
-      </a>
-      <div class="hero-in mb-6" style="--i: 1">
-        <Badge
-          variant="outline"
-          className="h-auto max-w-full px-3 font-mono text-xs tracking-widest whitespace-normal"
-        >
-          {t("automation.badge")}
-        </Badge>
-      </div>
-      <h1
-        class="hero-in max-w-3xl text-[min(2.25rem,10vw)] leading-tight font-bold tracking-tighter text-balance sm:text-[min(3.75rem,9.5vw)]"
-        style="--i: 2"
-      >
-        {t("automation.heading")}
-      </h1>
-      <p
-        class="hero-in mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
-        style="--i: 3"
-      >
-        {t("automation.intro")}
-      </p>
-      <div class="hero-in mt-8 flex flex-wrap gap-3" style="--i: 4">
+    <PageHero
+      back={{ href: localizePath(lang), label: t("webdesign.back") }}
+      badge={t("automation.badge")}
+      heading={t("automation.heading")}
+      intro={t("automation.intro")}
+    >
+      <div class="flex flex-wrap gap-3">
         <a
           href={mailto}
           class={buttonVariants({
@@ -145,64 +106,37 @@ const faqSchema = {
           {t("automation.case.title")}
         </a>
       </div>
-    </section>
+    </PageHero>
 
-    <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("automation.includes.title")} />
-      <div class="grid gap-6 sm:grid-cols-2">
-        {includes.map(({ title, text, icon: Icon }) => (
-          <Card size="sm">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2.5">
-                <Icon className="size-5 shrink-0 text-muted-foreground transition-colors duration-300 group-hover/card:text-foreground" />
-                <h3>{title}</h3>
-              </CardTitle>
-              <CardDescription>{text}</CardDescription>
-            </CardHeader>
-          </Card>
-        ))}
+    <FeatureRows title={t("automation.includes.title")} items={includes} />
+
+    <WideSection id="case" title={t("automation.case.title")}>
+      <div class="grid items-start gap-10 lg:grid-cols-12 lg:gap-8">
+        <div class="flex flex-col items-start gap-6 lg:col-span-4">
+          <p class="text-muted-foreground sm:text-lg">
+            {t("automation.case.intro")}
+          </p>
+          <a
+            href={caseHref}
+            class="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
+          >
+            {t("automation.case.link")}
+            <ArrowRight className="size-3.5" />
+          </a>
+        </div>
+        <div class="lg:col-span-8">
+          <AutomationFlow lang={lang} />
+        </div>
       </div>
-    </section>
+    </WideSection>
 
-    <section id="case" class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("automation.case.title")} />
-      <p class="max-w-3xl text-muted-foreground sm:text-lg">
-        {t("automation.case.intro")}
-      </p>
+    <ProcessSteps
+      lang={lang}
+      title={t("webdesign.process.title")}
+      steps={steps}
+    />
 
-      <AutomationFlow lang={lang} />
-
-      <a
-        href={caseHref}
-        class="inline-flex items-center gap-1.5 self-start text-sm font-medium underline-offset-4 hover:underline pointer-coarse:min-h-11"
-      >
-        {t("automation.case.link")}
-        <ArrowRight className="size-3.5" />
-      </a>
-    </section>
-
-    <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("webdesign.process.title")} />
-      <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {steps.map((step, i) => (
-          <li class="flex">
-            <Card size="sm" className="w-full">
-              <CardContent className="flex flex-col gap-2">
-                <span class="font-mono text-xs text-muted-foreground">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span class="text-sm">{step}</span>
-              </CardContent>
-            </Card>
-          </li>
-        ))}
-      </ol>
-    </section>
-
-    <section class="reveal flex flex-col gap-8">
-      <SectionHeader title={t("webdesign.faq.title")} />
-      <FaqAccordion client:visible faqs={faqs} />
-    </section>
+    <FaqSection title={t("webdesign.faq.title")} faqs={faqs} />
 
     <ContactSection
       lang={lang}

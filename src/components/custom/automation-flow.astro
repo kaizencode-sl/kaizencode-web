@@ -67,7 +67,7 @@ const packet =
   data-flow
   data-round="2"
   aria-label={t("automation.flow.label")}
-  class="group/flow mx-auto flex w-full max-w-3xl flex-col gap-6"
+  class="group/flow flex w-full flex-col gap-6"
 >
   <figcaption class="flex min-h-8 items-center justify-between gap-4 font-mono text-xs text-muted-foreground">
     <span class="flex items-center gap-2">
@@ -144,7 +144,7 @@ const packet =
   </div>
 
   <!-- The screen: one scene per step -->
-  <Card className="grid gap-0 py-0">
+  <Card className="grid gap-0 rounded-none py-0">
     <div data-flow-scene="1" data-state="done" class={scene}>
       <div
         class="flex w-full max-w-xs flex-col items-end gap-2"

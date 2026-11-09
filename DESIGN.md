@@ -132,7 +132,7 @@ Dark is the canonical theme and the default (`<html class="dark">`, stored in `l
 - Strict grayscale UI on a near-black canvas; color only from real screenshots.
 - Translucent glass cards (30% slate, backdrop blur, hairline ring) floating over a star field.
 - Developer-flavoured microcopy: numbered `01` steps, tabular stats. Headlines stand on their own, with no label above them.
-- Motion that settles once: a staggered blur-in entrance in CSS (it starts on first paint, never waiting for JavaScript), then GSAP (`src/lib/animations.ts`) for scroll reveals that move but never fade and the stat count-up. All gated by `prefers-reduced-motion`, including the star field, which holds still.
+- Motion that settles once: a staggered blur-in entrance in CSS (it starts on first paint, never waiting for JavaScript), then GSAP (`src/lib/animations.ts`) for scroll reveals that move but never fade, the scrubbed services stack and the stat count-up, with Lenis easing wheel scrolling (touch stays native). Never animate `border-radius`, `filter` or text on large surfaces while scrubbing: they repaint every frame; animate transform and opacity. Scrubbed animations use a 1.1s catch-up (`SCRUB`). All gated by `prefers-reduced-motion`, including the star field, which holds still.
 
 ## Colors
 
@@ -169,7 +169,7 @@ The same zero-chroma ramp, inverted. The page is a soft paper grey (`oklch(0.975
 **Character:** One monospace family does every job, so hierarchy is carried by size, weight and tracking alone. Large sizes are tracked tight (-0.05em) to keep the mono grid from feeling loose; small labels are tracked wide and uppercased so they read as code annotations. `font-sans` is mapped to JetBrains Mono too, so no utility can fall back to a second face.
 
 ### Hierarchy
-- **Display** (700, 3rem → 4.5rem at `sm`, capped at 14vw / 12vw so enlarged text never pushes the page wide, line-height 1.25, -0.05em): the "Kaizencode" wordmark in the hero, and nothing else.
+- **Display** (700, line-height 1, -0.05em): the "Kaizencode" wordmark in the hero at `min(15vw, 12.5rem)`, sized to span the column, and the service titles in the services stack at `min(13vw, 15svh, 11rem)` (`min(11vw, 16svh, 11rem)` from `lg`, line-height 1.1). Nothing else.
 - **Lead** (600, 1.25rem → 1.5rem, -0.025em): the hero's descriptive heading under the wordmark and the "about" highlight line. Paper at 90%.
 - **Headline** (600, 1.5rem → 1.875rem, -0.025em): every section `h2`.
 - **Title** (500, 1rem): card titles (`h3`) and FAQ questions (600).
@@ -187,20 +187,20 @@ The same zero-chroma ramp, inverted. The page is a soft paper grey (`oklch(0.975
 
 A single centered column, `max-width: 72rem` (1152px) with 24px side gutters, shared by the sticky header and the main content. Sections stack vertically with a 96px gap; inside a section, the header and content are 32px apart. The hero is left-aligned, not centered, and so is every section header.
 
-Grids are simple and collapse to one column on mobile: services and team in 3 columns from `md`/`sm`, process steps 2 → 4 columns, all with 16–24px gaps. Projects sit in a 2-column grid from `md` (one column below), so every project is visible at once. Anchored sections offset by 96px (`scroll-mt-24`) to clear the sticky header.
+Grids are simple and collapse to one column on mobile: services and team in 3 columns from `md`/`sm`, process steps 2 → 4 columns, all with 16–24px gaps. The projects and services break out of the column to full width. Anchored sections offset by 96px (`scroll-mt-24`) to clear the sticky header.
 
 Breakpoints are Tailwind defaults: `sm` 640px, `md` 768px, `lg` 1024px. The nav collapses to a full-width sheet below `md`.
 
 ## Elevation & Depth
 
-Depth comes from translucency, not shadow. Cards and panels are 30% slate with a backdrop blur, so the star field shows through, edged by a 1px hairline ring (white at 10% in dark). The only shadows are the card default (`shadow-sm`, nearly invisible on black) and a hover lift on every card (`shadow-lg` tinted with primary at 5%). The sticky header is the same idea at higher strength: 60% background with a heavy blur and a 50% hairline bottom border.
+Depth comes from translucency, not shadow. Cards and panels are 30% slate with a backdrop blur, so the star field shows through, edged by a 1px hairline ring (white at 10% in dark). The only shadows are the card default (`shadow-sm`, nearly invisible on black) and a hover lift on every card (`shadow-lg` tinted with primary at 5%). The sticky header is the same idea at higher strength: 90% background with a light blur and a 50% hairline bottom border.
 
 ### Shadow Vocabulary
 - **Rest** (`box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)`): default card.
 - **Lift** (`box-shadow: 0 10px 15px -3px oklch(0.922 0 0 / 5%), 0 4px 6px -4px oklch(0.922 0 0 / 5%)` + `translateY(-4px)`, 300ms): every `Card` on hover, built into the component; card icons brighten from fog to paper. The contact panel opts out, and reduced motion drops the movement.
 
 ### Named Rules
-**The Glass Over Stars Rule.** Surfaces that sit on the page are translucent (slate 30% + blur + hairline), never opaque fills. The stars must stay faintly visible through every card.
+**The Glass Over Stars Rule.** Surfaces that sit on the page are translucent (slate 30% + blur + hairline), never opaque fills. The stars must stay faintly visible through every card. The services stack is the one exception, because a panel must hide the title of the panel it covers (see Services stack).
 
 ## Shapes
 
@@ -229,7 +229,7 @@ Quiet and confident: rounded, compact, no hue.
 - **Structure:** optional flush screenshot (16:10, top-anchored), mono label, title (feature cards set a 20px fog icon inline before it, never in a tile above it), fog description, tags pushed to the bottom with `mt-auto`, then text links with arrow or external-link icons that underline on hover.
 
 ### Navigation
-- **Header:** sticky, 60% night with heavy blur, 50% hairline bottom border, a 2px chalk scroll-progress bar along its bottom edge.
+- **Header:** sticky, 90% night with a light blur (a heavy one recomposites all the scrolling content), 50% hairline bottom border, a 2px chalk scroll-progress bar along its bottom edge.
 - **Links:** 14px fog; hover turns paper. No underline.
 - **Right cluster:** EN/ES toggle group and the animated theme toggler.
 - **Mobile:** below 768px a menu button opens a full-width sheet with 30px semibold links in fog.
@@ -238,19 +238,39 @@ Quiet and confident: rounded, compact, no hue.
 `SectionHeader` is just the section `h2`: 30px semibold (24px on mobile), balanced, left-aligned, 32px above the content.
 
 ### Process steps
-A 4-up grid of small `Card`s, each with a zero-padded mono index (`01`) in fog above 14px text.
+`ProcessSteps` (`src/components/custom/process-steps.astro`), on every service page: from `lg` a side column with the `/{` mark and a short list of who we are, then the title at display size and one row per step, divided by hairlines: small mono number, short name, muted sentence. Numbers are labels here, never display type. The mark turns in space with the scroll (scrubbed); the title's letters and each row's line and cells play once as they arrive (`animateProcess`). Never mask this text: a row caught mid-scroll looks cut off. With reduced motion or no JavaScript everything is simply visible.
+
+### Intro
+On the home page only, once per visit: a full-screen `.site-intro` with the wordmark faint at first, its letters lighting up one by one in step with a progress line, and a developer joke; after about two seconds it wipes upward (a clip) while the hero's entrance starts behind it. CSS only, with no fake percentage and no waiting on assets. Skipped with reduced motion or without JavaScript.
+
+### Statement and marquee
+The home page has one statement between hero and projects, which deciphers itself left to right on its own, once, when it comes into view (never tied to scroll: a sentence should not cost screens), and one decorative line of service names (hidden from assistive tech) that travels with the scroll. One of each: they stop working if repeated.
+
+### Team
+Full-width rows with hairlines, one per partner: large round photo, display-size name sliding in from alternating sides, role, city and LinkedIn.
 
 ### FAQ
-`FaqAccordion` (`src/components/custom/faq-accordion.tsx`): shadcn `Accordion` on glass (slate 30%, blur, hairline, rounded) with semibold questions and one chevron per row. Rows tint on hover (muted at 30%). Several answers can be open at once. GSAP animates the panel height and turns the chevron 180° with a small overshoot (`back.out`); panels stay in the HTML (`forceMount`) so the answers stay indexable, and closed ones are hidden from assistive tech.
+`FaqSection` (`src/components/custom/faq-section.astro`) around `FaqAccordion` (`src/components/custom/faq-accordion.tsx`): full width, the title at display size holding on the left (sticky from `lg`) and the questions on the right as hairline rows, no card and no radius. Questions are semibold and step in slightly on hover, with one chevron per row. Several answers can be open at once. GSAP animates the panel height and turns the chevron 180° with a small overshoot (`back.out`); panels stay in the HTML (`forceMount`) so the answers stay indexable, and closed ones are hidden from assistive tech.
 
-### Projects grid
-A 2×2 grid of project cards (one column on mobile), all visible without interaction. Projects with a case study come first, so they fill the top row. No carousel: with a handful of projects, hiding any of them behind a scroll costs proof.
+### Mobile rhythm
+Below `md` nothing is stretched to fill the screen for its own sake: sections are as tall as their content and closer together (64px instead of 96px). The exception is the services stack, whose panels stay full height to keep the stacking; there the photograph takes up the space the title and text leave.
+
+### Inner pages
+Service, city and case study pages share the home page's language without its one-off set pieces (intro, stacked panels, deciphering statement, travelling type stay on the home page). They are built from `page-hero` (way back, display title, then tag, intro and actions under a hairline), `feature-rows` (numbered hairline rows instead of cards), `wide-section` and `split-section` (display title on top, or held on the left). Everything runs edge to edge on the same side padding as the home page. Case studies keep their screenshots in colour, because the work is the subject there; everywhere else they are black and white until pointed at. Phone screens keep their rounded corners because they depict a device.
+
+### Project index
+The work reads as an index in the same language as the process and FAQ: a display-size title, then one hairline row per project (zero-padded number, type, name at display size, one real result, link to the site; the whole row opens the case study) beside a single whole 16:10 screenshot of exactly the same height, so the section fits one screen with no crop and no leftover space, that changes with the row in use (`initProjectIndex` in `src/lib/animations.ts`). Screenshots are black and white and take their colour only while a project is pointed at or focused; the other rows step back to 40%. No text over images, no gradients. Rows draw in once, like the process. Below `lg` each row carries its own greyscale image (`<slug>-mobile.webp` under 768px). Results must be true and provable: no invented numbers.
+
+### Services stack
+On the home page, one edge-to-edge panel per service, as tall as the viewport under the header, with its display-size title and zero-padded number on top, and below a hairline a four-column grid that fills the panel: the service tag, description and link, what's included, and a black and white photograph (`public/services/`). These are atmosphere, not proof: decorative, uncaptioned, never shown as client work, with no invented projects on any screen; real work belongs in the project index. The grid takes all the height the title leaves, so the visual grows instead of leaving a gap. The included list is dropped below `md`, where a panel has no room for it, and below `lg` the visual moves to a full-width band that takes the height left over. Each panel is CSS `position: sticky` at the header's bottom edge, so the next slides over it. Panels are opaque and step down a lightness ladder: foreground (inverted, the only inverted surface on the site), secondary, card, background.
+
+The motion is scrubbed to scroll in `animateServicesStack` (`src/lib/animations.ts`): the title's lines rise out of a mask (SplitText) while the number and text move up with it, and the covered panel shrinks to 92% and darkens. Sticky and motion apply only with motion allowed; sticky also needs a viewport at least 700px tall, so a panel is never cut off. Without JavaScript the panels are complete and still stack.
 
 ### Demo phone (the one hue and type exception)
 The interactive app demo (`app-demo.tsx`) is a device, not site chrome: it keeps iOS's own palette (`.ios` in `global.css`, light and dark following the site theme), the system font and its own size steps (13px, 15px, 17px, 20–28px), and a near-black bezel with a black Dynamic Island. Nothing from it leaks out: the "live" badge and tap hint around it stay on site tokens, the 11px tag size is still the floor, and the hint settles in once instead of bouncing.
 
 ### Contact panel
-Every page closes with the same block, `ContactSection` (`src/components/custom/contact-section.astro`, anchored at `#contacto`): the standard `SectionHeader` (page-specific headline) above one shadcn `Card` (glass, 24px corners) holding the intro, the primary email button, and the address spelled out underneath in fog with a paper link. Pages vary only the copy and the email subject, never the layout. Email is the only channel.
+Every page closes with the same block, `ContactSection` (`src/components/custom/contact-section.astro`, anchored at `#contacto`): a full-screen inverted panel that grows into place on scroll, with the page-specific headline at display size, the intro, the email button, and the address spelled out large. Pages vary only the copy and the email subject, never the layout. Email is the only channel.
 
 ## Do's and Don'ts
 

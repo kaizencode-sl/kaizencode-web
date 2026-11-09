@@ -139,6 +139,9 @@
     /* Mono words get long when text is enlarged (200% zoom): let a word
        break rather than push the page sideways. No effect when it fits */
     overflow-wrap: anywhere;
+    /* Edge-to-edge sections are 100vw, which includes a classic scrollbar.
+       clip, not hidden: hidden would break position: sticky */
+    overflow-x: clip;
   }
   html {
     @apply font-heading;
@@ -167,10 +170,11 @@
   }
   .blur-in {
     animation: blur-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) backwards;
-    animation-delay: calc(0.2s + var(--i, 0) * 0.08s);
+    animation-delay: calc(var(--intro-delay, 0s) + 0.2s + var(--i, 0) * 0.08s);
   }
   .header-in {
     animation: header-in 0.7s cubic-bezier(0.215, 0.61, 0.355, 1) backwards;
+    animation-delay: var(--intro-delay, 0s);
   }
   /* Hidden from first paint so GSAP's reveal (src/lib/animations.ts) fades
      them in instead of moving cards that are already showing */
@@ -180,7 +184,7 @@
   }
   .hero-in {
     animation: hero-in 0.9s cubic-bezier(0.215, 0.61, 0.355, 1) backwards;
-    animation-delay: calc(0.1s + var(--i, 0) * 0.09s);
+    animation-delay: calc(var(--intro-delay, 0s) + 0.1s + var(--i, 0) * 0.09s);
   }
 }
 
@@ -230,4 +234,124 @@
   --ios-secondary: #8d8d93;
   --ios-separator: #2c2c2e;
   --ios-red: #ff453a;
+}
+
+/* Moving between pages: the new one wipes up over the old, which sinks back */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: page-sink 0.7s cubic-bezier(0.76, 0, 0.24, 1) both;
+  }
+  ::view-transition-new(root) {
+    animation: page-wipe 0.7s cubic-bezier(0.76, 0, 0.24, 1) both;
+  }
+}
+@keyframes page-sink {
+  to {
+    transform: scale(0.94);
+    opacity: 0.4;
+  }
+}
+@keyframes page-wipe {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+/* The project index: one screenshot at a time, black and white until someone
+   points at a project; the other rows step back meanwhile */
+.work-shot {
+  opacity: 0;
+  filter: grayscale(1);
+  transition:
+    opacity 0.5s ease-out,
+    filter 0.5s ease-out;
+}
+.work-shot[data-active] {
+  opacity: 1;
+}
+[data-work]:has([data-work-row]:hover, [data-work-row] a:focus-visible)
+  .work-shot {
+  filter: none;
+}
+@media (hover: hover) {
+  [data-work-list]:has(> li:hover) > li:not(:hover) {
+    opacity: 0.4;
+  }
+}
+
+/* The home page's intro, once per visit (flag set in layouts/main.astro). CSS
+   only and short, so it never waits on the network or holds the page back */
+.site-intro {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.intro {
+    --intro-delay: 2.3s;
+  }
+  html.intro .site-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem;
+    background: var(--background);
+    color: var(--foreground);
+    animation: intro-out 1.1s cubic-bezier(0.87, 0, 0.13, 1) 2s forwards;
+  }
+}
+.site-intro-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--muted-foreground);
+}
+.site-intro-word {
+  align-self: center;
+  font-size: min(15vw, 12.5rem);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+/* Faint at first; each letter lights up in step with the line */
+.site-intro-word span::before {
+  content: attr(data-letter);
+}
+.site-intro-word span {
+  color: color-mix(in oklab, var(--foreground) 14%, transparent);
+  animation: intro-letter 0.3s ease-out forwards;
+  animation-delay: calc(0.15s + var(--i) * 0.17s);
+}
+.site-intro-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.site-intro-line {
+  height: 2px;
+  background: var(--foreground);
+  transform-origin: left;
+  animation: intro-line 1.85s linear both;
+}
+@keyframes intro-line {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes intro-letter {
+  to {
+    color: var(--foreground);
+  }
+}
+@keyframes intro-out {
+  from {
+    clip-path: inset(0);
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+  }
 }

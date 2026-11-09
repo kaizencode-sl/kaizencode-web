@@ -1,0 +1,147 @@
+---
+import { ExternalLink, ArrowRight } from "lucide-react"
+import { type Lang } from "@/i18n/ui"
+import { useTranslations } from "@/i18n/utils"
+
+// The work as an index: one hairline row per project beside a single whole
+// screenshot of the same height, which follows the row in use. Screenshots stay black and white,
+// like the rest of the site, until someone points at a project. Below lg each
+// row carries its own image. The motion is in src/lib/animations.ts
+export interface Props {
+  lang: Lang
+  title: string
+  projects: {
+    slug: string
+    name: string
+    type: string
+    result: string
+    href?: string
+    caseHref: string
+    alt?: string
+  }[]
+}
+
+const { lang, title, projects } = Astro.props
+const t = useTranslations(lang)
+
+// The app's image set predates the 1920px captures
+const srcsetFor = (slug: string) =>
+  slug === "app-agora"
+    ? `/projects/${slug}-960.webp 960w, /projects/${slug}.webp 1280w`
+    : `/projects/${slug}-1100.webp 1100w, /projects/${slug}-1920.webp 1920w`
+const altFor = (name: string, alt?: string) =>
+  alt ?? `${t("project.image.alt")} ${name}`
+---
+
+<div data-work class="ml-[calc(50%-50vw)] w-screen px-6 sm:px-10 lg:px-16">
+  <h2
+    data-title-chars
+    class="text-[min(13vw,7rem)] leading-[1.05] font-bold tracking-tighter text-balance"
+  >
+    {title}
+  </h2>
+  <div class="mt-8 grid gap-8 lg:mt-16 lg:grid-cols-12">
+    <div class="hidden lg:col-span-7 lg:block">
+      <div
+        data-work-preview
+        class="relative aspect-[16/10] min-h-full overflow-hidden bg-muted"
+      >
+        {projects.map(({ slug, name, alt }, i) => (
+          <img
+            data-work-shot={slug}
+            data-active={i === 0 ? "" : undefined}
+            src={`/projects/${slug}.webp`}
+            srcset={srcsetFor(slug)}
+            sizes="60vw"
+            alt={altFor(name, alt)}
+            width="1920"
+            height="1200"
+            loading="lazy"
+            decoding="async"
+            draggable="false"
+            class="work-shot absolute inset-0 size-full object-cover object-top"
+          />
+        ))}
+      </div>
+    </div>
+    <ol
+      data-work-list
+      class="border-b border-border lg:col-span-5 lg:grid lg:auto-rows-fr"
+    >
+      {projects.map(({ slug, name, type, result, href, caseHref, alt }, i) => (
+        <li
+          data-process-step
+          data-work-row={slug}
+          class="group relative grid grid-cols-[3rem_1fr] gap-x-2 border-t border-border py-6 transition-opacity duration-300 lg:py-3"
+        >
+          <div
+            data-process-line
+            aria-hidden="true"
+            class="absolute inset-x-0 -top-px h-px origin-left bg-foreground"
+          />
+          <picture class="col-span-2 mb-5 lg:hidden">
+            {slug !== "app-agora" && (
+              <source
+                media="(max-width: 767px)"
+                srcset={`/projects/${slug}-mobile.webp`}
+              />
+            )}
+            <img
+              src={`/projects/${slug}.webp`}
+              srcset={srcsetFor(slug)}
+              sizes="100vw"
+              alt={altFor(name, alt)}
+              width="1920"
+              height="1200"
+              loading="lazy"
+              decoding="async"
+              draggable="false"
+              class="aspect-[4/3] w-full object-cover object-top grayscale md:aspect-[16/10]"
+            />
+          </picture>
+          <span
+            data-process-cell
+            aria-hidden="true"
+            class="pt-0.5 font-mono text-base text-muted-foreground tabular-nums"
+          >
+            {String(i + 1).padStart(3, "0")}
+          </span>
+          <div
+            data-process-cell
+            class="flex flex-col items-start gap-2 lg:grid lg:grid-cols-[1fr_auto] lg:items-center lg:gap-x-4 lg:gap-y-1"
+          >
+            <span class="font-mono text-xs tracking-widest text-muted-foreground uppercase lg:hidden">
+              {type}
+            </span>
+            <h3 class="pr-10 text-[min(10vw,3.5rem)] leading-[1.05] font-bold tracking-tighter text-balance lg:col-start-1 lg:row-start-1 lg:pr-0 lg:text-[clamp(1.5rem,2vw,2.75rem)]">
+              <a href={caseHref} class="after:absolute after:inset-0">
+                <span class="inline-block transition-[translate] duration-500 ease-out group-hover:translate-x-2">
+                  {name}
+                </span>
+              </a>
+            </h3>
+            <p class="text-base text-muted-foreground lg:col-span-2 lg:text-sm">
+              {result}
+            </p>
+            {href && (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener"
+                class="relative z-10 -my-1 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline lg:col-start-2 lg:row-start-1"
+              >
+                {t("project.visit")}
+                <ExternalLink className="size-4" />
+                <span class="sr-only">{t("a11y.newTab")}</span>
+              </a>
+            )}
+          </div>
+          <ArrowRight
+            aria-hidden="true"
+            className="absolute right-0 bottom-8 size-6 lg:hidden"
+          />
+        </li>
+      ))}
+    </ol>
+  </div>
+</div>
