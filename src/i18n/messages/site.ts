@@ -1,7 +1,6 @@
 export const site = {
   en: {
-    "site.title":
-      "Web design, online stores & custom software in Spain | Kaizencode",
+    "site.title": "Kaizencode: web design, online stores & software in Spain",
     "site.description":
       "We design and build websites, online stores and custom software for businesses all over Spain. Our own code, no templates, and direct contact with the developers.",
     "nav.projects": "Our projects",
@@ -156,7 +155,7 @@ export const site = {
     "service.ecommerce.link": "Shopify store development",
   },
   es: {
-    "site.title": "Diseño web, tiendas online y software a medida | Kaizencode",
+    "site.title": "Kaizencode: diseño web, tiendas online y software a medida",
     "site.description":
       "Diseñamos y programamos webs, tiendas online y software a medida para negocios de toda España. Código propio, sin plantillas, y trato directo con los desarrolladores.",
     "nav.projects": "Nuestros proyectos",

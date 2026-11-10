@@ -20,6 +20,9 @@ const {
 } = Astro.props
 
 const siteName = "Kaizencode"
+// How people may type the brand: one unknown word gets split into "kaizen
+// code", so tell Google these all name the same company
+const brandVariants = ["Kaizen Code", "KaizenCode", "kaizencode.es"]
 const defaultTitle = `${siteName} — Software & e-commerce solutions`
 const resolvedTitle = title ?? defaultTitle
 
@@ -186,6 +189,7 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/en/"
         "@type": "ProfessionalService",
         "@id": `${siteOrigin}/#organization`,
         name: "Kaizencode",
+        alternateName: brandVariants,
         url: siteOrigin,
         logo: `${siteOrigin}${basePath}favicon/favicon.svg`,
         image: ogImageUrl,
@@ -217,7 +221,7 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/en/"
           "@type": "WebSite",
           "@id": `${siteOrigin}/#website`,
           name: siteName,
-          alternateName: "kaizencode.es",
+          alternateName: brandVariants,
           url: `${siteOrigin}/`,
           inLanguage: ["es", "en"],
           publisher: { "@id": `${siteOrigin}/#organization` },
