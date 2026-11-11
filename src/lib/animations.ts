@@ -7,9 +7,9 @@ gsap.registerPlugin(ScrollTrigger, SplitText)
 
 // Under the 4rem sticky header
 const STACK_TOP = "top 64px"
-// Seconds scrubbed animations take to catch up with the scroll: this lag, on
-// top of Lenis, is what makes them glide instead of following every tick
-const SCRUB = 1.1
+// Seconds scrubbed animations take to catch up with the scroll. Kept short:
+// it stacks on Lenis's own lag, and touch has no Lenis, so it needs less
+const SCRUB = matchMedia("(hover: none)").matches ? 0.25 : 0.5
 
 const GLYPHS = "abcdefghijklmnopqrstuvwxyz0123456789{}<>/=+*"
 
@@ -195,6 +195,22 @@ function initProjectIndex() {
   })
 }
 
+// No hover on touch: the row crossing the middle of the screen lights up
+function lightRowsOnTouch() {
+  gsap.utils.toArray<HTMLElement>("[data-work-row]").forEach((row) => {
+    ScrollTrigger.create({
+      trigger: row,
+      start: "top 60%",
+      end: "bottom 40%",
+      onToggle: ({ isActive }) => row.toggleAttribute("data-lit", isActive),
+    })
+  })
+  return () =>
+    document
+      .querySelectorAll("[data-lit]")
+      .forEach((row) => row.removeAttribute("data-lit"))
+}
+
 // The screenshot opens once, as the rows draw themselves in
 function animateProjectIndex() {
   const preview = document.querySelector("[data-work-preview]")
@@ -296,8 +312,7 @@ export function initAnimations() {
     const lenis = new Lenis({
       autoRaf: false,
       allowNestedScroll: true,
-      lerp: 0.075,
-      wheelMultiplier: 0.95,
+      lerp: 0.14,
     })
     lenis.on("scroll", ScrollTrigger.update)
     // Not Lenis's own lenis-scrolling class: it can stay on with the page still
@@ -350,8 +365,7 @@ export function initAnimations() {
       gsap.to(counter, {
         value: Number(digits),
         duration: 1.4,
-        // After the intro, when it plays
-        delay: document.documentElement.classList.contains("intro") ? 3 : 0.7,
+        delay: 0.7,
         ease: "power4.out",
         onUpdate: () =>
           void (el.textContent = `${Math.round(counter.value)}${suffix}`),
@@ -370,6 +384,7 @@ export function initAnimations() {
   mm.add("(prefers-reduced-motion: no-preference)", animateProcess)
   mm.add("(prefers-reduced-motion: no-preference)", animateCharTitles)
   mm.add("(prefers-reduced-motion: no-preference)", animateProjectIndex)
+  mm.add("(hover: none)", lightRowsOnTouch)
   mm.add("(prefers-reduced-motion: no-preference)", () =>
     gsap.utils.toArray<HTMLElement>("[data-rows]").forEach(animateRows)
   )

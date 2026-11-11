@@ -160,15 +160,6 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/en/"
             )
           }
         }
-        // The home page's intro plays once per visit (.site-intro in global.css)
-        try {
-          if (html.dataset.home !== undefined && !sessionStorage.intro) {
-            sessionStorage.intro = "1"
-            html.classList.add("intro")
-          }
-        } catch {
-          // no storage, no intro
-        }
         new MutationObserver(syncThemeColor).observe(html, {
           attributes: true,
           attributeFilter: ["class"],
@@ -236,20 +227,6 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/en/"
     >
       {ui[lang]["a11y.skip"]}
     </a>
-    {isHome && (
-      <div class="site-intro" aria-hidden="true" translate="no">
-        <span class="site-intro-label">./kaizencode.sh</span>
-        <span class="site-intro-word">
-          {[..."Kaizencode"].map((letter, i) => (
-            <span style={`--i: ${i}`} data-letter={letter} />
-          ))}
-        </span>
-        <span class="site-intro-foot">
-          <span class="site-intro-line" />
-          <span class="site-intro-label">{ui[lang]["intro.status"]}</span>
-        </span>
-      </div>
-    )}
     <!-- The entrance fades this wrapper, not the React element -->
     <div
       transition:persist="stars"
